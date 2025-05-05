@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "build": "tsc"
-},
+    "build": "tsc",
+    "dev": "tsc --watch & serve ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/agussang/demo-room.git"
@@ -26,5 +27,8 @@
     "react-dom": "^19.1.0",
     "recharts": "^2.15.3",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
   }
 }

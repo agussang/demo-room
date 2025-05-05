@@ -1,0 +1,3210 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Information Management System</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #132b50;
+        --primary-light: #1e3f6f;
+        --primary-dark: #0a1a31;
+        --accent: #e9c070;
+        --accent-light: #f1d196;
+        --accent-dark: #d6a955;
+        --light: #ffffff;
+        --light-gray: #f5f7fa;
+        --mid-gray: #e2e8f0;
+        --text-dark: #1a202c;
+        --text-medium: #4a5568;
+        --text-light: #718096;
+        --success: #047857;
+        --warning: #b45309;
+        --danger: #b91c1c;
+        --border-radius: 6px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05),
+          0 1px 3px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--text-dark);
+        background-color: var(--light-gray);
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .hotel-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        box-shadow: var(--box-shadow);
+        position: relative;
+      }
+
+      .hotel-header h1 {
+        color: var(--light);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .hotel-header .accent-bar {
+        height: 4px;
+        width: 100%;
+        background: var(--accent);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .hotel-header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 300;
+        margin-bottom: 0;
+      }
+
+      .form-container {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 2rem;
+        overflow: hidden;
+      }
+
+      .form-section {
+        padding: 2rem;
+        display: none;
+      }
+
+      .form-section.active {
+        display: block;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 2rem;
+        border-bottom: 4px solid var(--accent);
+        margin-bottom: 1.5rem;
+      }
+
+      .form-header h3 {
+        color: var(--light);
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+        padding: 1.5rem 2rem;
+        background-color: var(--light);
+        border-bottom: 1px solid var(--mid-gray);
+      }
+
+      .step-indicator::before {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: var(--mid-gray);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: -1;
+        left: 0;
+      }
+
+      .step {
+        width: 36px;
+        height: 36px;
+        background: var(--light);
+        border: 2px solid var(--mid-gray);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        color: var(--text-medium);
+        position: relative;
+        z-index: 1;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+
+      .step-text {
+        position: absolute;
+        bottom: -25px;
+        font-size: 12px;
+        width: 120px;
+        text-align: center;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--text-medium);
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .step.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--primary-dark);
+        transform: scale(1.1);
+      }
+
+      .step.active .step-text {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .step.completed {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--light);
+      }
+
+      .btn-next,
+      .btn-prev {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        border-radius: var(--border-radius);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--light);
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background: var(--primary-light);
+        border-color: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(19, 43, 80, 0.2);
+      }
+
+      .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+      }
+
+      .btn-outline-primary:hover,
+      .btn-outline-primary:focus {
+        background: var(--primary);
+        color: var(--light);
+        transform: translateY(-2px);
+      }
+
+      .btn-accent {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--primary-dark);
+      }
+
+      .btn-accent:hover,
+      .btn-accent:focus {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(233, 192, 112, 0.2);
+      }
+
+      .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: var(--border-radius);
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--mid-gray);
+        color: var(--text-dark);
+        transition: var(--transition);
+        background-color: var(--light);
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.2rem rgba(233, 192, 112, 0.25);
+      }
+
+      .form-control::placeholder {
+        color: var(--text-light);
+      }
+
+      .input-group-text {
+        background-color: var(--light-gray);
+        color: var(--text-medium);
+        border-color: var(--mid-gray);
+        border-radius: var(--border-radius);
+      }
+
+      .required::after {
+        content: "*";
+        color: var(--danger);
+        margin-left: 3px;
+      }
+
+      .map-container {
+        height: 350px;
+        background-color: var(--light-gray);
+        border-radius: var(--border-radius);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--mid-gray);
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--light-gray);
+        border-radius: var(--border-radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        transition: var(--transition);
+      }
+
+      .feature-icon i {
+        font-size: 24px;
+        color: var(--primary);
+      }
+
+      .card {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--mid-gray);
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        background: var(--primary);
+        color: var(--light);
+        font-weight: 500;
+        padding: 1rem 1.5rem;
+        border-bottom: 3px solid var(--accent);
+      }
+
+      .card-title {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .card-title i {
+        color: var(--accent);
+        margin-right: 0.5rem;
+      }
+
+      .badge {
+        padding: 0.5rem 1rem;
+        border-radius: 30px;
+        font-weight: 500;
+      }
+
+      .badge.bg-primary {
+        background-color: var(--primary) !important;
+      }
+
+      .badge.bg-accent {
+        background-color: var(--accent) !important;
+        color: var(--primary-dark);
+      }
+
+      .form-check-input {
+        width: 1.1em;
+        height: 1.1em;
+        margin-top: 0.2em;
+        border: 2px solid var(--mid-gray);
+      }
+
+      .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(19, 43, 80, 0.25);
+      }
+
+      .form-check-label {
+        color: var(--text-dark);
+      }
+
+      .form-check-label i {
+        color: var(--primary);
+        width: 20px;
+      }
+
+      .form-switch .form-check-input {
+        width: 2.5em;
+        height: 1.25em;
+        margin-top: 0.125em;
+      }
+
+      /* Flowchart styling */
+      .flowchart-container {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .flowchart-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 1.5rem;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        margin: -2rem -2rem 2rem -2rem;
+        border-bottom: 4px solid var(--accent);
+      }
+
+      .flowchart {
+        position: relative;
+        overflow: visible;
+        padding: 1rem;
+      }
+
+      .flowchart-step {
+        width: 200px;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        background: var(--light);
+        border: 1px solid var(--mid-gray);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        position: relative;
+        margin: 0 auto 60px;
+        transition: var(--transition);
+      }
+
+      .flowchart-step::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 40px;
+        background: var(--primary);
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .flowchart-step:last-child::after {
+        display: none;
+      }
+
+      .flowchart-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--primary);
+        font-family: "Playfair Display", serif;
+      }
+
+      .flowchart-desc {
+        font-size: 12px;
+        color: var(--text-medium);
+      }
+
+      .api-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: var(--accent);
+        color: var(--primary-dark);
+        font-size: 10px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+      }
+
+      /* Interactive flowchart */
+      .flowchart-interactive .flowchart-step {
+        cursor: pointer;
+      }
+
+      .flowchart-interactive .flowchart-step:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        border-color: var(--accent);
+      }
+
+      .flowchart-step.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--light);
+        box-shadow: 0 8px 24px rgba(19, 43, 80, 0.2);
+      }
+
+      .flowchart-step.active .flowchart-title,
+      .flowchart-step.active .flowchart-desc {
+        color: var(--light);
+      }
+
+      /* Responsive utility */
+      @media (max-width: 768px) {
+        .step-text {
+          display: none;
+        }
+
+        .flowchart-step {
+          width: 160px;
+        }
+      }
+
+      /* Business Card Feature */
+      .business-card {
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        background: var(--light);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 1.5rem;
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .business-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border-color: var(--accent);
+      }
+
+      .business-card .gold-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 5px;
+        width: 30%;
+        background: var(--accent);
+        border-radius: var(--border-radius) 0 var(--border-radius) 0;
+      }
+
+      .business-card-title {
+        color: var(--primary);
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--mid-gray);
+        padding-bottom: 0.75rem;
+      }
+
+      .business-card-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .business-card-info i {
+        width: 20px;
+        color: var(--accent);
+        margin-right: 0.75rem;
+      }
+
+      .business-card-info p {
+        margin: 0;
+        color: var(--text-medium);
+      }
+
+      /* Facility Item Styling */
+      .facility-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+      }
+
+      .facility-item:hover {
+        background: var(--light-gray);
+        transform: translateX(5px);
+      }
+
+      .facility-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: var(--border-radius);
+        background: var(--primary);
+        margin-right: 1rem;
+      }
+
+      .facility-icon i {
+        color: var(--light);
+        font-size: 16px;
+      }
+
+      .facility-info {
+        flex: 1;
+      }
+
+      .facility-title {
+        margin: 0;
+        font-weight: 500;
+        color: var(--text-dark);
+      }
+
+      .facility-status {
+        margin-left: auto;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .facility-status.available {
+        background: rgba(4, 120, 87, 0.1);
+        color: var(--success);
+      }
+
+      .facility-status.unavailable {
+        background: rgba(185, 28, 28, 0.1);
+        color: var(--danger);
+      }
+
+      /* Upload area styling */
+      .upload-area {
+        border: 2px dashed var(--mid-gray);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        text-align: center;
+        transition: var(--transition);
+        margin-bottom: 1rem;
+        background: var(--light-gray);
+      }
+
+      .upload-area:hover {
+        border-color: var(--accent);
+        background: rgba(233, 192, 112, 0.05);
+      }
+
+      .upload-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .upload-text {
+        margin-bottom: 1rem;
+        color: var(--text-medium);
+      }
+
+      .upload-button {
+        background: var(--primary);
+        color: var(--light);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+
+      .upload-button:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+      }
+
+      .preview-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .preview-item {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--border-radius);
+        background: var(--light-gray);
+        border: 1px solid var(--mid-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .preview-item:hover {
+        border-color: var(--accent);
+        transform: scale(1.05);
+      }
+
+      .verification-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        background: rgba(4, 120, 87, 0.1);
+        color: var(--success);
+        margin-left: 0.5rem;
+      }
+
+      .verification-badge i {
+        margin-right: 0.35rem;
+      }
+
+      /* Custom Tab Navigation */
+      .custom-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--mid-gray);
+        margin-bottom: 1.5rem;
+      }
+
+      .custom-tab {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        color: var(--text-medium);
+        cursor: pointer;
+        transition: var(--transition);
+        border-bottom: 3px solid transparent;
+        margin-bottom: -1px;
+      }
+
+      .custom-tab:hover {
+        color: var(--primary);
+      }
+
+      .custom-tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--accent);
+      }
+
+      /* Tooltip */
+      .tooltip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: var(--primary-dark);
+        font-size: 10px;
+        margin-left: 0.5rem;
+        cursor: help;
+        transition: var(--transition);
+      }
+
+      .tooltip-icon:hover {
+        background: var(--primary);
+        color: var(--light);
+      }
+
+      /* Form Divider */
+      .form-divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        color: var(--text-medium);
+      }
+
+      .form-divider::before,
+      .form-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--mid-gray);
+      }
+
+      .form-divider::before {
+        margin-right: 1rem;
+      }
+
+      .form-divider::after {
+        margin-left: 1rem;
+      }
+
+      /* Section Title */
+      .section-title {
+        position: relative;
+        color: var(--primary);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      /* Validation */
+      .is-invalid {
+        border-color: var(--danger) !important;
+      }
+
+      .invalid-feedback {
+        color: var(--danger);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+      }
+
+      /* Toast Notification */
+      .toast-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1050;
+      }
+
+      .toast {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin-bottom: 1rem;
+        min-width: 300px;
+      }
+
+      .toast-header {
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .toast-body {
+        padding: 0.75rem 1rem;
+      }
+
+      /* Google Maps specific styles */
+      .z-index-1 {
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hotel-header">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12 text-center">
+            <h1 class="mb-1">MICE ID INVENTORY</h1>
+            <p>Professional Data Management for Business</p>
+          </div>
+        </div>
+      </div>
+      <div class="accent-bar"></div>
+    </header>
+
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <!-- Form container -->
+          <div class="form-container">
+            <div class="step-indicator">
+              <div class="step active" id="step1" onclick="showStep(1)">
+                1
+                <div class="step-text">Informasi Umum</div>
+              </div>
+              <div class="step" id="step2" onclick="showStep(2)">
+                2
+                <div class="step-text">Lokasi Properti</div>
+              </div>
+              <div class="step" id="step3" onclick="showStep(3)">
+                3
+                <div class="step-text">Kontak</div>
+              </div>
+              <div class="step" id="step4" onclick="showStep(4)">
+                4
+                <div class="step-text">Tempat Terdekat</div>
+              </div>
+              <div class="step" id="step5" onclick="showStep(5)">
+                5
+                <div class="step-text">Fasilitas</div>
+              </div>
+            </div>
+
+            <!-- Step 1: General Hotel Information -->
+            <div class="form-section active" id="section1">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-info-circle me-2"></i> Informasi Umum Hotel
+                </h3>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="nib" class="form-label required"
+                    >NIB Perusahaan</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nib"
+                      placeholder="Masukkan NIB"
+                    />
+                    <button
+                      class="btn btn-outline-primary"
+                      type="button"
+                      id="check-nib"
+                    >
+                      <i class="fas fa-check"></i> Verifikasi
+                    </button>
+                  </div>
+                  <div class="mt-2 d-flex align-items-center">
+                    <small class="text-muted"
+                      >Terhubung dengan API OSS BKPM</small
+                    >
+                    <span
+                      class="tooltip-icon"
+                      title="Data akan terverifikasi secara otomatis"
+                    >
+                      <i class="fas fa-info"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="chse" class="form-label required"
+                    >Nomor Sertifikat CHSE</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="chse"
+                      placeholder="Masukkan Nomor CHSE"
+                    />
+                    <button
+                      class="btn btn-outline-primary"
+                      type="button"
+                      id="check-chse"
+                    >
+                      <i class="fas fa-check"></i> Verifikasi
+                    </button>
+                  </div>
+                  <div class="mt-2 d-flex align-items-center">
+                    <small class="text-muted">Terhubung dengan API CHSE</small>
+                    <span
+                      class="tooltip-icon"
+                      title="Data akan terverifikasi secara otomatis"
+                    >
+                      <i class="fas fa-info"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="hotel-name" class="form-label required"
+                    >Nama Hotel</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="hotel-name"
+                    placeholder="Masukkan Nama Hotel"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="sta" class="form-label"
+                    >Nomor Sertifikat Tanda Anggota (STA) PHRI</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="sta"
+                    placeholder="Masukkan Nomor STA PHRI"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="classification" class="form-label required"
+                    >Klasifikasi Hotel</label
+                  >
+                  <select class="form-select" id="classification">
+                    <option value="" selected disabled>
+                      Pilih Klasifikasi
+                    </option>
+                    <option value="non-bintang">Non Bintang</option>
+                    <option value="bintang-1">Bintang 1</option>
+                    <option value="bintang-2">Bintang 2</option>
+                    <option value="bintang-3">Bintang 3</option>
+                    <option value="bintang-4">Bintang 4</option>
+                    <option value="bintang-5">Bintang 5</option>
+                    <option value="bintang-5-luxury">Bintang 5 Luxury</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="company-name" class="form-label required"
+                    >Nama Perusahaan</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="company-name"
+                    placeholder="Masukkan Nama Perusahaan"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="description" class="form-label required"
+                  >Deskripsi</label
+                >
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="4"
+                  placeholder="Masukkan deskripsi singkat tentang hotel dalam Bahasa Indonesia (maksimal 500 kata)"
+                ></textarea>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Image 360 View</label>
+                  <div class="upload-area">
+                    <div class="upload-icon">
+                      <i class="fas fa-panorama"></i>
+                    </div>
+                    <p class="upload-text">
+                      Upload gambar 360° Hotel atau masukkan link
+                    </p>
+                    <div class="d-flex gap-2 mb-3 justify-content-center">
+                      <label for="image360" class="upload-button">
+                        <i class="fas fa-cloud-upload-alt me-1"></i> Pilih File
+                      </label>
+                      <input
+                        type="file"
+                        id="image360"
+                        class="d-none"
+                        accept="image/*"
+                      />
+                    </div>
+                    <div class="mt-3">
+                      <label for="image360link" class="form-label"
+                        >Atau masukkan link 360°</label
+                      >
+                      <input
+                        type="url"
+                        id="image360link"
+                        class="form-control"
+                        placeholder="https://"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Upload Foto</label>
+                  <div class="upload-area">
+                    <div class="upload-icon">
+                      <i class="fas fa-images"></i>
+                    </div>
+                    <p class="upload-text">Upload foto Aestetik Hotel</p>
+                    <label for="photos" class="upload-button">
+                      <i class="fas fa-cloud-upload-alt me-1"></i> Pilih File
+                    </label>
+                    <input
+                      type="file"
+                      id="photos"
+                      class="d-none"
+                      accept="image/*"
+                      multiple
+                    />
+                  </div>
+                  <small class="text-muted d-block mt-2"
+                    >Dapat upload beberapa foto (multiple)</small
+                  >
+                  <div class="preview-gallery">
+                    <div class="preview-item">
+                      <div class="text-center text-muted">
+                        <i class="fas fa-image"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item">
+                      <div class="text-center text-muted">
+                        <i class="fas fa-plus"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-next"
+                  onclick="nextStep(1)"
+                >
+                  Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Property Location -->
+            <div class="form-section" id="section2">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-map-marked-alt me-2"></i> Lokasi Properti
+                </h3>
+              </div>
+
+              <!-- Google Maps Integration -->
+              <div class="map-container mb-4">
+                <div id="map" class="w-100 h-100 position-relative">
+                  <!-- Google Map will be loaded here -->
+                </div>
+
+                <!-- Hotel search box -->
+                <div class="position-absolute top-0 start-0 m-3 z-index-1">
+                  <div class="bg-white rounded shadow-sm" style="width: 280px">
+                    <div class="input-group">
+                      <span class="input-group-text bg-white border-0">
+                        <i class="fas fa-search text-muted"></i>
+                      </span>
+                      <input
+                        type="text"
+                        id="hotel-search"
+                        class="form-control border-0 shadow-none"
+                        placeholder="Cari nama hotel"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Map controls -->
+                <div class="position-absolute top-0 end-0 m-3">
+                  <div class="d-flex flex-column">
+                    <button
+                      class="btn btn-white bg-white rounded shadow-sm mb-2"
+                      id="btn-zoom-in"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    <button
+                      class="btn btn-white bg-white rounded shadow-sm mb-2"
+                      id="btn-zoom-out"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button
+                      class="btn btn-white bg-white rounded shadow-sm"
+                      id="btn-my-location"
+                      title="Lokasi Saya"
+                    >
+                      <i class="fas fa-location-arrow text-primary"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Map type controls -->
+                <div class="position-absolute bottom-0 start-0 m-3">
+                  <div class="bg-white rounded-pill shadow-sm px-3 py-1">
+                    <div class="btn-group" role="group">
+                      <button
+                        class="btn btn-sm py-1 px-2 map-type-btn active"
+                        data-map-type="roadmap"
+                        style="background-color: #132b50; color: white"
+                      >
+                        Peta
+                      </button>
+                      <button
+                        class="btn btn-sm py-1 px-2 map-type-btn text-muted"
+                        data-map-type="satellite"
+                      >
+                        Satelit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Instructions and coordinate displays -->
+                <div
+                  class="position-absolute bottom-0 end-0 m-3 bg-white p-2 rounded shadow-sm d-flex align-items-center"
+                >
+                  <i
+                    class="fas fa-map-marker-alt"
+                    style="color: #e9c070; margin-right: 8px"
+                  ></i>
+                  <span>Klik pada peta untuk pin point lokasi</span>
+                </div>
+
+                <div
+                  class="position-absolute bottom-0 start-50 translate-middle-x mb-3 bg-white px-3 py-1 rounded-pill shadow-sm small"
+                >
+                  <i class="fas fa-location-arrow me-1 text-primary"></i>
+                  <span id="coordinates-display">6.1754° S, 106.8272° E</span>
+                </div>
+
+                <!-- Directions control -->
+                <div class="position-absolute top-16 end-0 m-3 mt-5 pt-5">
+                  <button
+                    id="get-directions"
+                    class="btn btn-white bg-white rounded shadow-sm"
+                    title="Petunjuk Arah"
+                    style="display: none"
+                  >
+                    <i class="fas fa-directions text-primary"></i>
+                  </button>
+                </div>
+
+                <!-- Hidden inputs to store latitude and longitude -->
+                <input
+                  type="hidden"
+                  id="lat-input"
+                  name="latitude"
+                  value="-6.1754"
+                />
+                <input
+                  type="hidden"
+                  id="lng-input"
+                  name="longitude"
+                  value="106.8272"
+                />
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="province" class="form-label required"
+                    >Provinsi</label
+                  >
+                  <select class="form-select" id="province">
+                    <option value="" selected disabled>Pilih Provinsi</option>
+                    <option value="dki-jakarta">DKI Jakarta</option>
+                    <option value="jawa-barat">Jawa Barat</option>
+                    <option value="jawa-tengah">Jawa Tengah</option>
+                    <option value="jawa-timur">Jawa Timur</option>
+                    <option value="bali">Bali</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="regency" class="form-label required"
+                    >Kabupaten</label
+                  >
+                  <select class="form-select" id="regency" disabled>
+                    <option value="" selected disabled>Pilih Kabupaten</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="district" class="form-label required"
+                    >Kecamatan</label
+                  >
+                  <select class="form-select" id="district" disabled>
+                    <option value="" selected disabled>Pilih Kecamatan</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="village" class="form-label required"
+                    >Kelurahan / Desa</label
+                  >
+                  <select class="form-select" id="village" disabled>
+                    <option value="" selected disabled>
+                      Pilih Kelurahan / Desa
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                  <label for="postal-code" class="form-label required"
+                    >Kode Pos</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="postal-code"
+                    placeholder="Masukkan Kode Pos"
+                  />
+                </div>
+                <div class="col-md-8 mb-3">
+                  <label for="address" class="form-label required"
+                    >Alamat</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="address"
+                    rows="3"
+                    placeholder="Masukkan alamat lengkap"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-prev"
+                  onclick="prevStep(2)"
+                >
+                  <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-next"
+                  onclick="nextStep(2)"
+                >
+                  Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Contact Information -->
+            <div class="form-section" id="section3">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-address-card me-2"></i> Kontak Informasi
+                </h3>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label required"
+                    >Nomor Telepon</label
+                  >
+                  <div class="input-group">
+                    <span class="input-group-text">+62</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="phone"
+                      placeholder="Masukkan nomor telepon"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="website" class="form-label">Website</label>
+                  <div class="input-group">
+                    <span class="input-group-text">https://</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="website"
+                      placeholder="Masukkan alamat website"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-title">Sosial Media</div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text"
+                      ><i class="fab fa-instagram"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Username Instagram"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text"
+                      ><i class="fab fa-facebook"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Username Facebook"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text"
+                      ><i class="fab fa-twitter"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Username Twitter"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text"
+                      ><i class="fab fa-tiktok"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Username TikTok"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-divider">Informasi PIC</div>
+
+              <div class="mb-4 p-3 border rounded">
+                <div class="row mb-3">
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <label class="form-label required">Nama PIC</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="pic_name"
+                      placeholder="Masukkan nama PIC"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label required">Jabatan</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="pic_position"
+                      placeholder="Masukkan jabatan"
+                    />
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <label class="form-label required">Email</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="pic_email"
+                      placeholder="Masukkan email"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label required">Nomor Telepon</label>
+                    <div class="input-group">
+                      <span class="input-group-text">+62</span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="pic_phone"
+                        placeholder="Masukkan nomor telepon"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="form-label">Departemen</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="pic_department"
+                      placeholder="Masukkan departemen"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-prev"
+                  onclick="prevStep(3)"
+                >
+                  <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-next"
+                  onclick="nextStep(3)"
+                >
+                  Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Nearby Places -->
+            <div class="form-section" id="section4">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-location-arrow me-2"></i> Tempat Terdekat
+                </h3>
+              </div>
+
+              <div class="alert alert-light mb-4">
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-robot text-primary me-3 fs-4"></i>
+                  <p class="mb-0">
+                    Informasi ini akan otomatis diambil dari AI berdasarkan
+                    koordinat hotel
+                  </p>
+                </div>
+              </div>
+
+              <div class="custom-tabs mb-3">
+                <div class="custom-tab active" data-tab="transportation">
+                  Transportasi
+                </div>
+                <div class="custom-tab" data-tab="shopping">Belanja</div>
+                <div class="custom-tab" data-tab="dining">Kuliner</div>
+                <div class="custom-tab" data-tab="attractions">Wisata</div>
+              </div>
+
+              <div class="tab-content">
+                <!-- Transportation Tab -->
+                <div class="tab-pane active" id="transportation">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <i class="fas fa-plane me-2"></i> Bandara Terdekat
+                      </h5>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <p class="card-text mb-0">
+                          Bandara Internasional Soekarno-Hatta
+                        </p>
+                        <span class="badge bg-accent">15.2 km</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <i class="fas fa-train me-2"></i> Stasiun Kereta Api
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">Stasiun Gambir</p>
+                            <span class="badge bg-accent">3.5 km</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">Stasiun Pasar Senen</p>
+                            <span class="badge bg-accent">4.2 km</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Shopping Tab -->
+                <div class="tab-pane" id="shopping" style="display: none">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <i class="fas fa-shopping-bag me-2"></i> Pusat
+                        Perbelanjaan
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">Mall Central Park</p>
+                            <span class="badge bg-accent">2.5 km</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">Mall Taman Anggrek</p>
+                            <span class="badge bg-accent">3.1 km</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dining Tab -->
+                <div class="tab-pane" id="dining" style="display: none">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <i class="fas fa-utensils me-2"></i> Restoran
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">
+                              Restoran Padang Sederhana
+                            </p>
+                            <span class="badge bg-accent">0.8 km</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">Sushi Tei</p>
+                            <span class="badge bg-accent">1.2 km</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Attractions Tab -->
+                <div class="tab-pane" id="attractions" style="display: none">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <i class="fas fa-landmark me-2"></i> Tempat Wisata
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">Museum Nasional</p>
+                            <span class="badge bg-accent">5.3 km</span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <p class="card-text mb-0">
+                              Taman Mini Indonesia Indah
+                            </p>
+                            <span class="badge bg-accent">12.7 km</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between mt-4">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-prev"
+                  onclick="prevStep(4)"
+                >
+                  <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-next"
+                  onclick="nextStep(4)"
+                >
+                  Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 5: Facilities & Sustainability -->
+            <div class="form-section" id="section5">
+              <div class="form-header">
+                <h3><i class="fas fa-concierge-bell me-2"></i> Fasilitas</h3>
+              </div>
+
+              <div class="section-title">Fasilitas Hotel</div>
+
+              <div class="row mb-4">
+                <div class="col-12 mb-3">
+                  <p class="text-muted mb-2">
+                    Pilih fasilitas yang tersedia di hotel:
+                  </p>
+
+                  <div class="row">
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="wifi"
+                          checked
+                          data-facility="wifi"
+                        />
+                        <label class="form-check-label" for="wifi">
+                          <i class="fas fa-wifi text-primary me-2"></i> WiFi
+                          Gratis
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="parking"
+                          checked
+                          data-facility="parking"
+                        />
+                        <label class="form-check-label" for="parking">
+                          <i class="fas fa-parking text-primary me-2"></i> Area
+                          Parkir
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="pool"
+                          checked
+                          data-facility="pool"
+                        />
+                        <label class="form-check-label" for="pool">
+                          <i class="fas fa-swimming-pool text-primary me-2"></i>
+                          Kolam Renang
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="restaurant"
+                          checked
+                          data-facility="restaurant"
+                        />
+                        <label class="form-check-label" for="restaurant">
+                          <i class="fas fa-utensils text-primary me-2"></i>
+                          Restoran
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="spa"
+                          data-facility="spa"
+                        />
+                        <label class="form-check-label" for="spa">
+                          <i class="fas fa-spa text-primary me-2"></i> Spa &
+                          Wellness
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="fitness"
+                          data-facility="fitness"
+                        />
+                        <label class="form-check-label" for="fitness">
+                          <i class="fas fa-dumbbell text-primary me-2"></i>
+                          Fitness Center
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="meeting"
+                          checked
+                          data-facility="meeting"
+                        />
+                        <label class="form-check-label" for="meeting">
+                          <i class="fas fa-briefcase text-primary me-2"></i>
+                          Ruang Rapat
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="ballroom"
+                          checked
+                          data-facility="ballroom"
+                        />
+                        <label class="form-check-label" for="ballroom">
+                          <i class="fas fa-glass-cheers text-primary me-2"></i>
+                          Ballroom
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="laundry"
+                          data-facility="laundry"
+                        />
+                        <label class="form-check-label" for="laundry">
+                          <i class="fas fa-tshirt text-primary me-2"></i>
+                          Laundry
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="shuttle"
+                          data-facility="shuttle"
+                        />
+                        <label class="form-check-label" for="shuttle">
+                          <i class="fas fa-shuttle-van text-primary me-2"></i>
+                          Layanan Shuttle
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-title">Fasilitas Tambahan</div>
+
+              <div class="mb-4">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nama fasilitas"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    id="add-facility"
+                  >
+                    <i class="fas fa-plus me-1"></i> Tambah
+                  </button>
+                </div>
+                <small class="text-muted"
+                  >Tambahkan fasilitas lain yang belum tercantum pada
+                  daftar</small
+                >
+              </div>
+              <div class="d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-prev"
+                  onclick="prevStep(5)"
+                >
+                  <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                </button>
+                <button type="button" class="btn btn-accent" id="submit-form">
+                  <i class="fas fa-check-circle me-2"></i> Simpan & Selesai
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <!-- Flowchart -->
+          <div class="flowchart-container">
+            <div class="flowchart-header">
+              <h4 class="mb-0">Flowchart Sistem</h4>
+            </div>
+            <div class="flowchart flowchart-interactive">
+              <div
+                class="flowchart-step active"
+                id="flow-step1"
+                onclick="showStep(1)"
+              >
+                <div class="api-badge">API Integration</div>
+                <div class="flowchart-title">Step 1: Informasi Umum</div>
+                <div class="flowchart-desc">NIB, CHSE, Klasifikasi, Foto</div>
+              </div>
+              <div class="flowchart-step" id="flow-step2" onclick="showStep(2)">
+                <div class="flowchart-title">Step 2: Lokasi Properti</div>
+                <div class="flowchart-desc">Maps, Alamat, Koordinat</div>
+              </div>
+              <div class="flowchart-step" id="flow-step3" onclick="showStep(3)">
+                <div class="flowchart-title">Step 3: Kontak</div>
+                <div class="flowchart-desc">Telepon, Website, Media Sosial</div>
+              </div>
+              <div class="flowchart-step" id="flow-step4" onclick="showStep(4)">
+                <div class="api-badge">AI Integration</div>
+                <div class="flowchart-title">Step 4: Tempat Terdekat</div>
+                <div class="flowchart-desc">Bandara, Mall, Restoran</div>
+              </div>
+              <div class="flowchart-step" id="flow-step5" onclick="showStep(5)">
+                <div class="flowchart-title">Step 5: Fasilitas</div>
+                <div class="flowchart-desc">WiFi, Parkir, Sustainability</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Card -->
+          <div class="business-card">
+            <div class="gold-bar"></div>
+            <h5 class="business-card-title">Hotel Status</h5>
+
+            <div class="business-card-info">
+              <i class="fas fa-check-circle"></i>
+              <p>
+                <strong>NIB:</strong>
+                <span id="status-nib">Menunggu Verifikasi</span>
+              </p>
+            </div>
+
+            <div class="business-card-info">
+              <i class="fas fa-check-circle"></i>
+              <p>
+                <strong>CHSE:</strong>
+                <span id="status-chse">Menunggu Verifikasi</span>
+              </p>
+            </div>
+
+            <div class="business-card-info">
+              <i class="fas fa-info-circle"></i>
+              <p><strong>Nama:</strong> <span id="status-name">-</span></p>
+            </div>
+
+            <div class="business-card-info">
+              <i class="fas fa-star"></i>
+              <p>
+                <strong>Klasifikasi:</strong>
+                <span id="status-classification">-</span>
+              </p>
+            </div>
+
+            <div class="business-card-info">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>
+                <strong>Lokasi:</strong> <span id="status-location">-</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="container mb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="mb-0">Frequently Asked Questions (FAQ)</h4>
+            </div>
+            <div class="card-body">
+              <div class="accordion" id="faqAccordion">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item border-0 mb-3">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="false"
+                      aria-controls="collapseOne"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Apa itu MICE ID INVENTORY?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        MICE ID INVENTORY adalah sistem manajemen informasi
+                        hotel yang dirancang khusus untuk bisnis perhotelan di
+                        Indonesia. Sistem ini memungkinkan pengelola hotel untuk
+                        mencatat, memperbarui, dan mengelola data-data penting
+                        hotel seperti informasi umum, lokasi, kontak, dan
+                        fasilitas yang tersedia. MICE merupakan singkatan dari
+                        Meetings, Incentives, Conferences, and Exhibitions, yang
+                        menunjukkan fokus sistem pada pengelolaan hotel yang
+                        sering digunakan untuk acara bisnis dan pertemuan.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item border-0 mb-3">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Apakah NIB dan CHSE wajib diisi?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        Ya, NIB (Nomor Induk Berusaha) dan Nomor Sertifikat CHSE
+                        (Cleanliness, Health, Safety & Environment) wajib diisi
+                        karena merupakan dokumen legalitas yang penting. NIB
+                        merupakan identitas berusaha yang diterbitkan oleh OSS
+                        BKPM, sedangkan Sertifikat CHSE merupakan standar
+                        protokol kesehatan yang diwajibkan untuk industri
+                        pariwisata termasuk hotel. Kedua nomor ini akan
+                        diverifikasi melalui API yang terhubung dengan database
+                        pemerintah.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item border-0 mb-3">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree"
+                      aria-expanded="false"
+                      aria-controls="collapseThree"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Bagaimana cara mengisi informasi PIC?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseThree"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        Untuk mengisi informasi PIC (Person In Charge), Anda
+                        cukup mengisi form yang tersedia pada tab Kontak
+                        Informasi. Anda diminta memasukkan informasi dasar
+                        seperti nama PIC, jabatan, email, dan nomor telepon. PIC
+                        adalah orang yang dapat dihubungi terkait informasi
+                        hotel dan biasanya merupakan perwakilan dari departemen
+                        sales atau marketing hotel. Pastikan data yang diisi
+                        adalah data yang selalu aktif dan dapat dihubungi.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item border-0 mb-3">
+                  <h2 class="accordion-header" id="headingFour">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseFour"
+                      aria-expanded="false"
+                      aria-controls="collapseFour"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Bagaimana cara menentukan lokasi hotel pada peta?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseFour"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingFour"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        Untuk menentukan lokasi hotel pada peta, Anda dapat
+                        langsung mengklik pada peta interaktif yang tersedia
+                        pada Step 2 (Lokasi Properti). Saat Anda mengklik pada
+                        titik tertentu, sistem akan menempatkan pin pada lokasi
+                        tersebut dan secara otomatis mengisi koordinat geografis
+                        hotel. Anda juga dapat menggunakan fitur pencarian pada
+                        peta dengan mengetikkan alamat atau nama landmark
+                        terdekat untuk mempermudah pencarian lokasi yang tepat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="accordion-item border-0 mb-3">
+                  <h2 class="accordion-header" id="headingFive">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseFive"
+                      aria-expanded="false"
+                      aria-controls="collapseFive"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Bagaimana sistem menentukan tempat-tempat terdekat dengan
+                      hotel?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseFive"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingFive"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        Sistem MICE ID INVENTORY menggunakan teknologi AI dan
+                        integrasi dengan database geografis untuk secara
+                        otomatis mendeteksi tempat-tempat penting di sekitar
+                        hotel berdasarkan koordinat yang telah ditentukan.
+                        Tempat-tempat ini dikategorikan menjadi beberapa
+                        kelompok seperti transportasi (bandara, stasiun), pusat
+                        perbelanjaan, restoran, dan tempat wisata. Jarak akan
+                        dihitung secara otomatis berdasarkan rute tercepat. Anda
+                        tidak perlu memasukkan data tempat terdekat secara
+                        manual, cukup verifikasi dan edit jika diperlukan.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="accordion-item border-0 mb-3">
+                  <h2 class="accordion-header" id="headingSix">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseSix"
+                      aria-expanded="false"
+                      aria-controls="collapseSix"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Apakah data yang saya input dapat diperbarui di kemudian
+                      hari?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseSix"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingSix"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        Ya, semua data yang telah diinput ke dalam sistem MICE
+                        ID INVENTORY dapat diperbarui kapan saja. Setelah login
+                        ke sistem, Anda dapat mengakses menu "Kelola Hotel" dan
+                        memilih hotel yang ingin diperbarui datanya. Sistem akan
+                        menampilkan form yang sama dengan saat pendaftaran awal,
+                        namun sudah terisi dengan data yang ada. Anda cukup
+                        mengubah bagian yang perlu diperbarui dan menyimpannya.
+                        Perubahan akan langsung tercatat dalam sistem dan
+                        terlihat pada dashboard MICE ID INVENTORY.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ Item 7 -->
+                <div class="accordion-item border-0">
+                  <h2 class="accordion-header" id="headingSeven">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseSeven"
+                      aria-expanded="false"
+                      aria-controls="collapseSeven"
+                      style="background-color: #f8f9fa; color: var(--primary)"
+                    >
+                      <i
+                        class="fas fa-question-circle me-2"
+                        style="color: var(--accent)"
+                      ></i>
+                      Apa itu bagian Sustainability dan mengapa penting?
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseSeven"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingSeven"
+                    data-bs-parent="#faqAccordion"
+                  >
+                    <div class="accordion-body pt-0">
+                      <p>
+                        Bagian Sustainability adalah fitur baru yang
+                        memungkinkan hotel untuk menginformasikan
+                        praktik-praktik ramah lingkungan yang sudah diterapkan.
+                        Ini penting karena tren pariwisata berkelanjutan semakin
+                        meningkat dan banyak wisatawan yang mempertimbangkan
+                        aspek lingkungan dalam memilih akomodasi. Dengan mengisi
+                        informasi ini, hotel Anda dapat menonjolkan komitmen
+                        terhadap lingkungan kepada calon tamu. Praktik yang
+                        dapat diinformasikan meliputi pengelolaan sampah,
+                        konservasi energi dan air, penggunaan produk lokal,
+                        pengurangan plastik sekali pakai, dan sertifikasi ramah
+                        lingkungan yang dimiliki.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Google Maps API script -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAS5Vc3Ixr-TYcoAdmTAWqfsuQchoQtEHs&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
+
+    <script>
+      // Current active step
+      let currentStep = 1;
+
+      // Google Maps variables
+      let map;
+      let marker;
+      let autocomplete;
+      let directionsService;
+      let directionsRenderer;
+      let userMarker;
+      let userLocation = null;
+      const defaultLocation = { lat: -6.1754, lng: 106.8272 }; // Default: Jakarta
+
+      // Initialize Google Maps
+      function initMap() {
+        // Create map instance
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: defaultLocation,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: false,
+          fullscreenControl: false,
+          streetViewControl: false,
+          zoomControl: false,
+        });
+
+        // Create the marker for selected location
+        marker = new google.maps.Marker({
+          position: defaultLocation,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          icon: {
+            path: google.maps.SymbolPath.MARKER,
+            fillColor: "#e9c070",
+            fillOpacity: 1,
+            strokeColor: "#132B50",
+            strokeWeight: 2,
+            scale: 15,
+          },
+        });
+
+        // Initialize directions service
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer({
+          suppressMarkers: true,
+          polylineOptions: {
+            strokeColor: "#132B50",
+            strokeWeight: 5,
+          },
+        });
+        directionsRenderer.setMap(map);
+
+        // Add click listener to map
+        map.addListener("click", function (event) {
+          placeMarker(event.latLng);
+        });
+
+        // Add drag end listener to marker
+        marker.addListener("dragend", function () {
+          updateCoordinates(marker.getPosition());
+          showDirectionsButton();
+        });
+
+        // Initialize the Places Autocomplete
+        const input = document.getElementById("hotel-search");
+        autocomplete = new google.maps.places.Autocomplete(input, {
+          types: ["establishment"],
+          componentRestrictions: { country: "id" },
+          fields: ["geometry", "name", "formatted_address"],
+        });
+
+        // Set bounds to Jakarta area for better results
+        const jakartaBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(-6.4, 106.6),
+          new google.maps.LatLng(-5.9, 107.0)
+        );
+        autocomplete.setBounds(jakartaBounds);
+
+        // Add event listener for place selection
+        autocomplete.addListener("place_changed", function () {
+          const place = autocomplete.getPlace();
+
+          if (!place.geometry || !place.geometry.location) {
+            window.alert(
+              "Tidak ada detail untuk hotel yang dipilih: '" + place.name + "'"
+            );
+            return;
+          }
+
+          // Set map center and marker position to selected place
+          map.setCenter(place.geometry.location);
+          placeMarker(place.geometry.location);
+
+          // Update hotel name in form if available
+          const hotelNameInput = document.getElementById("hotel-name");
+          if (hotelNameInput && place.name && place.name.includes("Hotel")) {
+            hotelNameInput.value = place.name;
+            // Trigger input event to update status card
+            const inputEvent = new Event("input");
+            hotelNameInput.dispatchEvent(inputEvent);
+          }
+
+          // Update address in form if available
+          const addressInput = document.getElementById("address");
+          if (addressInput && place.formatted_address) {
+            addressInput.value = place.formatted_address;
+          }
+        });
+
+        // Add custom zoom controls
+        document
+          .getElementById("btn-zoom-in")
+          .addEventListener("click", function () {
+            map.setZoom(map.getZoom() + 1);
+          });
+
+        document
+          .getElementById("btn-zoom-out")
+          .addEventListener("click", function () {
+            map.setZoom(map.getZoom() - 1);
+          });
+
+        // Add map type controls
+        document.querySelectorAll(".map-type-btn").forEach((button) => {
+          button.addEventListener("click", function () {
+            // Remove active class from all buttons
+            document.querySelectorAll(".map-type-btn").forEach((btn) => {
+              btn.classList.remove("active");
+              btn.classList.add("text-muted");
+              btn.style.backgroundColor = "";
+              btn.style.color = "";
+            });
+
+            // Add active class to clicked button
+            this.classList.add("active");
+            this.classList.remove("text-muted");
+            this.style.backgroundColor = "#132B50";
+            this.style.color = "white";
+
+            // Change map type
+            map.setMapTypeId(this.getAttribute("data-map-type"));
+          });
+        });
+
+        // Get user location button
+        document
+          .getElementById("btn-my-location")
+          .addEventListener("click", getUserLocation);
+
+        // Get directions button
+        document
+          .getElementById("get-directions")
+          .addEventListener("click", calculateAndDisplayRoute);
+      }
+
+      // Function to handle marker placement
+      function placeMarker(location) {
+        marker.setPosition(location);
+        updateCoordinates(location);
+
+        // Show directions button if user location is available
+        showDirectionsButton();
+      }
+
+      // Function to update coordinates display and hidden inputs
+      function updateCoordinates(location) {
+        const lat = location.lat().toFixed(4);
+        const lng = location.lng().toFixed(4);
+
+        // Update display
+        document.getElementById(
+          "coordinates-display"
+        ).textContent = `${Math.abs(lat)}° ${lat < 0 ? "S" : "N"}, ${Math.abs(
+          lng
+        )}° ${lng < 0 ? "W" : "E"}`;
+
+        // Update hidden inputs
+        document.getElementById("lat-input").value = lat;
+        document.getElementById("lng-input").value = lng;
+
+        // Update location status
+        updateLocationStatus(lat, lng);
+      }
+
+      // Function to get user's location
+      function getUserLocation() {
+        if (navigator.geolocation) {
+          // Show loading indicator
+          document.getElementById("btn-my-location").innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i>';
+
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              // Success callback
+              userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+
+              // Add or move user marker
+              if (userMarker) {
+                userMarker.setPosition(userLocation);
+              } else {
+                userMarker = new google.maps.Marker({
+                  position: userLocation,
+                  map: map,
+                  icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: "#4285F4",
+                    fillOpacity: 1,
+                    strokeColor: "#FFFFFF",
+                    strokeWeight: 2,
+                    scale: 8,
+                  },
+                  title: "Lokasi Anda",
+                });
+              }
+
+              // Pan to user location
+              map.panTo(userLocation);
+
+              // Show directions button if marker exists
+              showDirectionsButton();
+
+              // Reset button
+              document.getElementById("btn-my-location").innerHTML =
+                '<i class="fas fa-location-arrow text-primary"></i>';
+
+              // Show success notification
+              showNotification(
+                "Lokasi Ditemukan",
+                "Berhasil mendapatkan lokasi Anda saat ini",
+                "success"
+              );
+            },
+            function (error) {
+              // Error callback
+              let errorMessage = "Tidak dapat menemukan lokasi Anda.";
+
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  errorMessage =
+                    "Akses lokasi ditolak, mohon izinkan akses lokasi pada browser Anda.";
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  errorMessage = "Informasi lokasi tidak tersedia.";
+                  break;
+                case error.TIMEOUT:
+                  errorMessage =
+                    "Permintaan untuk mendapatkan lokasi habis waktu.";
+                  break;
+              }
+
+              // Reset button
+              document.getElementById("btn-my-location").innerHTML =
+                '<i class="fas fa-location-arrow text-primary"></i>';
+
+              // Show error notification
+              showNotification("Lokasi Tidak Ditemukan", errorMessage, "error");
+            },
+            { maximumAge: 60000, timeout: 10000, enableHighAccuracy: true }
+          );
+        } else {
+          showNotification(
+            "Lokasi Tidak Tersedia",
+            "Geolocation tidak didukung oleh browser ini",
+            "error"
+          );
+        }
+      }
+
+      // Function to show directions button if user location is available
+      function showDirectionsButton() {
+        if (userLocation) {
+          document.getElementById("get-directions").style.display = "block";
+        }
+      }
+
+      // Function to calculate and display route between user location and hotel
+      function calculateAndDisplayRoute() {
+        if (!userLocation) {
+          showNotification(
+            "Lokasi Tidak Tersedia",
+            "Silakan aktifkan lokasi Anda terlebih dahulu",
+            "error"
+          );
+          return;
+        }
+
+        const hotelLocation = marker.getPosition();
+
+        const request = {
+          origin: userLocation,
+          destination: hotelLocation,
+          travelMode: google.maps.TravelMode.DRIVING,
+        };
+
+        directionsService.route(request, function (response, status) {
+          if (status === google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setDirections(response);
+
+            // Get distance and duration
+            const route = response.routes[0];
+            const leg = route.legs[0];
+
+            showNotification(
+              "Rute Tersedia",
+              `Jarak: ${leg.distance.text}, Waktu Tempuh: ${leg.duration.text}`,
+              "success"
+            );
+          } else {
+            showNotification(
+              "Rute Tidak Tersedia",
+              "Tidak dapat menghitung rute ke lokasi hotel",
+              "error"
+            );
+          }
+        });
+      }
+
+      // Function to show specific step
+      function showStep(step) {
+        // Validate data before proceeding to next step
+        if (step > currentStep && !validateCurrentStep(currentStep)) {
+          showNotification(
+            "Data Tidak Lengkap",
+            "Mohon lengkapi data yang wajib diisi sebelum melanjutkan",
+            "error"
+          );
+          return false;
+        }
+
+        // Hide all sections
+        document.querySelectorAll(".form-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Show the requested section
+        document.getElementById("section" + step).classList.add("active");
+
+        // Update step indicators
+        updateStepIndicators(step);
+
+        // Update flowchart
+        updateFlowchart(step);
+
+        // Update current step
+        currentStep = step;
+
+        // Scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+
+        return true;
+      }
+
+      // Function for next step
+      function nextStep(current) {
+        if (current < 5) {
+          showStep(current + 1);
+        }
+      }
+
+      // Function for previous step
+      function prevStep(current) {
+        if (current > 1) {
+          showStep(current - 1);
+        }
+      }
+
+      // Update step indicators
+      function updateStepIndicators(active) {
+        // Reset all steps
+        document.querySelectorAll(".step").forEach((step, index) => {
+          const stepNumber = index + 1;
+          step.classList.remove("active", "completed");
+
+          if (stepNumber < active) {
+            step.classList.add("completed");
+          } else if (stepNumber === active) {
+            step.classList.add("active");
+          }
+        });
+      }
+
+      // Update flowchart
+      function updateFlowchart(active) {
+        // Reset all flowchart steps
+        document.querySelectorAll(".flowchart-step").forEach((step, index) => {
+          const stepNumber = index + 1;
+
+          if (stepNumber === active) {
+            step.classList.add("active");
+          } else {
+            step.classList.remove("active");
+          }
+        });
+      }
+
+      // Function to validate current step
+      function validateCurrentStep(step) {
+        let isValid = true;
+
+        // Get all required fields in the current section
+        const requiredFields = document.querySelectorAll(
+          "#section" +
+            step +
+            " .form-label.required + input, #section" +
+            step +
+            " .form-label.required + select, #section" +
+            step +
+            " .form-label.required + textarea, #section" +
+            step +
+            " .form-label.required + div .form-control, #section" +
+            step +
+            " .form-label.required + div .form-select"
+        );
+
+        requiredFields.forEach((field) => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add("is-invalid");
+
+            // Add validation message if not exists
+            if (
+              !field.nextElementSibling ||
+              !field.nextElementSibling.classList.contains("invalid-feedback")
+            ) {
+              const feedback = document.createElement("div");
+              feedback.className = "invalid-feedback";
+              feedback.textContent = "Bidang ini wajib diisi";
+              field.after(feedback);
+            }
+          } else {
+            field.classList.remove("is-invalid");
+            if (
+              field.nextElementSibling &&
+              field.nextElementSibling.classList.contains("invalid-feedback")
+            ) {
+              field.nextElementSibling.remove();
+            }
+          }
+        });
+
+        return isValid;
+      }
+
+      // Update location status in the business card
+      function updateLocationStatus(lat, lng) {
+        const locationStatus = document.getElementById("status-location");
+        if (locationStatus) {
+          const provinceSelect = document.getElementById("province");
+          let locationText = "Koordinat dipilih";
+
+          if (provinceSelect && provinceSelect.selectedIndex > 0) {
+            const provinceOption =
+              provinceSelect.options[provinceSelect.selectedIndex];
+            locationText = `${provinceOption.text} (${lat}° S, ${lng}° E)`;
+          } else {
+            locationText = `Koordinat: ${lat}° S, ${lng}° E`;
+          }
+
+          locationStatus.textContent = locationText;
+        }
+      }
+
+      // Handle facility toggles
+      function handleFacilityToggles() {
+        const facilityToggles = document.querySelectorAll(
+          '.form-check-input[type="checkbox"]'
+        );
+
+        facilityToggles.forEach((toggle) => {
+          toggle.addEventListener("change", function () {
+            const facilityId = this.id;
+            const facilityItem = document.querySelector(
+              `.facility-item[data-facility="${facilityId}"]`
+            );
+
+            if (facilityItem) {
+              const statusSpan = facilityItem.querySelector(".facility-status");
+
+              if (this.checked) {
+                statusSpan.textContent = "Tersedia";
+                statusSpan.classList.remove("unavailable");
+                statusSpan.classList.add("available");
+              } else {
+                statusSpan.textContent = "Tidak Tersedia";
+                statusSpan.classList.remove("available");
+                statusSpan.classList.add("unavailable");
+              }
+            }
+          });
+        });
+      }
+
+      // Add a new facility
+      function addNewFacility() {
+        const facilityInput = document.querySelector(
+          'input[placeholder="Nama fasilitas"]'
+        );
+        const facilityName = facilityInput.value.trim();
+
+        if (facilityName) {
+          // Create a unique ID for the facility
+          const facilityId = "custom-" + Date.now();
+
+          // Create the HTML for the facility switch
+          const facilityHtml = `
+                    <div class="col-md-4 mb-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="${facilityId}" checked data-facility="${facilityId}">
+                            <label class="form-check-label" for="${facilityId}">
+                                <i class="fas fa-plus-circle text-primary me-2"></i> ${facilityName}
+                            </label>
+                        </div>
+                    </div>
+                `;
+
+          // Append to the facilities container
+          const facilitiesContainer = document.querySelector(
+            ".row:has(.form-check.form-switch)"
+          );
+          facilitiesContainer.insertAdjacentHTML("beforeend", facilityHtml);
+
+          // Clear the input field
+          facilityInput.value = "";
+
+          // Add event listener to the new toggle
+          const newToggle = document.getElementById(facilityId);
+          newToggle.addEventListener("change", function () {
+            // Handle toggle behavior (similar to other facility toggles)
+          });
+
+          showNotification(
+            "Fasilitas Ditambahkan",
+            `${facilityName} berhasil ditambahkan ke daftar fasilitas`,
+            "success"
+          );
+        } else {
+          showNotification("Error", "Silakan masukkan nama fasilitas", "error");
+        }
+      }
+
+      // Show toast notification
+      function showNotification(title, message, type) {
+        // Create toast container if it doesn't exist
+        let toastContainer = document.querySelector(".toast-container");
+
+        if (!toastContainer) {
+          toastContainer = document.createElement("div");
+          toastContainer.className =
+            "toast-container position-fixed bottom-0 end-0 p-3";
+          toastContainer.style.zIndex = "1050";
+          document.body.appendChild(toastContainer);
+        }
+
+        // Create toast element
+        const toastId = "toast-" + Date.now();
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.id = toastId;
+        toast.setAttribute("role", "alert");
+        toast.setAttribute("aria-live", "assertive");
+        toast.setAttribute("aria-atomic", "true");
+
+        // Set toast HTML
+        const bgClass = type === "success" ? "bg-success" : "bg-danger";
+        const icon =
+          type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+
+        toast.innerHTML = `
+                <div class="toast-header ${bgClass} text-white">
+                    <i class="fas ${icon} me-2"></i>
+                    <strong class="me-auto">${title}</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${message}
+                </div>
+            `;
+
+        // Add to container
+        toastContainer.appendChild(toast);
+
+        // Initialize and show the toast
+        const bsToast = new bootstrap.Toast(toast, {
+          autohide: true,
+          delay: 5000,
+        });
+
+        bsToast.show();
+
+        // Remove from DOM after hiding
+        toast.addEventListener("hidden.bs.toast", function () {
+          toast.remove();
+        });
+      }
+
+      // Utility function to populate select elements
+      function populateSelect(elementId, options) {
+        const select = document.getElementById(elementId);
+
+        // Clear existing options (except the first one)
+        while (select.options.length > 1) {
+          select.remove(1);
+        }
+
+        // Add new options
+        options.forEach((optionText) => {
+          const option = document.createElement("option");
+          option.text = optionText;
+          option.value = optionText.toLowerCase().replace(/\s+/g, "-");
+          select.add(option);
+        });
+      }
+
+      // Show loading indicator
+      function showLoading(elementId) {
+        const select = document.getElementById(elementId);
+
+        // Add loading option
+        const option = document.createElement("option");
+        option.text = "Memuat data...";
+        option.value = "";
+        option.selected = true;
+        option.disabled = true;
+
+        // Clear existing options and add loading
+        while (select.options.length > 0) {
+          select.remove(0);
+        }
+
+        select.add(option);
+      }
+
+      // Hide loading indicator
+      function hideLoading(elementId) {
+        const select = document.getElementById(elementId);
+
+        // Remove all options
+        while (select.options.length > 0) {
+          select.remove(0);
+        }
+
+        // Add default option
+        const option = document.createElement("option");
+        option.text = "Pilih " + select.previousElementSibling.textContent;
+        option.value = "";
+        option.selected = true;
+        option.disabled = true;
+        select.add(option);
+      }
+
+      // Initialize image and file uploads
+      function initializeFileUploads() {
+        // For hotel photos (multiple)
+        const photosInput = document.getElementById("photos");
+        const previewGallery = document.querySelector(".preview-gallery");
+
+        if (photosInput && previewGallery) {
+          photosInput.addEventListener("change", function (e) {
+            // Clear existing preview items except the last one (add button)
+            const existingPreviews = previewGallery.querySelectorAll(
+              ".preview-item:not(:last-child)"
+            );
+            existingPreviews.forEach((item) => item.remove());
+
+            // Add preview for each selected file
+            Array.from(this.files).forEach((file) => {
+              if (file.type.match("image.*")) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                  const previewItem = document.createElement("div");
+                  previewItem.className = "preview-item";
+                  previewItem.innerHTML = `<img src="${e.target.result}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">`;
+                  previewGallery.insertBefore(
+                    previewItem,
+                    previewGallery.lastElementChild
+                  );
+                };
+
+                reader.readAsDataURL(file);
+              }
+            });
+
+            showNotification(
+              "Upload Berhasil",
+              `${this.files.length} foto berhasil diunggah`,
+              "success"
+            );
+          });
+        }
+
+        // For 360 image
+        const image360Input = document.getElementById("image360");
+
+        if (image360Input) {
+          image360Input.addEventListener("change", function (e) {
+            if (this.files.length > 0 && this.files[0].type.match("image.*")) {
+              showNotification(
+                "Upload Berhasil",
+                "Gambar 360° berhasil diunggah",
+                "success"
+              );
+            }
+          });
+        }
+      }
+
+      // Add event listeners when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize facility toggles
+        handleFacilityToggles();
+
+        // Initialize file uploads
+        initializeFileUploads();
+
+        // NIB Verification
+        document
+          .getElementById("check-nib")
+          .addEventListener("click", function () {
+            const nibInput = document.getElementById("nib");
+            if (nibInput.value.trim() !== "") {
+              this.innerHTML =
+                '<i class="fas fa-check-circle"></i> Terverifikasi';
+              this.classList.remove("btn-outline-primary");
+              this.classList.add("btn-accent");
+
+              // Update status card
+              document.getElementById("status-nib").textContent =
+                "Terverifikasi";
+              document.getElementById("status-nib").className = "text-success";
+
+              // Show notification
+              showNotification(
+                "NIB Terverifikasi",
+                "Data berhasil divalidasi melalui API OSS BKPM",
+                "success"
+              );
+            } else {
+              showNotification(
+                "Verifikasi Gagal",
+                "Silakan masukkan NIB terlebih dahulu",
+                "error"
+              );
+            }
+          });
+
+        // CHSE Verification
+        document
+          .getElementById("check-chse")
+          .addEventListener("click", function () {
+            const chseInput = document.getElementById("chse");
+            if (chseInput.value.trim() !== "") {
+              this.innerHTML =
+                '<i class="fas fa-check-circle"></i> Terverifikasi';
+              this.classList.remove("btn-outline-primary");
+              this.classList.add("btn-accent");
+
+              // Update status card
+              document.getElementById("status-chse").textContent =
+                "Terverifikasi";
+              document.getElementById("status-chse").className = "text-success";
+
+              // Show notification
+              showNotification(
+                "CHSE Terverifikasi",
+                "Sertifikat valid dan terverifikasi melalui API CHSE",
+                "success"
+              );
+            } else {
+              showNotification(
+                "Verifikasi Gagal",
+                "Silakan masukkan nomor CHSE terlebih dahulu",
+                "error"
+              );
+            }
+          });
+
+        // Update hotel name status when input changes
+        document
+          .getElementById("hotel-name")
+          .addEventListener("input", function () {
+            document.getElementById("status-name").textContent =
+              this.value || "-";
+          });
+
+        // Update classification status when select changes
+        document
+          .getElementById("classification")
+          .addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById("status-classification").textContent =
+              selectedOption.text || "-";
+          });
+
+        // Province change
+        document
+          .getElementById("province")
+          .addEventListener("change", function () {
+            document.getElementById("regency").disabled = false;
+
+            // Update status card
+            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById("status-location").textContent =
+              selectedOption.text || "-";
+
+            // Simulate API call for regencies
+            showLoading("regency");
+            setTimeout(() => {
+              hideLoading("regency");
+              populateSelect("regency", [
+                "Kota Jakarta Pusat",
+                "Kota Jakarta Utara",
+                "Kota Jakarta Barat",
+                "Kota Jakarta Selatan",
+                "Kota Jakarta Timur",
+              ]);
+            }, 800);
+          });
+
+        // Regency change
+        document
+          .getElementById("regency")
+          .addEventListener("change", function () {
+            document.getElementById("district").disabled = false;
+
+            // Update status card
+            const provinceSelect = document.getElementById("province");
+            const provinceOption =
+              provinceSelect.options[provinceSelect.selectedIndex];
+            const regencyOption = this.options[this.selectedIndex];
+            document.getElementById("status-location").textContent =
+              provinceOption.text + ", " + regencyOption.text;
+
+            // Simulate API call for districts
+            showLoading("district");
+            setTimeout(() => {
+              hideLoading("district");
+              populateSelect("district", [
+                "Tanah Abang",
+                "Menteng",
+                "Senen",
+                "Kemayoran",
+                "Sawah Besar",
+              ]);
+            }, 800);
+          });
+
+        // District change
+        document
+          .getElementById("district")
+          .addEventListener("change", function () {
+            document.getElementById("village").disabled = false;
+
+            // Simulate API call for villages
+            showLoading("village");
+            setTimeout(() => {
+              hideLoading("village");
+              populateSelect("village", [
+                "Kebon Melati",
+                "Kebon Kacang",
+                "Kampung Bali",
+                "Petamburan",
+                "Bendungan Hilir",
+              ]);
+            }, 800);
+          });
+
+        // Tab navigation
+        document.querySelectorAll(".custom-tab").forEach((tab) => {
+          tab.addEventListener("click", function () {
+            // Remove active class from all tabs
+            document
+              .querySelectorAll(".custom-tab")
+              .forEach((t) => t.classList.remove("active"));
+
+            // Add active class to clicked tab
+            this.classList.add("active");
+
+            // Hide all tab panes
+            document.querySelectorAll(".tab-pane").forEach((pane) => {
+              pane.style.display = "none";
+              pane.classList.remove("active");
+            });
+
+            // Show the selected tab pane
+            const tabId = this.getAttribute("data-tab");
+            const tabPane = document.getElementById(tabId);
+            if (tabPane) {
+              tabPane.style.display = "block";
+              tabPane.classList.add("active");
+            }
+          });
+        });
+
+        // Add facility button
+        document
+          .getElementById("add-facility")
+          .addEventListener("click", addNewFacility);
+
+        // Form submission
+        document
+          .getElementById("submit-form")
+          .addEventListener("click", function () {
+            // Validate the current step before submission
+            if (validateCurrentStep(currentStep)) {
+              showNotification(
+                "Data Tersimpan",
+                "Informasi hotel berhasil disimpan dan diproses",
+                "success"
+              );
+
+              // Reset form to step 1 after a delay
+              setTimeout(() => {
+                showStep(1);
+              }, 2000);
+            } else {
+              showNotification(
+                "Data Tidak Lengkap",
+                "Mohon lengkapi data yang wajib diisi sebelum menyimpan",
+                "error"
+              );
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

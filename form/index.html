@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hotel Information Management System</title>
-    <!-- Bootstrap CSS -->
+    <title>Form Informasi Hotel - MICE ID INVENTORY</title>
+    <!-- Bootstrap 5 CSS -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <!-- Font Awesome Icons -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       rel="stylesheet"
     />
     <!-- Google Fonts -->
@@ -21,25 +21,26 @@
     />
     <style>
       :root {
-        --primary: #132b50;
-        --primary-light: #1e3f6f;
-        --primary-dark: #0a1a31;
-        --accent: #e9c070;
+        --primary: #2a4061;
+        --primary-light: #3a5680;
+        --primary-dark: #1a2c45;
+        --accent: #e5bc6d;
         --accent-light: #f1d196;
         --accent-dark: #d6a955;
         --light: #ffffff;
-        --light-gray: #f5f7fa;
+        --light-gray: #f8f9fa;
         --mid-gray: #e2e8f0;
         --text-dark: #1a202c;
         --text-medium: #4a5568;
         --text-light: #718096;
-        --success: #047857;
-        --warning: #b45309;
-        --danger: #b91c1c;
-        --border-radius: 6px;
-        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05),
-          0 1px 3px rgba(0, 0, 0, 0.1);
-        --transition: all 0.3s ease;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        --transition: all 0.25s ease;
       }
 
       body {
@@ -47,6 +48,9 @@
         color: var(--text-dark);
         background-color: var(--light-gray);
         line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
       h1,
@@ -60,42 +64,70 @@
         color: var(--primary);
       }
 
-      .hotel-header {
-        background: var(--primary);
-        color: var(--light);
-        padding: 2rem 0;
-        margin-bottom: 2rem;
+      /* Navbar styling */
+      .navbar {
+        background-color: var(--primary);
+        padding: 0.75rem 1rem;
         box-shadow: var(--box-shadow);
-        position: relative;
       }
 
-      .hotel-header h1 {
-        color: var(--light);
+      .navbar-brand {
+        font-family: "Playfair Display", serif;
         font-weight: 700;
-        letter-spacing: 0.5px;
+        color: var(--light) !important;
+        font-size: 1.5rem;
       }
 
-      .hotel-header .accent-bar {
-        height: 4px;
-        width: 100%;
-        background: var(--accent);
-        position: absolute;
-        bottom: 0;
-        left: 0;
+      .navbar-brand span {
+        color: var(--accent);
       }
 
-      .hotel-header p {
-        color: rgba(255, 255, 255, 0.9);
+      .navbar-brand-subtitle {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        display: block;
+        font-family: "Poppins", sans-serif;
         font-weight: 300;
-        margin-bottom: 0;
       }
 
+      .navbar .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .navbar .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      /* Form container styling */
       .form-container {
         background: var(--light);
         border-radius: var(--border-radius);
         box-shadow: var(--box-shadow);
-        margin-bottom: 2rem;
         overflow: hidden;
+        margin-bottom: 2rem;
+      }
+
+      .form-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1.25rem 1.5rem;
+        position: relative;
+      }
+
+      .form-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: 100%;
+        background: var(--accent);
+      }
+
+      .form-header h3 {
+        color: var(--light);
+        margin: 0;
+        font-size: 1.5rem;
       }
 
       .form-section {
@@ -119,24 +151,10 @@
         }
       }
 
-      .form-header {
-        background: var(--primary);
-        color: var(--light);
-        padding: 1rem 2rem;
-        border-bottom: 4px solid var(--accent);
-        margin-bottom: 1.5rem;
-      }
-
-      .form-header h3 {
-        color: var(--light);
-        margin: 0;
-        font-size: 1.5rem;
-      }
-
+      /* Step indicator styling */
       .step-indicator {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 2rem;
         position: relative;
         z-index: 1;
         padding: 1.5rem 2rem;
@@ -157,15 +175,15 @@
       }
 
       .step {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
         background: var(--light);
         border: 2px solid var(--mid-gray);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 500;
+        font-weight: 600;
         color: var(--text-medium);
         position: relative;
         z-index: 1;
@@ -175,8 +193,8 @@
 
       .step-text {
         position: absolute;
-        bottom: -25px;
-        font-size: 12px;
+        bottom: -30px;
+        font-size: 0.8rem;
         width: 120px;
         text-align: center;
         left: 50%;
@@ -191,6 +209,7 @@
         border-color: var(--accent);
         color: var(--primary-dark);
         transform: scale(1.1);
+        box-shadow: 0 0 0 5px rgba(229, 188, 109, 0.3);
       }
 
       .step.active .step-text {
@@ -204,8 +223,47 @@
         color: var(--light);
       }
 
-      .btn-next,
-      .btn-prev {
+      .step.completed::after {
+        content: "\f00c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+      }
+
+      /* Form controls styling */
+      .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: var(--border-radius);
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--mid-gray);
+        color: var(--text-dark);
+        transition: var(--transition);
+        background-color: var(--light);
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.2rem rgba(229, 188, 109, 0.25);
+      }
+
+      .form-control::placeholder {
+        color: var(--text-light);
+      }
+
+      .required::after {
+        content: "*";
+        color: var(--danger);
+        margin-left: 3px;
+      }
+
+      .btn {
         padding: 0.75rem 1.5rem;
         font-weight: 500;
         transition: var(--transition);
@@ -223,7 +281,7 @@
         background: var(--primary-light);
         border-color: var(--primary-light);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(19, 43, 80, 0.2);
+        box-shadow: 0 4px 12px rgba(42, 64, 97, 0.2);
       }
 
       .btn-outline-primary {
@@ -250,49 +308,79 @@
         background: var(--accent-dark);
         border-color: var(--accent-dark);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(233, 192, 112, 0.2);
+        box-shadow: 0 4px 12px rgba(229, 188, 109, 0.2);
       }
 
-      .form-label {
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-        color: var(--text-dark);
-        font-size: 0.95rem;
-      }
-
-      .form-control,
-      .form-select {
+      /* Upload area styling */
+      .upload-area {
+        border: 2px dashed var(--mid-gray);
         border-radius: var(--border-radius);
-        padding: 0.75rem 1rem;
-        border: 1px solid var(--mid-gray);
-        color: var(--text-dark);
+        padding: 2rem;
+        text-align: center;
         transition: var(--transition);
-        background-color: var(--light);
+        margin-bottom: 1rem;
+        background: var(--light-gray);
       }
 
-      .form-control:focus,
-      .form-select:focus {
+      .upload-area:hover {
         border-color: var(--accent);
-        box-shadow: 0 0 0 0.2rem rgba(233, 192, 112, 0.25);
+        background: rgba(229, 188, 109, 0.05);
       }
 
-      .form-control::placeholder {
-        color: var(--text-light);
+      .upload-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
       }
 
-      .input-group-text {
-        background-color: var(--light-gray);
+      .upload-text {
+        margin-bottom: 1rem;
         color: var(--text-medium);
-        border-color: var(--mid-gray);
+      }
+
+      .upload-button {
+        background: var(--primary);
+        color: var(--light);
+        border: none;
+        padding: 0.5rem 1.5rem;
         border-radius: var(--border-radius);
+        font-weight: 500;
+        transition: var(--transition);
+        cursor: pointer;
       }
 
-      .required::after {
-        content: "*";
-        color: var(--danger);
-        margin-left: 3px;
+      .upload-button:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
       }
 
+      .preview-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .preview-item {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--border-radius);
+        background: var(--light-gray);
+        border: 1px solid var(--mid-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .preview-item:hover {
+        border-color: var(--accent);
+        transform: scale(1.05);
+      }
+
+      /* Map container styling */
       .map-container {
         height: 350px;
         background-color: var(--light-gray);
@@ -301,103 +389,157 @@
         overflow: hidden;
         margin-bottom: 1.5rem;
         border: 1px solid var(--mid-gray);
+        box-shadow: var(--box-shadow);
       }
 
-      .feature-icon {
-        width: 60px;
-        height: 60px;
-        background: var(--light-gray);
+      .map-control {
+        background: var(--light);
         border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .map-control-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--border-radius);
+        border: none;
+        background: var(--light);
+        color: var(--primary);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 1rem;
         transition: var(--transition);
+        cursor: pointer;
       }
 
-      .feature-icon i {
-        font-size: 24px;
-        color: var(--primary);
-      }
-
-      .card {
-        background: var(--light);
-        border-radius: var(--border-radius);
-        border: 1px solid var(--mid-gray);
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
-        overflow: hidden;
-        margin-bottom: 1rem;
-      }
-
-      .card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      }
-
-      .card-header {
+      .map-control-btn:hover {
         background: var(--primary);
         color: var(--light);
-        font-weight: 500;
-        padding: 1rem 1.5rem;
-        border-bottom: 3px solid var(--accent);
       }
 
-      .card-title {
-        color: var(--primary);
-        margin-bottom: 1rem;
-        font-weight: 600;
-      }
-
-      .card-title i {
-        color: var(--accent);
-        margin-right: 0.5rem;
-      }
-
-      .badge {
-        padding: 0.5rem 1rem;
-        border-radius: 30px;
-        font-weight: 500;
-      }
-
-      .badge.bg-primary {
-        background-color: var(--primary) !important;
-      }
-
-      .badge.bg-accent {
-        background-color: var(--accent) !important;
+      .map-control-btn.active {
+        background: var(--accent);
         color: var(--primary-dark);
       }
 
-      .form-check-input {
-        width: 1.1em;
-        height: 1.1em;
-        margin-top: 0.2em;
-        border: 2px solid var(--mid-gray);
+      .coordinates-display {
+        background: var(--light);
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        box-shadow: var(--box-shadow);
+        display: inline-flex;
+        align-items: center;
       }
 
-      .form-check-input:checked {
-        background-color: var(--primary);
-        border-color: var(--primary);
-      }
-
-      .form-check-input:focus {
-        box-shadow: 0 0 0 0.2rem rgba(19, 43, 80, 0.25);
-      }
-
-      .form-check-label {
-        color: var(--text-dark);
-      }
-
-      .form-check-label i {
+      .coordinates-display i {
+        margin-right: 0.5rem;
         color: var(--primary);
-        width: 20px;
       }
 
-      .form-switch .form-check-input {
-        width: 2.5em;
-        height: 1.25em;
-        margin-top: 0.125em;
+      /* Form section title */
+      .section-title {
+        position: relative;
+        color: var(--primary);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      /* Form divider */
+      .form-divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        color: var(--text-medium);
+      }
+
+      .form-divider::before,
+      .form-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--mid-gray);
+      }
+
+      .form-divider::before {
+        margin-right: 1rem;
+      }
+
+      .form-divider::after {
+        margin-left: 1rem;
+      }
+
+      /* Custom tabs styling */
+      .custom-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--mid-gray);
+        margin-bottom: 1.5rem;
+      }
+
+      .custom-tab {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        color: var(--text-medium);
+        cursor: pointer;
+        transition: var(--transition);
+        border-bottom: 3px solid transparent;
+        margin-bottom: -1px;
+      }
+
+      .custom-tab:hover {
+        color: var(--primary);
+      }
+
+      .custom-tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--accent);
+      }
+
+      /* Tooltip icon */
+      .tooltip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: var(--primary-dark);
+        font-size: 10px;
+        margin-left: 0.5rem;
+        cursor: help;
+        transition: var(--transition);
+      }
+
+      .tooltip-icon:hover {
+        background: var(--primary);
+        color: var(--light);
+      }
+
+      /* Validation styling */
+      .is-invalid {
+        border-color: var(--danger) !important;
+      }
+
+      .invalid-feedback {
+        color: var(--danger);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
       }
 
       /* Flowchart styling */
@@ -464,6 +606,7 @@
       .flowchart-desc {
         font-size: 12px;
         color: var(--text-medium);
+        margin: 0;
       }
 
       .api-badge {
@@ -480,7 +623,6 @@
         z-index: 1;
       }
 
-      /* Interactive flowchart */
       .flowchart-interactive .flowchart-step {
         cursor: pointer;
       }
@@ -495,7 +637,7 @@
         background: var(--primary);
         border-color: var(--primary);
         color: var(--light);
-        box-shadow: 0 8px 24px rgba(19, 43, 80, 0.2);
+        box-shadow: 0 8px 24px rgba(42, 64, 97, 0.2);
       }
 
       .flowchart-step.active .flowchart-title,
@@ -503,18 +645,7 @@
         color: var(--light);
       }
 
-      /* Responsive utility */
-      @media (max-width: 768px) {
-        .step-text {
-          display: none;
-        }
-
-        .flowchart-step {
-          width: 160px;
-        }
-      }
-
-      /* Business Card Feature */
+      /* Business card styling */
       .business-card {
         border: 1px solid var(--mid-gray);
         border-radius: var(--border-radius);
@@ -569,252 +700,7 @@
         color: var(--text-medium);
       }
 
-      /* Facility Item Styling */
-      .facility-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-        padding: 0.75rem;
-        border: 1px solid var(--mid-gray);
-        border-radius: var(--border-radius);
-        transition: var(--transition);
-      }
-
-      .facility-item:hover {
-        background: var(--light-gray);
-        transform: translateX(5px);
-      }
-
-      .facility-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: var(--border-radius);
-        background: var(--primary);
-        margin-right: 1rem;
-      }
-
-      .facility-icon i {
-        color: var(--light);
-        font-size: 16px;
-      }
-
-      .facility-info {
-        flex: 1;
-      }
-
-      .facility-title {
-        margin: 0;
-        font-weight: 500;
-        color: var(--text-dark);
-      }
-
-      .facility-status {
-        margin-left: auto;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 500;
-      }
-
-      .facility-status.available {
-        background: rgba(4, 120, 87, 0.1);
-        color: var(--success);
-      }
-
-      .facility-status.unavailable {
-        background: rgba(185, 28, 28, 0.1);
-        color: var(--danger);
-      }
-
-      /* Upload area styling */
-      .upload-area {
-        border: 2px dashed var(--mid-gray);
-        border-radius: var(--border-radius);
-        padding: 2rem;
-        text-align: center;
-        transition: var(--transition);
-        margin-bottom: 1rem;
-        background: var(--light-gray);
-      }
-
-      .upload-area:hover {
-        border-color: var(--accent);
-        background: rgba(233, 192, 112, 0.05);
-      }
-
-      .upload-icon {
-        font-size: 2rem;
-        color: var(--primary);
-        margin-bottom: 1rem;
-      }
-
-      .upload-text {
-        margin-bottom: 1rem;
-        color: var(--text-medium);
-      }
-
-      .upload-button {
-        background: var(--primary);
-        color: var(--light);
-        border: none;
-        padding: 0.5rem 1.5rem;
-        border-radius: var(--border-radius);
-        font-weight: 500;
-        transition: var(--transition);
-        cursor: pointer;
-      }
-
-      .upload-button:hover {
-        background: var(--primary-light);
-        transform: translateY(-2px);
-      }
-
-      .preview-gallery {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-
-      .preview-item {
-        width: 100px;
-        height: 100px;
-        border-radius: var(--border-radius);
-        background: var(--light-gray);
-        border: 1px solid var(--mid-gray);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-        transition: var(--transition);
-      }
-
-      .preview-item:hover {
-        border-color: var(--accent);
-        transform: scale(1.05);
-      }
-
-      .verification-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.35rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        background: rgba(4, 120, 87, 0.1);
-        color: var(--success);
-        margin-left: 0.5rem;
-      }
-
-      .verification-badge i {
-        margin-right: 0.35rem;
-      }
-
-      /* Custom Tab Navigation */
-      .custom-tabs {
-        display: flex;
-        border-bottom: 1px solid var(--mid-gray);
-        margin-bottom: 1.5rem;
-      }
-
-      .custom-tab {
-        padding: 0.75rem 1.5rem;
-        font-weight: 500;
-        color: var(--text-medium);
-        cursor: pointer;
-        transition: var(--transition);
-        border-bottom: 3px solid transparent;
-        margin-bottom: -1px;
-      }
-
-      .custom-tab:hover {
-        color: var(--primary);
-      }
-
-      .custom-tab.active {
-        color: var(--primary);
-        border-bottom-color: var(--accent);
-      }
-
-      /* Tooltip */
-      .tooltip-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: var(--accent);
-        color: var(--primary-dark);
-        font-size: 10px;
-        margin-left: 0.5rem;
-        cursor: help;
-        transition: var(--transition);
-      }
-
-      .tooltip-icon:hover {
-        background: var(--primary);
-        color: var(--light);
-      }
-
-      /* Form Divider */
-      .form-divider {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-        color: var(--text-medium);
-      }
-
-      .form-divider::before,
-      .form-divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--mid-gray);
-      }
-
-      .form-divider::before {
-        margin-right: 1rem;
-      }
-
-      .form-divider::after {
-        margin-left: 1rem;
-      }
-
-      /* Section Title */
-      .section-title {
-        position: relative;
-        color: var(--primary);
-        padding-bottom: 0.75rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .section-title::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 3px;
-        background: var(--accent);
-      }
-
-      /* Validation */
-      .is-invalid {
-        border-color: var(--danger) !important;
-      }
-
-      .invalid-feedback {
-        color: var(--danger);
-        font-size: 0.8rem;
-        margin-top: 0.25rem;
-      }
-
-      /* Toast Notification */
+      /* Toast notification styling */
       .toast-container {
         position: fixed;
         bottom: 2rem;
@@ -841,36 +727,78 @@
         padding: 0.75rem 1rem;
       }
 
-      /* Google Maps specific styles */
-      .z-index-1 {
-        z-index: 1;
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .step-text {
+          display: none;
+        }
+
+        .flowchart-step {
+          width: 160px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .form-section {
+          padding: 1.5rem 1rem;
+        }
+      }
+
+      /* Footer styling */
+      footer {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 0;
+        margin-top: auto;
+        position: relative;
+      }
+
+      footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent);
+      }
+
+      footer p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      footer a {
+        color: var(--light);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      footer a:hover {
+        color: var(--accent);
       }
     </style>
   </head>
   <body>
-    <header class="hotel-header">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-12 text-center">
-            <h1 class="mb-1">MICE ID INVENTORY</h1>
-            <p>Professional Data Management for Business</p>
-            <a
-              href="../dashboard/index.html"
-              class="btn btn-light btn-sm position-absolute"
-              style="top: 10px; left: 10px"
-            >
-              <i class="fas fa-arrow-left me-1"></i> Kembali ke Dashboard
-            </a>
-          </div>
-        </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          MICE<span>ID</span> INVENTORY
+          <span class="navbar-brand-subtitle"
+            >Professional Data Management for Business</span
+          >
+        </a>
+        <a href="../dashboard/" class="btn btn-outline-light btn-sm">
+          <i class="fas fa-arrow-left me-1"></i> Kembali ke Dashboard
+        </a>
       </div>
-      <div class="accent-bar"></div>
-    </header>
+    </nav>
 
-    <div class="container">
-      <div class="row mb-4">
+    <div class="container py-4">
+      <div class="row">
+        <!-- Form Container -->
         <div class="col-lg-8">
-          <!-- Form container -->
           <div class="form-container">
             <div class="step-indicator">
               <div class="step active" id="step1" onclick="showStep(1)">
@@ -929,6 +857,7 @@
                     >
                     <span
                       class="tooltip-icon"
+                      data-bs-toggle="tooltip"
                       title="Data akan terverifikasi secara otomatis"
                     >
                       <i class="fas fa-info"></i>
@@ -958,6 +887,7 @@
                     <small class="text-muted">Terhubung dengan API CHSE</small>
                     <span
                       class="tooltip-icon"
+                      data-bs-toggle="tooltip"
                       title="Data akan terverifikasi secara otomatis"
                     >
                       <i class="fas fa-info"></i>
@@ -1075,7 +1005,7 @@
                     <div class="upload-icon">
                       <i class="fas fa-images"></i>
                     </div>
-                    <p class="upload-text">Upload foto Aestetik Hotel</p>
+                    <p class="upload-text">Upload foto Estetik Hotel</p>
                     <label for="photos" class="upload-button">
                       <i class="fas fa-cloud-upload-alt me-1"></i> Pilih File
                     </label>
@@ -1127,10 +1057,18 @@
               <!-- Google Maps Integration -->
               <div class="map-container mb-4">
                 <div id="map" class="w-100 h-100 position-relative">
-                  <!-- Google Map will be loaded here -->
+                  <!-- Placeholder for the map (will be replaced by actual Google Maps) -->
+                  <div
+                    class="w-100 h-100 d-flex align-items-center justify-content-center bg-light"
+                  >
+                    <div class="text-center text-muted">
+                      <i class="fas fa-map-marked-alt fa-4x mb-3"></i>
+                      <h5>Google Maps akan dimuat di sini</h5>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Hotel search box -->
+                <!-- Search box -->
                 <div class="position-absolute top-0 start-0 m-3 z-index-1">
                   <div class="bg-white rounded shadow-sm" style="width: 280px">
                     <div class="input-group">
@@ -1149,25 +1087,27 @@
 
                 <!-- Map controls -->
                 <div class="position-absolute top-0 end-0 m-3">
-                  <div class="d-flex flex-column">
+                  <div class="map-control">
                     <button
-                      class="btn btn-white bg-white rounded shadow-sm mb-2"
+                      class="map-control-btn"
                       id="btn-zoom-in"
+                      title="Zoom In"
                     >
                       <i class="fas fa-plus"></i>
                     </button>
                     <button
-                      class="btn btn-white bg-white rounded shadow-sm mb-2"
+                      class="map-control-btn"
                       id="btn-zoom-out"
+                      title="Zoom Out"
                     >
                       <i class="fas fa-minus"></i>
                     </button>
                     <button
-                      class="btn btn-white bg-white rounded shadow-sm"
+                      class="map-control-btn"
                       id="btn-my-location"
                       title="Lokasi Saya"
                     >
-                      <i class="fas fa-location-arrow text-primary"></i>
+                      <i class="fas fa-location-arrow"></i>
                     </button>
                   </div>
                 </div>
@@ -1179,7 +1119,7 @@
                       <button
                         class="btn btn-sm py-1 px-2 map-type-btn active"
                         data-map-type="roadmap"
-                        style="background-color: #132b50; color: white"
+                        style="background-color: #2a4061; color: white"
                       >
                         Peta
                       </button>
@@ -1193,37 +1133,28 @@
                   </div>
                 </div>
 
-                <!-- Instructions and coordinate displays -->
+                <!-- Instructions -->
                 <div
                   class="position-absolute bottom-0 end-0 m-3 bg-white p-2 rounded shadow-sm d-flex align-items-center"
                 >
                   <i
-                    class="fas fa-map-marker-alt"
-                    style="color: #e9c070; margin-right: 8px"
+                    class="fas fa-map-marker-alt me-2"
+                    style="color: #e5bc6d"
                   ></i>
                   <span>Klik pada peta untuk pin point lokasi</span>
                 </div>
 
+                <!-- Coordinates display -->
                 <div
-                  class="position-absolute bottom-0 start-50 translate-middle-x mb-3 bg-white px-3 py-1 rounded-pill shadow-sm small"
+                  class="position-absolute bottom-0 start-50 translate-middle-x mb-3"
                 >
-                  <i class="fas fa-location-arrow me-1 text-primary"></i>
-                  <span id="coordinates-display">6.1754° S, 106.8272° E</span>
+                  <div class="coordinates-display">
+                    <i class="fas fa-location-arrow"></i>
+                    <span id="coordinates-display">6.1754° S, 106.8272° E</span>
+                  </div>
                 </div>
 
-                <!-- Directions control -->
-                <div class="position-absolute top-16 end-0 m-3 mt-5 pt-5">
-                  <button
-                    id="get-directions"
-                    class="btn btn-white bg-white rounded shadow-sm"
-                    title="Petunjuk Arah"
-                    style="display: none"
-                  >
-                    <i class="fas fa-directions text-primary"></i>
-                  </button>
-                </div>
-
-                <!-- Hidden inputs to store latitude and longitude -->
+                <!-- Hidden inputs for coordinates -->
                 <input
                   type="hidden"
                   id="lat-input"
@@ -1418,7 +1349,7 @@
 
               <div class="form-divider">Informasi PIC</div>
 
-              <div class="mb-4 p-3 border rounded">
+              <div class="mb-4 p-3 border rounded bg-light">
                 <div class="row mb-3">
                   <div class="col-md-6 mb-3 mb-md-0">
                     <label class="form-label required">Nama PIC</label>
@@ -1536,7 +1467,7 @@
                         <p class="card-text mb-0">
                           Bandara Internasional Soekarno-Hatta
                         </p>
-                        <span class="badge bg-accent">15.2 km</span>
+                        <span class="badge bg-primary">15.2 km</span>
                       </div>
                     </div>
                   </div>
@@ -1552,7 +1483,7 @@
                             class="d-flex justify-content-between align-items-center mb-2"
                           >
                             <p class="card-text mb-0">Stasiun Gambir</p>
-                            <span class="badge bg-accent">3.5 km</span>
+                            <span class="badge bg-primary">3.5 km</span>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -1560,7 +1491,7 @@
                             class="d-flex justify-content-between align-items-center mb-2"
                           >
                             <p class="card-text mb-0">Stasiun Pasar Senen</p>
-                            <span class="badge bg-accent">4.2 km</span>
+                            <span class="badge bg-primary">4.2 km</span>
                           </div>
                         </div>
                       </div>
@@ -1582,7 +1513,7 @@
                             class="d-flex justify-content-between align-items-center mb-2"
                           >
                             <p class="card-text mb-0">Mall Central Park</p>
-                            <span class="badge bg-accent">2.5 km</span>
+                            <span class="badge bg-primary">2.5 km</span>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -1590,7 +1521,7 @@
                             class="d-flex justify-content-between align-items-center mb-2"
                           >
                             <p class="card-text mb-0">Mall Taman Anggrek</p>
-                            <span class="badge bg-accent">3.1 km</span>
+                            <span class="badge bg-primary">3.1 km</span>
                           </div>
                         </div>
                       </div>
@@ -1600,64 +1531,12 @@
 
                 <!-- Dining Tab -->
                 <div class="tab-pane" id="dining" style="display: none">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <i class="fas fa-utensils me-2"></i> Restoran
-                      </h5>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">
-                              Restoran Padang Sederhana
-                            </p>
-                            <span class="badge bg-accent">0.8 km</span>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">Sushi Tei</p>
-                            <span class="badge bg-accent">1.2 km</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <!-- Dining content -->
                 </div>
 
                 <!-- Attractions Tab -->
                 <div class="tab-pane" id="attractions" style="display: none">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <i class="fas fa-landmark me-2"></i> Tempat Wisata
-                      </h5>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">Museum Nasional</p>
-                            <span class="badge bg-accent">5.3 km</span>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">
-                              Taman Mini Indonesia Indah
-                            </p>
-                            <span class="badge bg-accent">12.7 km</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <!-- Attractions content -->
                 </div>
               </div>
 
@@ -1826,20 +1705,6 @@
                         </label>
                       </div>
                     </div>
-                    <div class="col-md-4 mb-2">
-                      <div class="form-check form-switch">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          id="shuttle"
-                          data-facility="shuttle"
-                        />
-                        <label class="form-check-label" for="shuttle">
-                          <i class="fas fa-shuttle-van text-primary me-2"></i>
-                          Layanan Shuttle
-                        </label>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -1882,6 +1747,7 @@
           </div>
         </div>
 
+        <!-- Sidebar Content -->
         <div class="col-lg-4">
           <!-- Flowchart -->
           <div class="flowchart-container">
@@ -1959,661 +1825,65 @@
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- FAQ Section -->
-    <section class="container mb-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="mb-0">Frequently Asked Questions (FAQ)</h4>
+          <!-- Help Card -->
+          <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0">
+                <i class="fas fa-question-circle me-2"></i> Butuh Bantuan?
+              </h5>
             </div>
             <div class="card-body">
-              <div class="accordion" id="faqAccordion">
-                <!-- FAQ Item 1 -->
-                <div class="accordion-item border-0 mb-3">
-                  <h2 class="accordion-header" id="headingOne">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseOne"
-                      aria-expanded="false"
-                      aria-controls="collapseOne"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Apa itu MICE ID INVENTORY?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseOne"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingOne"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        MICE ID INVENTORY adalah sistem manajemen informasi
-                        hotel yang dirancang khusus untuk bisnis perhotelan di
-                        Indonesia. Sistem ini memungkinkan pengelola hotel untuk
-                        mencatat, memperbarui, dan mengelola data-data penting
-                        hotel seperti informasi umum, lokasi, kontak, dan
-                        fasilitas yang tersedia. MICE merupakan singkatan dari
-                        Meetings, Incentives, Conferences, and Exhibitions, yang
-                        menunjukkan fokus sistem pada pengelolaan hotel yang
-                        sering digunakan untuk acara bisnis dan pertemuan.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="accordion-item border-0 mb-3">
-                  <h2 class="accordion-header" id="headingTwo">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseTwo"
-                      aria-expanded="false"
-                      aria-controls="collapseTwo"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Apakah NIB dan CHSE wajib diisi?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseTwo"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingTwo"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        Ya, NIB (Nomor Induk Berusaha) dan Nomor Sertifikat CHSE
-                        (Cleanliness, Health, Safety & Environment) wajib diisi
-                        karena merupakan dokumen legalitas yang penting. NIB
-                        merupakan identitas berusaha yang diterbitkan oleh OSS
-                        BKPM, sedangkan Sertifikat CHSE merupakan standar
-                        protokol kesehatan yang diwajibkan untuk industri
-                        pariwisata termasuk hotel. Kedua nomor ini akan
-                        diverifikasi melalui API yang terhubung dengan database
-                        pemerintah.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="accordion-item border-0 mb-3">
-                  <h2 class="accordion-header" id="headingThree">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseThree"
-                      aria-expanded="false"
-                      aria-controls="collapseThree"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Bagaimana cara mengisi informasi PIC?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseThree"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingThree"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        Untuk mengisi informasi PIC (Person In Charge), Anda
-                        cukup mengisi form yang tersedia pada tab Kontak
-                        Informasi. Anda diminta memasukkan informasi dasar
-                        seperti nama PIC, jabatan, email, dan nomor telepon. PIC
-                        adalah orang yang dapat dihubungi terkait informasi
-                        hotel dan biasanya merupakan perwakilan dari departemen
-                        sales atau marketing hotel. Pastikan data yang diisi
-                        adalah data yang selalu aktif dan dapat dihubungi.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="accordion-item border-0 mb-3">
-                  <h2 class="accordion-header" id="headingFour">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseFour"
-                      aria-expanded="false"
-                      aria-controls="collapseFour"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Bagaimana cara menentukan lokasi hotel pada peta?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseFour"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingFour"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        Untuk menentukan lokasi hotel pada peta, Anda dapat
-                        langsung mengklik pada peta interaktif yang tersedia
-                        pada Step 2 (Lokasi Properti). Saat Anda mengklik pada
-                        titik tertentu, sistem akan menempatkan pin pada lokasi
-                        tersebut dan secara otomatis mengisi koordinat geografis
-                        hotel. Anda juga dapat menggunakan fitur pencarian pada
-                        peta dengan mengetikkan alamat atau nama landmark
-                        terdekat untuk mempermudah pencarian lokasi yang tepat.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- FAQ Item 5 -->
-                <div class="accordion-item border-0 mb-3">
-                  <h2 class="accordion-header" id="headingFive">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseFive"
-                      aria-expanded="false"
-                      aria-controls="collapseFive"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Bagaimana sistem menentukan tempat-tempat terdekat dengan
-                      hotel?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseFive"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingFive"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        Sistem MICE ID INVENTORY menggunakan teknologi AI dan
-                        integrasi dengan database geografis untuk secara
-                        otomatis mendeteksi tempat-tempat penting di sekitar
-                        hotel berdasarkan koordinat yang telah ditentukan.
-                        Tempat-tempat ini dikategorikan menjadi beberapa
-                        kelompok seperti transportasi (bandara, stasiun), pusat
-                        perbelanjaan, restoran, dan tempat wisata. Jarak akan
-                        dihitung secara otomatis berdasarkan rute tercepat. Anda
-                        tidak perlu memasukkan data tempat terdekat secara
-                        manual, cukup verifikasi dan edit jika diperlukan.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- FAQ Item 6 -->
-                <div class="accordion-item border-0 mb-3">
-                  <h2 class="accordion-header" id="headingSix">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseSix"
-                      aria-expanded="false"
-                      aria-controls="collapseSix"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Apakah data yang saya input dapat diperbarui di kemudian
-                      hari?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseSix"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingSix"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        Ya, semua data yang telah diinput ke dalam sistem MICE
-                        ID INVENTORY dapat diperbarui kapan saja. Setelah login
-                        ke sistem, Anda dapat mengakses menu "Kelola Hotel" dan
-                        memilih hotel yang ingin diperbarui datanya. Sistem akan
-                        menampilkan form yang sama dengan saat pendaftaran awal,
-                        namun sudah terisi dengan data yang ada. Anda cukup
-                        mengubah bagian yang perlu diperbarui dan menyimpannya.
-                        Perubahan akan langsung tercatat dalam sistem dan
-                        terlihat pada dashboard MICE ID INVENTORY.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- FAQ Item 7 -->
-                <div class="accordion-item border-0">
-                  <h2 class="accordion-header" id="headingSeven">
-                    <button
-                      class="accordion-button collapsed"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseSeven"
-                      aria-expanded="false"
-                      aria-controls="collapseSeven"
-                      style="background-color: #f8f9fa; color: var(--primary)"
-                    >
-                      <i
-                        class="fas fa-question-circle me-2"
-                        style="color: var(--accent)"
-                      ></i>
-                      Apa itu bagian Sustainability dan mengapa penting?
-                    </button>
-                  </h2>
-                  <div
-                    id="collapseSeven"
-                    class="accordion-collapse collapse"
-                    aria-labelledby="headingSeven"
-                    data-bs-parent="#faqAccordion"
-                  >
-                    <div class="accordion-body pt-0">
-                      <p>
-                        Bagian Sustainability adalah fitur baru yang
-                        memungkinkan hotel untuk menginformasikan
-                        praktik-praktik ramah lingkungan yang sudah diterapkan.
-                        Ini penting karena tren pariwisata berkelanjutan semakin
-                        meningkat dan banyak wisatawan yang mempertimbangkan
-                        aspek lingkungan dalam memilih akomodasi. Dengan mengisi
-                        informasi ini, hotel Anda dapat menonjolkan komitmen
-                        terhadap lingkungan kepada calon tamu. Praktik yang
-                        dapat diinformasikan meliputi pengelolaan sampah,
-                        konservasi energi dan air, penggunaan produk lokal,
-                        pengurangan plastik sekali pakai, dan sertifikasi ramah
-                        lingkungan yang dimiliki.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <p>
+                Jika Anda memiliki pertanyaan atau mengalami kesulitan dalam
+                mengisi data, silakan hubungi tim support kami:
+              </p>
+              <div class="d-grid gap-2">
+                <a href="#" class="btn btn-outline-primary">
+                  <i class="fas fa-headset me-2"></i> Live Chat
+                </a>
+                <a
+                  href="mailto:support@miceid.com"
+                  class="btn btn-outline-primary"
+                >
+                  <i class="fas fa-envelope me-2"></i> Email Support
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-3 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2025 MICE ID INVENTORY. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="#" class="me-3"
+              ><i class="fas fa-envelope me-1"></i> Kontak</a
+            >
+            <a href="#"><i class="fas fa-info-circle me-1"></i> Bantuan</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast notification container -->
+    <div class="toast-container"></div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Google Maps API script -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAS5Vc3Ixr-TYcoAdmTAWqfsuQchoQtEHs&libraries=places&callback=initMap"
-      async
-      defer
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
     <script>
       // Current active step
       let currentStep = 1;
 
-      // Google Maps variables
-      let map;
-      let marker;
-      let autocomplete;
-      let directionsService;
-      let directionsRenderer;
-      let userMarker;
-      let userLocation = null;
-      const defaultLocation = { lat: -6.1754, lng: 106.8272 }; // Default: Jakarta
-
-      // Initialize Google Maps
-      function initMap() {
-        // Create map instance
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: defaultLocation,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          mapTypeControl: false,
-          fullscreenControl: false,
-          streetViewControl: false,
-          zoomControl: false,
-        });
-
-        // Create the marker for selected location
-        marker = new google.maps.Marker({
-          position: defaultLocation,
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          icon: {
-            path: google.maps.SymbolPath.MARKER,
-            fillColor: "#e9c070",
-            fillOpacity: 1,
-            strokeColor: "#132B50",
-            strokeWeight: 2,
-            scale: 15,
-          },
-        });
-
-        // Initialize directions service
-        directionsService = new google.maps.DirectionsService();
-        directionsRenderer = new google.maps.DirectionsRenderer({
-          suppressMarkers: true,
-          polylineOptions: {
-            strokeColor: "#132B50",
-            strokeWeight: 5,
-          },
-        });
-        directionsRenderer.setMap(map);
-
-        // Add click listener to map
-        map.addListener("click", function (event) {
-          placeMarker(event.latLng);
-        });
-
-        // Add drag end listener to marker
-        marker.addListener("dragend", function () {
-          updateCoordinates(marker.getPosition());
-          showDirectionsButton();
-        });
-
-        // Initialize the Places Autocomplete
-        const input = document.getElementById("hotel-search");
-        autocomplete = new google.maps.places.Autocomplete(input, {
-          types: ["establishment"],
-          componentRestrictions: { country: "id" },
-          fields: ["geometry", "name", "formatted_address"],
-        });
-
-        // Set bounds to Jakarta area for better results
-        const jakartaBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(-6.4, 106.6),
-          new google.maps.LatLng(-5.9, 107.0)
-        );
-        autocomplete.setBounds(jakartaBounds);
-
-        // Add event listener for place selection
-        autocomplete.addListener("place_changed", function () {
-          const place = autocomplete.getPlace();
-
-          if (!place.geometry || !place.geometry.location) {
-            window.alert(
-              "Tidak ada detail untuk hotel yang dipilih: '" + place.name + "'"
-            );
-            return;
-          }
-
-          // Set map center and marker position to selected place
-          map.setCenter(place.geometry.location);
-          placeMarker(place.geometry.location);
-
-          // Update hotel name in form if available
-          const hotelNameInput = document.getElementById("hotel-name");
-          if (hotelNameInput && place.name && place.name.includes("Hotel")) {
-            hotelNameInput.value = place.name;
-            // Trigger input event to update status card
-            const inputEvent = new Event("input");
-            hotelNameInput.dispatchEvent(inputEvent);
-          }
-
-          // Update address in form if available
-          const addressInput = document.getElementById("address");
-          if (addressInput && place.formatted_address) {
-            addressInput.value = place.formatted_address;
-          }
-        });
-
-        // Add custom zoom controls
-        document
-          .getElementById("btn-zoom-in")
-          .addEventListener("click", function () {
-            map.setZoom(map.getZoom() + 1);
-          });
-
-        document
-          .getElementById("btn-zoom-out")
-          .addEventListener("click", function () {
-            map.setZoom(map.getZoom() - 1);
-          });
-
-        // Add map type controls
-        document.querySelectorAll(".map-type-btn").forEach((button) => {
-          button.addEventListener("click", function () {
-            // Remove active class from all buttons
-            document.querySelectorAll(".map-type-btn").forEach((btn) => {
-              btn.classList.remove("active");
-              btn.classList.add("text-muted");
-              btn.style.backgroundColor = "";
-              btn.style.color = "";
-            });
-
-            // Add active class to clicked button
-            this.classList.add("active");
-            this.classList.remove("text-muted");
-            this.style.backgroundColor = "#132B50";
-            this.style.color = "white";
-
-            // Change map type
-            map.setMapTypeId(this.getAttribute("data-map-type"));
-          });
-        });
-
-        // Get user location button
-        document
-          .getElementById("btn-my-location")
-          .addEventListener("click", getUserLocation);
-
-        // Get directions button
-        document
-          .getElementById("get-directions")
-          .addEventListener("click", calculateAndDisplayRoute);
-      }
-
-      // Function to handle marker placement
-      function placeMarker(location) {
-        marker.setPosition(location);
-        updateCoordinates(location);
-
-        // Show directions button if user location is available
-        showDirectionsButton();
-      }
-
-      // Function to update coordinates display and hidden inputs
-      function updateCoordinates(location) {
-        const lat = location.lat().toFixed(4);
-        const lng = location.lng().toFixed(4);
-
-        // Update display
-        document.getElementById(
-          "coordinates-display"
-        ).textContent = `${Math.abs(lat)}° ${lat < 0 ? "S" : "N"}, ${Math.abs(
-          lng
-        )}° ${lng < 0 ? "W" : "E"}`;
-
-        // Update hidden inputs
-        document.getElementById("lat-input").value = lat;
-        document.getElementById("lng-input").value = lng;
-
-        // Update location status
-        updateLocationStatus(lat, lng);
-      }
-
-      // Function to get user's location
-      function getUserLocation() {
-        if (navigator.geolocation) {
-          // Show loading indicator
-          document.getElementById("btn-my-location").innerHTML =
-            '<i class="fas fa-spinner fa-spin"></i>';
-
-          navigator.geolocation.getCurrentPosition(
-            function (position) {
-              // Success callback
-              userLocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-
-              // Add or move user marker
-              if (userMarker) {
-                userMarker.setPosition(userLocation);
-              } else {
-                userMarker = new google.maps.Marker({
-                  position: userLocation,
-                  map: map,
-                  icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: "#4285F4",
-                    fillOpacity: 1,
-                    strokeColor: "#FFFFFF",
-                    strokeWeight: 2,
-                    scale: 8,
-                  },
-                  title: "Lokasi Anda",
-                });
-              }
-
-              // Pan to user location
-              map.panTo(userLocation);
-
-              // Show directions button if marker exists
-              showDirectionsButton();
-
-              // Reset button
-              document.getElementById("btn-my-location").innerHTML =
-                '<i class="fas fa-location-arrow text-primary"></i>';
-
-              // Show success notification
-              showNotification(
-                "Lokasi Ditemukan",
-                "Berhasil mendapatkan lokasi Anda saat ini",
-                "success"
-              );
-            },
-            function (error) {
-              // Error callback
-              let errorMessage = "Tidak dapat menemukan lokasi Anda.";
-
-              switch (error.code) {
-                case error.PERMISSION_DENIED:
-                  errorMessage =
-                    "Akses lokasi ditolak, mohon izinkan akses lokasi pada browser Anda.";
-                  break;
-                case error.POSITION_UNAVAILABLE:
-                  errorMessage = "Informasi lokasi tidak tersedia.";
-                  break;
-                case error.TIMEOUT:
-                  errorMessage =
-                    "Permintaan untuk mendapatkan lokasi habis waktu.";
-                  break;
-              }
-
-              // Reset button
-              document.getElementById("btn-my-location").innerHTML =
-                '<i class="fas fa-location-arrow text-primary"></i>';
-
-              // Show error notification
-              showNotification("Lokasi Tidak Ditemukan", errorMessage, "error");
-            },
-            { maximumAge: 60000, timeout: 10000, enableHighAccuracy: true }
-          );
-        } else {
-          showNotification(
-            "Lokasi Tidak Tersedia",
-            "Geolocation tidak didukung oleh browser ini",
-            "error"
-          );
-        }
-      }
-
-      // Function to show directions button if user location is available
-      function showDirectionsButton() {
-        if (userLocation) {
-          document.getElementById("get-directions").style.display = "block";
-        }
-      }
-
-      // Function to calculate and display route between user location and hotel
-      function calculateAndDisplayRoute() {
-        if (!userLocation) {
-          showNotification(
-            "Lokasi Tidak Tersedia",
-            "Silakan aktifkan lokasi Anda terlebih dahulu",
-            "error"
-          );
-          return;
-        }
-
-        const hotelLocation = marker.getPosition();
-
-        const request = {
-          origin: userLocation,
-          destination: hotelLocation,
-          travelMode: google.maps.TravelMode.DRIVING,
-        };
-
-        directionsService.route(request, function (response, status) {
-          if (status === google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setDirections(response);
-
-            // Get distance and duration
-            const route = response.routes[0];
-            const leg = route.legs[0];
-
-            showNotification(
-              "Rute Tersedia",
-              `Jarak: ${leg.distance.text}, Waktu Tempuh: ${leg.duration.text}`,
-              "success"
-            );
-          } else {
-            showNotification(
-              "Rute Tidak Tersedia",
-              "Tidak dapat menghitung rute ke lokasi hotel",
-              "error"
-            );
-          }
-        });
-      }
-
       // Function to show specific step
       function showStep(step) {
-        // Validate data before proceeding to next step
-        if (step > currentStep && !validateCurrentStep(currentStep)) {
-          showNotification(
-            "Data Tidak Lengkap",
-            "Mohon lengkapi data yang wajib diisi sebelum melanjutkan",
-            "error"
-          );
-          return false;
-        }
-
         // Hide all sections
         document.querySelectorAll(".form-section").forEach((section) => {
           section.classList.remove("active");
@@ -2683,151 +1953,6 @@
         });
       }
 
-      // Function to validate current step
-      function validateCurrentStep(step) {
-        let isValid = true;
-
-        // Get all required fields in the current section
-        const requiredFields = document.querySelectorAll(
-          "#section" +
-            step +
-            " .form-label.required + input, #section" +
-            step +
-            " .form-label.required + select, #section" +
-            step +
-            " .form-label.required + textarea, #section" +
-            step +
-            " .form-label.required + div .form-control, #section" +
-            step +
-            " .form-label.required + div .form-select"
-        );
-
-        requiredFields.forEach((field) => {
-          if (!field.value.trim()) {
-            isValid = false;
-            field.classList.add("is-invalid");
-
-            // Add validation message if not exists
-            if (
-              !field.nextElementSibling ||
-              !field.nextElementSibling.classList.contains("invalid-feedback")
-            ) {
-              const feedback = document.createElement("div");
-              feedback.className = "invalid-feedback";
-              feedback.textContent = "Bidang ini wajib diisi";
-              field.after(feedback);
-            }
-          } else {
-            field.classList.remove("is-invalid");
-            if (
-              field.nextElementSibling &&
-              field.nextElementSibling.classList.contains("invalid-feedback")
-            ) {
-              field.nextElementSibling.remove();
-            }
-          }
-        });
-
-        return isValid;
-      }
-
-      // Update location status in the business card
-      function updateLocationStatus(lat, lng) {
-        const locationStatus = document.getElementById("status-location");
-        if (locationStatus) {
-          const provinceSelect = document.getElementById("province");
-          let locationText = "Koordinat dipilih";
-
-          if (provinceSelect && provinceSelect.selectedIndex > 0) {
-            const provinceOption =
-              provinceSelect.options[provinceSelect.selectedIndex];
-            locationText = `${provinceOption.text} (${lat}° S, ${lng}° E)`;
-          } else {
-            locationText = `Koordinat: ${lat}° S, ${lng}° E`;
-          }
-
-          locationStatus.textContent = locationText;
-        }
-      }
-
-      // Handle facility toggles
-      function handleFacilityToggles() {
-        const facilityToggles = document.querySelectorAll(
-          '.form-check-input[type="checkbox"]'
-        );
-
-        facilityToggles.forEach((toggle) => {
-          toggle.addEventListener("change", function () {
-            const facilityId = this.id;
-            const facilityItem = document.querySelector(
-              `.facility-item[data-facility="${facilityId}"]`
-            );
-
-            if (facilityItem) {
-              const statusSpan = facilityItem.querySelector(".facility-status");
-
-              if (this.checked) {
-                statusSpan.textContent = "Tersedia";
-                statusSpan.classList.remove("unavailable");
-                statusSpan.classList.add("available");
-              } else {
-                statusSpan.textContent = "Tidak Tersedia";
-                statusSpan.classList.remove("available");
-                statusSpan.classList.add("unavailable");
-              }
-            }
-          });
-        });
-      }
-
-      // Add a new facility
-      function addNewFacility() {
-        const facilityInput = document.querySelector(
-          'input[placeholder="Nama fasilitas"]'
-        );
-        const facilityName = facilityInput.value.trim();
-
-        if (facilityName) {
-          // Create a unique ID for the facility
-          const facilityId = "custom-" + Date.now();
-
-          // Create the HTML for the facility switch
-          const facilityHtml = `
-                    <div class="col-md-4 mb-2">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="${facilityId}" checked data-facility="${facilityId}">
-                            <label class="form-check-label" for="${facilityId}">
-                                <i class="fas fa-plus-circle text-primary me-2"></i> ${facilityName}
-                            </label>
-                        </div>
-                    </div>
-                `;
-
-          // Append to the facilities container
-          const facilitiesContainer = document.querySelector(
-            ".row:has(.form-check.form-switch)"
-          );
-          facilitiesContainer.insertAdjacentHTML("beforeend", facilityHtml);
-
-          // Clear the input field
-          facilityInput.value = "";
-
-          // Add event listener to the new toggle
-          const newToggle = document.getElementById(facilityId);
-          newToggle.addEventListener("change", function () {
-            // Handle toggle behavior (similar to other facility toggles)
-          });
-
-          showNotification(
-            "Fasilitas Ditambahkan",
-            `${facilityName} berhasil ditambahkan ke daftar fasilitas`,
-            "success"
-          );
-        } else {
-          showNotification("Error", "Silakan masukkan nama fasilitas", "error");
-        }
-      }
-
       // Show toast notification
       function showNotification(title, message, type) {
         // Create toast container if it doesn't exist
@@ -2856,15 +1981,15 @@
           type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
 
         toast.innerHTML = `
-                <div class="toast-header ${bgClass} text-white">
-                    <i class="fas ${icon} me-2"></i>
-                    <strong class="me-auto">${title}</strong>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    ${message}
-                </div>
-            `;
+          <div class="toast-header ${bgClass} text-white">
+            <i class="fas ${icon} me-2"></i>
+            <strong class="me-auto">${title}</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            ${message}
+          </div>
+        `;
 
         // Add to container
         toastContainer.appendChild(toast);
@@ -2883,125 +2008,15 @@
         });
       }
 
-      // Utility function to populate select elements
-      function populateSelect(elementId, options) {
-        const select = document.getElementById(elementId);
-
-        // Clear existing options (except the first one)
-        while (select.options.length > 1) {
-          select.remove(1);
-        }
-
-        // Add new options
-        options.forEach((optionText) => {
-          const option = document.createElement("option");
-          option.text = optionText;
-          option.value = optionText.toLowerCase().replace(/\s+/g, "-");
-          select.add(option);
-        });
-      }
-
-      // Show loading indicator
-      function showLoading(elementId) {
-        const select = document.getElementById(elementId);
-
-        // Add loading option
-        const option = document.createElement("option");
-        option.text = "Memuat data...";
-        option.value = "";
-        option.selected = true;
-        option.disabled = true;
-
-        // Clear existing options and add loading
-        while (select.options.length > 0) {
-          select.remove(0);
-        }
-
-        select.add(option);
-      }
-
-      // Hide loading indicator
-      function hideLoading(elementId) {
-        const select = document.getElementById(elementId);
-
-        // Remove all options
-        while (select.options.length > 0) {
-          select.remove(0);
-        }
-
-        // Add default option
-        const option = document.createElement("option");
-        option.text = "Pilih " + select.previousElementSibling.textContent;
-        option.value = "";
-        option.selected = true;
-        option.disabled = true;
-        select.add(option);
-      }
-
-      // Initialize image and file uploads
-      function initializeFileUploads() {
-        // For hotel photos (multiple)
-        const photosInput = document.getElementById("photos");
-        const previewGallery = document.querySelector(".preview-gallery");
-
-        if (photosInput && previewGallery) {
-          photosInput.addEventListener("change", function (e) {
-            // Clear existing preview items except the last one (add button)
-            const existingPreviews = previewGallery.querySelectorAll(
-              ".preview-item:not(:last-child)"
-            );
-            existingPreviews.forEach((item) => item.remove());
-
-            // Add preview for each selected file
-            Array.from(this.files).forEach((file) => {
-              if (file.type.match("image.*")) {
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                  const previewItem = document.createElement("div");
-                  previewItem.className = "preview-item";
-                  previewItem.innerHTML = `<img src="${e.target.result}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">`;
-                  previewGallery.insertBefore(
-                    previewItem,
-                    previewGallery.lastElementChild
-                  );
-                };
-
-                reader.readAsDataURL(file);
-              }
-            });
-
-            showNotification(
-              "Upload Berhasil",
-              `${this.files.length} foto berhasil diunggah`,
-              "success"
-            );
-          });
-        }
-
-        // For 360 image
-        const image360Input = document.getElementById("image360");
-
-        if (image360Input) {
-          image360Input.addEventListener("change", function (e) {
-            if (this.files.length > 0 && this.files[0].type.match("image.*")) {
-              showNotification(
-                "Upload Berhasil",
-                "Gambar 360° berhasil diunggah",
-                "success"
-              );
-            }
-          });
-        }
-      }
-
-      // Add event listeners when DOM is loaded
+      // Event listeners when DOM is loaded
       document.addEventListener("DOMContentLoaded", function () {
-        // Initialize facility toggles
-        handleFacilityToggles();
-
-        // Initialize file uploads
-        initializeFileUploads();
+        // Initialize tooltips
+        const tooltipTriggerList = document.querySelectorAll(
+          '[data-bs-toggle="tooltip"]'
+        );
+        const tooltipList = [...tooltipTriggerList].map(
+          (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+        );
 
         // NIB Verification
         document
@@ -3012,7 +2027,7 @@
               this.innerHTML =
                 '<i class="fas fa-check-circle"></i> Terverifikasi';
               this.classList.remove("btn-outline-primary");
-              this.classList.add("btn-accent");
+              this.classList.add("btn-success");
 
               // Update status card
               document.getElementById("status-nib").textContent =
@@ -3043,7 +2058,7 @@
               this.innerHTML =
                 '<i class="fas fa-check-circle"></i> Terverifikasi';
               this.classList.remove("btn-outline-primary");
-              this.classList.add("btn-accent");
+              this.classList.add("btn-success");
 
               // Update status card
               document.getElementById("status-chse").textContent =
@@ -3094,65 +2109,51 @@
               selectedOption.text || "-";
 
             // Simulate API call for regencies
-            showLoading("regency");
             setTimeout(() => {
-              hideLoading("regency");
-              populateSelect("regency", [
-                "Kota Jakarta Pusat",
-                "Kota Jakarta Utara",
-                "Kota Jakarta Barat",
-                "Kota Jakarta Selatan",
-                "Kota Jakarta Timur",
-              ]);
-            }, 800);
-          });
+              const regencySelect = document.getElementById("regency");
 
-        // Regency change
-        document
-          .getElementById("regency")
-          .addEventListener("change", function () {
-            document.getElementById("district").disabled = false;
+              // Clear existing options (except the first one)
+              while (regencySelect.options.length > 1) {
+                regencySelect.remove(1);
+              }
 
-            // Update status card
-            const provinceSelect = document.getElementById("province");
-            const provinceOption =
-              provinceSelect.options[provinceSelect.selectedIndex];
-            const regencyOption = this.options[this.selectedIndex];
-            document.getElementById("status-location").textContent =
-              provinceOption.text + ", " + regencyOption.text;
+              // Add loading option
+              const loadingOption = document.createElement("option");
+              loadingOption.text = "Memuat data...";
+              loadingOption.disabled = true;
+              loadingOption.selected = true;
+              regencySelect.add(loadingOption);
 
-            // Simulate API call for districts
-            showLoading("district");
-            setTimeout(() => {
-              hideLoading("district");
-              populateSelect("district", [
-                "Tanah Abang",
-                "Menteng",
-                "Senen",
-                "Kemayoran",
-                "Sawah Besar",
-              ]);
-            }, 800);
-          });
+              // Simulate loading delay
+              setTimeout(() => {
+                // Remove loading option
+                regencySelect.remove(regencySelect.selectedIndex);
 
-        // District change
-        document
-          .getElementById("district")
-          .addEventListener("change", function () {
-            document.getElementById("village").disabled = false;
+                // Add dummy options
+                const options = [
+                  "Kota Jakarta Pusat",
+                  "Kota Jakarta Utara",
+                  "Kota Jakarta Barat",
+                  "Kota Jakarta Selatan",
+                  "Kota Jakarta Timur",
+                ];
 
-            // Simulate API call for villages
-            showLoading("village");
-            setTimeout(() => {
-              hideLoading("village");
-              populateSelect("village", [
-                "Kebon Melati",
-                "Kebon Kacang",
-                "Kampung Bali",
-                "Petamburan",
-                "Bendungan Hilir",
-              ]);
-            }, 800);
+                options.forEach((optionText) => {
+                  const option = document.createElement("option");
+                  option.text = optionText;
+                  option.value = optionText.toLowerCase().replace(/\s+/g, "-");
+                  regencySelect.add(option);
+                });
+
+                // Add default option
+                const defaultOption = document.createElement("option");
+                defaultOption.text = "Pilih Kabupaten";
+                defaultOption.value = "";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                regencySelect.add(defaultOption, 0);
+              }, 800);
+            }, 500);
           });
 
         // Tab navigation
@@ -3185,31 +2186,65 @@
         // Add facility button
         document
           .getElementById("add-facility")
-          .addEventListener("click", addNewFacility);
+          .addEventListener("click", function () {
+            const facilityInput = document.querySelector(
+              'input[placeholder="Nama fasilitas"]'
+            );
+            const facilityName = facilityInput.value.trim();
+
+            if (facilityName) {
+              // Create a unique ID for the facility
+              const facilityId = "custom-" + Date.now();
+
+              // Create the HTML for the facility switch
+              const facilityHtml = `
+              <div class="col-md-4 mb-2">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="${facilityId}" checked data-facility="${facilityId}">
+                  <label class="form-check-label" for="${facilityId}">
+                    <i class="fas fa-plus-circle text-primary me-2"></i> ${facilityName}
+                  </label>
+                </div>
+              </div>
+            `;
+
+              // Append to the facilities container
+              const facilitiesContainer = document.querySelector(
+                ".row:has(.form-check.form-switch)"
+              );
+              facilitiesContainer.insertAdjacentHTML("beforeend", facilityHtml);
+
+              // Clear the input field
+              facilityInput.value = "";
+
+              showNotification(
+                "Fasilitas Ditambahkan",
+                `${facilityName} berhasil ditambahkan ke daftar fasilitas`,
+                "success"
+              );
+            } else {
+              showNotification(
+                "Error",
+                "Silakan masukkan nama fasilitas",
+                "error"
+              );
+            }
+          });
 
         // Form submission
         document
           .getElementById("submit-form")
           .addEventListener("click", function () {
-            // Validate the current step before submission
-            if (validateCurrentStep(currentStep)) {
-              showNotification(
-                "Data Tersimpan",
-                "Informasi hotel berhasil disimpan dan diproses",
-                "success"
-              );
+            showNotification(
+              "Data Tersimpan",
+              "Informasi hotel berhasil disimpan dan diproses",
+              "success"
+            );
 
-              // Reset form to step 1 after a delay
-              setTimeout(() => {
-                showStep(1);
-              }, 2000);
-            } else {
-              showNotification(
-                "Data Tidak Lengkap",
-                "Mohon lengkapi data yang wajib diisi sebelum menyimpan",
-                "error"
-              );
-            }
+            // Redirect to dashboard after a delay
+            setTimeout(() => {
+              window.location.href = "../dashboard/";
+            }, 2000);
           });
       });
     </script>

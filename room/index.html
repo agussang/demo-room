@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entri Data Kamar - MICE ID INVENTORY</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #132b50;
+        --primary-light: #1e3f6f;
+        --primary-dark: #0a1a31;
+        --accent: #e9c070;
+        --accent-light: #f1d196;
+        --accent-dark: #d6a955;
+        --light: #ffffff;
+        --light-gray: #f5f7fa;
+        --mid-gray: #e2e8f0;
+        --text-dark: #1a202c;
+        --text-medium: #4a5568;
+        --text-light: #718096;
+        --success: #047857;
+        --warning: #b45309;
+        --danger: #b91c1c;
+        --border-radius: 6px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05),
+          0 1px 3px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--text-dark);
+        background-color: var(--light-gray);
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .hotel-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        box-shadow: var(--box-shadow);
+        position: relative;
+      }
+
+      .hotel-header h1 {
+        color: var(--light);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .hotel-header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 300;
+        margin-bottom: 0;
+      }
+
+      .hotel-header .accent-bar {
+        height: 4px;
+        width: 100%;
+        background: var(--accent);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .form-container {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 2rem;
+        overflow: hidden;
+      }
+
+      .form-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 2rem;
+        border-bottom: 4px solid var(--accent);
+        margin-bottom: 1.5rem;
+      }
+
+      .form-header h3 {
+        color: var(--light);
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .form-section {
+        padding: 2rem;
+      }
+
+      .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: var(--border-radius);
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--mid-gray);
+        color: var(--text-dark);
+        transition: var(--transition);
+        background-color: var(--light);
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.2rem rgba(233, 192, 112, 0.25);
+      }
+
+      .form-control::placeholder {
+        color: var(--text-light);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--light);
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        border-radius: var(--border-radius);
+      }
+
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background: var(--primary-light);
+        border-color: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(19, 43, 80, 0.2);
+      }
+
+      .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        border-radius: var(--border-radius);
+      }
+
+      .btn-outline-primary:hover,
+      .btn-outline-primary:focus {
+        background: var(--primary);
+        color: var(--light);
+        transform: translateY(-2px);
+      }
+
+      .btn-accent {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--primary-dark);
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+        border-radius: var(--border-radius);
+      }
+
+      .btn-accent:hover,
+      .btn-accent:focus {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(233, 192, 112, 0.2);
+      }
+
+      .input-group-text {
+        background-color: var(--light-gray);
+        color: var(--text-medium);
+        border-color: var(--mid-gray);
+        border-radius: var(--border-radius);
+      }
+
+      .required::after {
+        content: "*";
+        color: var(--danger);
+        margin-left: 3px;
+      }
+
+      .card {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--mid-gray);
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        background: var(--primary);
+        color: var(--light);
+        font-weight: 500;
+        padding: 1rem 1.5rem;
+        border-bottom: 3px solid var(--accent);
+      }
+
+      .card-title {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .section-title {
+        position: relative;
+        color: var(--primary);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--accent);
+      }
+
+      .form-divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        color: var(--text-medium);
+      }
+
+      .form-divider::before,
+      .form-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--mid-gray);
+      }
+
+      .form-divider::before {
+        margin-right: 1rem;
+      }
+
+      .form-divider::after {
+        margin-left: 1rem;
+      }
+
+      .form-check-input {
+        width: 1.1em;
+        height: 1.1em;
+        margin-top: 0.2em;
+        border: 2px solid var(--mid-gray);
+      }
+
+      .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(19, 43, 80, 0.25);
+      }
+
+      .form-check-label {
+        color: var(--text-dark);
+      }
+
+      .form-check-label i {
+        color: var(--primary);
+        width: 20px;
+      }
+
+      .upload-area {
+        border: 2px dashed var(--mid-gray);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        text-align: center;
+        transition: var(--transition);
+        margin-bottom: 1rem;
+        background: var(--light-gray);
+      }
+
+      .upload-area:hover {
+        border-color: var(--accent);
+        background: rgba(233, 192, 112, 0.05);
+      }
+
+      .upload-icon {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .upload-text {
+        margin-bottom: 1rem;
+        color: var(--text-medium);
+      }
+
+      .upload-button {
+        background: var(--primary);
+        color: var(--light);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+
+      .upload-button:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+      }
+
+      .preview-gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .preview-item {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--border-radius);
+        background: var(--light-gray);
+        border: 1px solid var(--mid-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .preview-item:hover {
+        border-color: var(--accent);
+        transform: scale(1.05);
+      }
+
+      /* Room type card */
+      .room-type-card {
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        transition: var(--transition);
+        margin-bottom: 1.5rem;
+      }
+
+      .room-type-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+      }
+
+      .room-type-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 1.5rem;
+        border-bottom: 3px solid var(--accent);
+      }
+
+      .room-type-body {
+        padding: 1.5rem;
+      }
+
+      .room-type-footer {
+        padding: 1rem 1.5rem;
+        background: var(--light-gray);
+        border-top: 1px solid var(--mid-gray);
+        text-align: right;
+      }
+
+      .toast-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1050;
+      }
+
+      .toast {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin-bottom: 1rem;
+        min-width: 300px;
+      }
+
+      .toast-header {
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .toast-body {
+        padding: 0.75rem 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hotel-header">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12 text-center">
+            <h1 class="mb-1">MICE ID INVENTORY</h1>
+            <p>Professional Data Management for Business</p>
+            <a
+              href="../dashboard/index.html"
+              class="btn btn-light btn-sm position-absolute"
+              style="top: 10px; left: 10px"
+            >
+              <i class="fas fa-arrow-left me-1"></i> Kembali ke Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="accent-bar"></div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- Form Container -->
+          <div class="form-container">
+            <div class="form-header">
+              <h3><i class="fas fa-bed me-2"></i> Entri Data Kamar</h3>
+            </div>
+
+            <div class="form-section">
+              <!-- Room Type List -->
+              <div
+                class="mb-4 d-flex justify-content-between align-items-center"
+              >
+                <h4 class="section-title mb-0">Daftar Tipe Kamar</h4>
+                <button
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addRoomTypeModal"
+                >
+                  <i class="fas fa-plus-circle me-1"></i> Tambah Tipe Kamar
+                </button>
+              </div>
+
+              <!-- Room Type Cards -->
+              <div class="room-type-list">
+                <!-- Standard Room -->
+                <div class="room-type-card">
+                  <div
+                    class="room-type-header d-flex justify-content-between align-items-center"
+                  >
+                    <h5 class="mb-0">Standard Room</h5>
+                    <span class="badge bg-success">30 Kamar</span>
+                  </div>
+                  <div class="room-type-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <p><strong>Luas Kamar:</strong> 24 m²</p>
+                        <p><strong>Kapasitas:</strong> 2 orang</p>
+                        <p><strong>Tempat Tidur:</strong> 1 Double Bed</p>
+                      </div>
+                      <div class="col-md-4">
+                        <p><strong>Pemandangan:</strong> City View</p>
+                        <p><strong>Merokok:</strong> Tidak Diperbolehkan</p>
+                        <p><strong>Lantai:</strong> 2-4</p>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                          <div class="flex-grow-1">
+                            <p><strong>Fasilitas Utama:</strong></p>
+                            <ul class="ps-3 mb-0">
+                              <li>WiFi Gratis</li>
+                              <li>AC</li>
+                              <li>TV LED 32"</li>
+                              <li>Kamar Mandi Shower</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="room-type-footer">
+                    <a
+                      href="#"
+                      class="btn btn-sm btn-outline-primary me-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editRoomTypeModal"
+                    >
+                      <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                      <i class="fas fa-eye"></i> Detail
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Deluxe Room -->
+                <div class="room-type-card">
+                  <div
+                    class="room-type-header d-flex justify-content-between align-items-center"
+                  >
+                    <h5 class="mb-0">Deluxe Room</h5>
+                    <span class="badge bg-success">15 Kamar</span>
+                  </div>
+                  <div class="room-type-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <p><strong>Luas Kamar:</strong> 32 m²</p>
+                        <p><strong>Kapasitas:</strong> 2 orang</p>
+                        <p><strong>Tempat Tidur:</strong> 1 King Bed</p>
+                      </div>
+                      <div class="col-md-4">
+                        <p><strong>Pemandangan:</strong> Garden View</p>
+                        <p><strong>Merokok:</strong> Tidak Diperbolehkan</p>
+                        <p><strong>Lantai:</strong> 5-7</p>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                          <div class="flex-grow-1">
+                            <p><strong>Fasilitas Utama:</strong></p>
+                            <ul class="ps-3 mb-0">
+                              <li>WiFi Gratis</li>
+                              <li>AC</li>
+                              <li>TV LED 42"</li>
+                              <li>Kamar Mandi Bathtub</li>
+                              <li>Mini Bar</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="room-type-footer">
+                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                      <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                      <i class="fas fa-eye"></i> Detail
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Junior Suite -->
+                <div class="room-type-card">
+                  <div
+                    class="room-type-header d-flex justify-content-between align-items-center"
+                  >
+                    <h5 class="mb-0">Junior Suite</h5>
+                    <span class="badge bg-success">5 Kamar</span>
+                  </div>
+                  <div class="room-type-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <p><strong>Luas Kamar:</strong> 48 m²</p>
+                        <p><strong>Kapasitas:</strong> 3 orang</p>
+                        <p>
+                          <strong>Tempat Tidur:</strong> 1 King Bed + 1 Sofa Bed
+                        </p>
+                      </div>
+                      <div class="col-md-4">
+                        <p><strong>Pemandangan:</strong> City View</p>
+                        <p><strong>Merokok:</strong> Tidak Diperbolehkan</p>
+                        <p><strong>Lantai:</strong> 8-9</p>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                          <div class="flex-grow-1">
+                            <p><strong>Fasilitas Utama:</strong></p>
+                            <ul class="ps-3 mb-0">
+                              <li>WiFi Gratis</li>
+                              <li>AC</li>
+                              <li>TV LED 50"</li>
+                              <li>Kamar Mandi Bathtub</li>
+                              <li>Mini Bar</li>
+                              <li>Living Area</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="room-type-footer">
+                    <a href="#" class="btn btn-sm btn-outline-primary me-2">
+                      <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                      <i class="fas fa-eye"></i> Detail
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Room Type Modal -->
+    <div
+      class="modal fade"
+      id="addRoomTypeModal"
+      tabindex="-1"
+      aria-labelledby="addRoomTypeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="addRoomTypeModalLabel">
+              Tambah Tipe Kamar Baru
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="roomTypeForm">
+              <!-- Basic Information -->
+              <div class="section-title">Informasi Dasar</div>
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="room-type" class="form-label required"
+                    >Tipe Kamar</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="room-type"
+                    placeholder="Masukkan tipe kamar"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="room-count" class="form-label required"
+                    >Jumlah Kamar</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="room-count"
+                    placeholder="Masukkan jumlah kamar"
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="room-size" class="form-label required"
+                    >Luas Kamar (m²)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="room-size"
+                    placeholder="Masukkan luas kamar"
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="guest-capacity" class="form-label required"
+                    >Kapasitas Tamu</label
+                  >
+                  <select class="form-select" id="guest-capacity">
+                    <option value="" selected disabled>
+                      Pilih kapasitas tamu
+                    </option>
+                    <option value="1">1 orang</option>
+                    <option value="2">2 orang</option>
+                    <option value="3">3 orang</option>
+                    <option value="4">4 orang</option>
+                    <option value="5">5 orang</option>
+                    <option value="6+">6+ orang</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="bed-config" class="form-label required"
+                    >Konfigurasi Tempat Tidur</label
+                  >
+                  <select class="form-select" id="bed-config">
+                    <option value="" selected disabled>
+                      Pilih konfigurasi tempat tidur
+                    </option>
+                    <option value="1 Single Bed">1 Single Bed</option>
+                    <option value="2 Single Beds">2 Single Beds</option>
+                    <option value="1 Double Bed">1 Double Bed</option>
+                    <option value="1 Queen Bed">1 Queen Bed</option>
+                    <option value="1 King Bed">1 King Bed</option>
+                    <option value="1 King Bed + 1 Single Bed">
+                      1 King Bed + 1 Single Bed
+                    </option>
+                    <option value="1 Queen Bed + 1 Single Bed">
+                      1 Queen Bed + 1 Single Bed
+                    </option>
+                    <option value="1 King Bed + 1 Sofa Bed">
+                      1 King Bed + 1 Sofa Bed
+                    </option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="view-type" class="form-label"
+                    >Jenis Pemandangan</label
+                  >
+                  <select class="form-select" id="view-type">
+                    <option value="" selected disabled>
+                      Pilih jenis pemandangan
+                    </option>
+                    <option value="City View">City View</option>
+                    <option value="Garden View">Garden View</option>
+                    <option value="Mountain View">Mountain View</option>
+                    <option value="Pool View">Pool View</option>
+                    <option value="Ocean View">Ocean View</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="smoking" class="form-label required"
+                    >Status Merokok</label
+                  >
+                  <select class="form-select" id="smoking">
+                    <option value="" selected disabled>
+                      Pilih status merokok
+                    </option>
+                    <option value="Diperbolehkan">Diperbolehkan</option>
+                    <option value="Tidak Diperbolehkan">
+                      Tidak Diperbolehkan
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="floor" class="form-label">Lantai</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floor"
+                    placeholder="Contoh: 2-4 atau 5"
+                  />
+                </div>
+              </div>
+
+              <!-- Room Facilities -->
+              <div class="form-divider">Fasilitas Kamar</div>
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Fasilitas Kamar Mandi</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="shower"
+                        />
+                        <label class="form-check-label" for="shower">
+                          <i class="fas fa-shower text-primary me-1"></i> Shower
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="bathtub"
+                        />
+                        <label class="form-check-label" for="bathtub">
+                          <i class="fas fa-bath text-primary me-1"></i> Bathtub
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="toilet"
+                        />
+                        <label class="form-check-label" for="toilet">
+                          <i class="fas fa-toilet text-primary me-1"></i> Toilet
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="hairdryer"
+                        />
+                        <label class="form-check-label" for="hairdryer">
+                          <i class="fas fa-wind text-primary me-1"></i> Hair
+                          Dryer
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="toiletries"
+                        />
+                        <label class="form-check-label" for="toiletries">
+                          <i class="fas fa-pump-soap text-primary me-1"></i>
+                          Toiletries
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="slippers"
+                        />
+                        <label class="form-check-label" for="slippers">
+                          <i class="fas fa-shoe-prints text-primary me-1"></i>
+                          Slippers
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Perabotan</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="desk"
+                        />
+                        <label class="form-check-label" for="desk">
+                          <i class="fas fa-desk text-primary me-1"></i> Meja
+                          Kerja
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="sofa"
+                        />
+                        <label class="form-check-label" for="sofa">
+                          <i class="fas fa-couch text-primary me-1"></i> Sofa
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="wardrobe"
+                        />
+                        <label class="form-check-label" for="wardrobe">
+                          <i class="fas fa-archive text-primary me-1"></i>
+                          Lemari Pakaian
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="coffee-table"
+                        />
+                        <label class="form-check-label" for="coffee-table">
+                          <i class="fas fa-table text-primary me-1"></i> Meja
+                          Kopi
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="chair"
+                        />
+                        <label class="form-check-label" for="chair">
+                          <i class="fas fa-chair text-primary me-1"></i> Kursi
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="luggage-rack"
+                        />
+                        <label class="form-check-label" for="luggage-rack">
+                          <i class="fas fa-suitcase text-primary me-1"></i> Rak
+                          Koper
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Elektronik</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="tv"
+                          checked
+                        />
+                        <label class="form-check-label" for="tv">
+                          <i class="fas fa-tv text-primary me-1"></i> TV
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="ac"
+                          checked
+                        />
+                        <label class="form-check-label" for="ac">
+                          <i class="fas fa-snowflake text-primary me-1"></i> AC
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="telephone"
+                        />
+                        <label class="form-check-label" for="telephone">
+                          <i class="fas fa-phone text-primary me-1"></i> Telepon
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="safe"
+                        />
+                        <label class="form-check-label" for="safe">
+                          <i class="fas fa-lock text-primary me-1"></i> Safe
+                          Deposit Box
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="sound-system"
+                        />
+                        <label class="form-check-label" for="sound-system">
+                          <i class="fas fa-volume-up text-primary me-1"></i>
+                          Sound System
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="electric-kettle"
+                        />
+                        <label class="form-check-label" for="electric-kettle">
+                          <i class="fas fa-mug-hot text-primary me-1"></i>
+                          Electric Kettle
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Internet & Konektivitas</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="wifi"
+                          checked
+                        />
+                        <label class="form-check-label" for="wifi">
+                          <i class="fas fa-wifi text-primary me-1"></i> WiFi
+                          Gratis
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="lan"
+                        />
+                        <label class="form-check-label" for="lan">
+                          <i class="fas fa-network-wired text-primary me-1"></i>
+                          Internet Kabel
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="usb-ports"
+                        />
+                        <label class="form-check-label" for="usb-ports">
+                          <i class="fas fa-plug text-primary me-1"></i> USB
+                          Ports
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="universal-socket"
+                        />
+                        <label class="form-check-label" for="universal-socket">
+                          <i class="fas fa-plug text-primary me-1"></i>
+                          Universal Socket
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Mini Bar & Dapur</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="minibar"
+                        />
+                        <label class="form-check-label" for="minibar">
+                          <i class="fas fa-glass-whiskey text-primary me-1"></i>
+                          Mini Bar
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="refrigerator"
+                        />
+                        <label class="form-check-label" for="refrigerator">
+                          <i class="fas fa-snowflake text-primary me-1"></i>
+                          Kulkas
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="coffee-maker"
+                        />
+                        <label class="form-check-label" for="coffee-maker">
+                          <i class="fas fa-coffee text-primary me-1"></i> Coffee
+                          Maker
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="microwave"
+                        />
+                        <label class="form-check-label" for="microwave">
+                          <i class="fas fa-microwave text-primary me-1"></i>
+                          Microwave
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Fitur Khusus</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="balcony"
+                        />
+                        <label class="form-check-label" for="balcony">
+                          <i class="fas fa-door-open text-primary me-1"></i>
+                          Balkon
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="living-room"
+                        />
+                        <label class="form-check-label" for="living-room">
+                          <i class="fas fa-couch text-primary me-1"></i> Ruang
+                          Tamu Terpisah
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="kitchenette"
+                        />
+                        <label class="form-check-label" for="kitchenette">
+                          <i class="fas fa-utensils text-primary me-1"></i>
+                          Dapur Kecil
+                        </label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          id="disable-friendly"
+                        />
+                        <label class="form-check-label" for="disable-friendly">
+                          <i class="fas fa-wheelchair text-primary me-1"></i>
+                          Ramah Difabel
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Additional Information -->
+              <div class="form-divider">Informasi Tambahan</div>
+              <div class="row mb-4">
+                <div class="col-md-12 mb-3">
+                  <label for="room-description" class="form-label"
+                    >Deskripsi Kamar</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="room-description"
+                    rows="4"
+                    placeholder="Masukkan deskripsi singkat tentang tipe kamar ini"
+                  ></textarea>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Foto Kamar</label>
+                  <div class="upload-area">
+                    <div class="upload-icon">
+                      <i class="fas fa-images"></i>
+                    </div>
+                    <p class="upload-text">
+                      Upload foto kamar dari berbagai sudut
+                    </p>
+                    <div class="d-flex gap-2 mb-3 justify-content-center">
+                      <label for="room-photos" class="upload-button">
+                        <i class="fas fa-cloud-upload-alt me-1"></i> Pilih File
+                      </label>
+                      <input
+                        type="file"
+                        id="room-photos"
+                        class="d-none"
+                        accept="image/*"
+                        multiple
+                      />
+                    </div>
+                  </div>
+                  <small class="text-muted d-block mt-2"
+                    >Dapat upload beberapa foto (multiple)</small
+                  >
+                  <div class="preview-gallery">
+                    <div class="preview-item">
+                      <div class="text-center text-muted">
+                        <i class="fas fa-image"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item">
+                      <div class="text-center text-muted">
+                        <i class="fas fa-plus"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Catatan Khusus</label>
+                  <textarea
+                    class="form-control"
+                    id="special-notes"
+                    rows="3"
+                    placeholder="Masukkan catatan khusus tentang tipe kamar ini (opsional)"
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary" id="saveRoomType">
+              Simpan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Room Type Modal -->
+    <div
+      class="modal fade"
+      id="editRoomTypeModal"
+      tabindex="-1"
+      aria-labelledby="editRoomTypeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="editRoomTypeModalLabel">
+              Edit Tipe Kamar - Standard Room
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Same form as Add Room Type, but pre-filled with existing data -->
+            <form id="editRoomTypeForm">
+              <!-- Basic Information -->
+              <div class="section-title">Informasi Dasar</div>
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <label for="edit-room-type" class="form-label required"
+                    >Tipe Kamar</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="edit-room-type"
+                    value="Standard Room"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="edit-room-count" class="form-label required"
+                    >Jumlah Kamar</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="edit-room-count"
+                    value="30"
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="edit-room-size" class="form-label required"
+                    >Luas Kamar (m²)</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="edit-room-size"
+                    value="24"
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="edit-guest-capacity" class="form-label required"
+                    >Kapasitas Tamu</label
+                  >
+                  <select class="form-select" id="edit-guest-capacity">
+                    <option value="1">1 orang</option>
+                    <option value="2" selected>2 orang</option>
+                    <option value="3">3 orang</option>
+                    <option value="4">4 orang</option>
+                    <option value="5">5 orang</option>
+                    <option value="6+">6+ orang</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="edit-bed-config" class="form-label required"
+                    >Konfigurasi Tempat Tidur</label
+                  >
+                  <select class="form-select" id="edit-bed-config">
+                    <option value="1 Single Bed">1 Single Bed</option>
+                    <option value="2 Single Beds">2 Single Beds</option>
+                    <option value="1 Double Bed" selected>1 Double Bed</option>
+                    <option value="1 Queen Bed">1 Queen Bed</option>
+                    <option value="1 King Bed">1 King Bed</option>
+                    <option value="1 King Bed + 1 Single Bed">
+                      1 King Bed + 1 Single Bed
+                    </option>
+                    <option value="1 Queen Bed + 1 Single Bed">
+                      1 Queen Bed + 1 Single Bed
+                    </option>
+                    <option value="1 King Bed + 1 Sofa Bed">
+                      1 King Bed + 1 Sofa Bed
+                    </option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="edit-view-type" class="form-label"
+                    >Jenis Pemandangan</label
+                  >
+                  <select class="form-select" id="edit-view-type">
+                    <option value="City View" selected>City View</option>
+                    <option value="Garden View">Garden View</option>
+                    <option value="Mountain View">Mountain View</option>
+                    <option value="Pool View">Pool View</option>
+                    <option value="Ocean View">Ocean View</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="edit-smoking" class="form-label required"
+                    >Status Merokok</label
+                  >
+                  <select class="form-select" id="edit-smoking">
+                    <option value="Diperbolehkan">Diperbolehkan</option>
+                    <option value="Tidak Diperbolehkan" selected>
+                      Tidak Diperbolehkan
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="edit-floor" class="form-label">Lantai</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="edit-floor"
+                    value="2-4"
+                  />
+                </div>
+              </div>
+
+              <!-- Room Facilities (already pre-checked based on existing data) -->
+              <div class="form-divider">Fasilitas Kamar</div>
+              <!-- ... (same structure as Add Room Type form but with appropriate checkboxes pre-checked) ... -->
+
+              <!-- Additional Information -->
+              <div class="form-divider">Informasi Tambahan</div>
+              <div class="row mb-4">
+                <div class="col-md-12 mb-3">
+                  <label for="edit-room-description" class="form-label"
+                    >Deskripsi Kamar</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="edit-room-description"
+                    rows="4"
+                  >
+Standard Room kami menawarkan kenyamanan dan suasana yang tenang untuk istirahat Anda. Dengan luas 24 m², kamar ini dilengkapi dengan tempat tidur double yang nyaman, kamar mandi dengan shower, serta fasilitas modern seperti TV LED 32", AC, dan WiFi gratis.</textarea
+                  >
+                </div>
+
+                <!-- Room Photos with existing photos showing -->
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Foto Kamar</label>
+                  <div class="preview-gallery">
+                    <div class="preview-item">
+                      <img
+                        src="https://via.placeholder.com/100"
+                        class="img-fluid"
+                        alt="Room Photo"
+                      />
+                    </div>
+                    <div class="preview-item">
+                      <img
+                        src="https://via.placeholder.com/100"
+                        class="img-fluid"
+                        alt="Room Photo"
+                      />
+                    </div>
+                    <div class="preview-item">
+                      <div class="text-center text-muted">
+                        <i class="fas fa-plus"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <label
+                      for="edit-room-photos"
+                      class="btn btn-outline-primary btn-sm"
+                    >
+                      <i class="fas fa-cloud-upload-alt me-1"></i> Upload Foto
+                      Tambahan
+                    </label>
+                    <input
+                      type="file"
+                      id="edit-room-photos"
+                      class="d-none"
+                      accept="image/*"
+                      multiple
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Catatan Khusus</label>
+                  <textarea
+                    class="form-control"
+                    id="edit-special-notes"
+                    rows="3"
+                  >
+Kamar ini terletak di lantai 2-4 dengan pemandangan kota. Check-in mulai pukul 14:00 dan check-out pukul 12:00.</textarea
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-primary" id="updateRoomType">
+              Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize file uploads
+        initializeFileUploads();
+
+        // Save Room Type button event
+        document
+          .getElementById("saveRoomType")
+          .addEventListener("click", function () {
+            // Validate form
+            if (validateRoomTypeForm()) {
+              // Show success notification
+              showNotification(
+                "Data Tersimpan",
+                "Tipe kamar baru berhasil ditambahkan",
+                "success"
+              );
+
+              // Close modal
+              var modal = bootstrap.Modal.getInstance(
+                document.getElementById("addRoomTypeModal")
+              );
+              modal.hide();
+
+              // In a real application, we would save the data and refresh the list
+              // For demo purposes, we'll just reload the page
+              setTimeout(() => {
+                location.reload();
+              }, 1500);
+            }
+          });
+
+        // Update Room Type button event
+        document
+          .getElementById("updateRoomType")
+          .addEventListener("click", function () {
+            // Show success notification
+            showNotification(
+              "Data Diperbarui",
+              "Tipe kamar berhasil diperbarui",
+              "success"
+            );
+
+            // Close modal
+            var modal = bootstrap.Modal.getInstance(
+              document.getElementById("editRoomTypeModal")
+            );
+            modal.hide();
+
+            // In a real application, we would update the data and refresh the list
+            // For demo purposes, we'll just reload the page
+            setTimeout(() => {
+              location.reload();
+            }, 1500);
+          });
+      });
+
+      // Initialize file uploads
+      function initializeFileUploads() {
+        const roomPhotosInput = document.getElementById("room-photos");
+        const previewGallery = document.querySelector(".preview-gallery");
+
+        if (roomPhotosInput && previewGallery) {
+          roomPhotosInput.addEventListener("change", function (e) {
+            // Clear existing preview items except the last one (add button)
+            const existingPreviews = previewGallery.querySelectorAll(
+              ".preview-item:not(:last-child)"
+            );
+            existingPreviews.forEach((item) => item.remove());
+
+            // Add preview for each selected file
+            Array.from(this.files).forEach((file) => {
+              if (file.type.match("image.*")) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                  const previewItem = document.createElement("div");
+                  previewItem.className = "preview-item";
+                  previewItem.innerHTML = `<img src="${e.target.result}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">`;
+                  previewGallery.insertBefore(
+                    previewItem,
+                    previewGallery.lastElementChild
+                  );
+                };
+
+                reader.readAsDataURL(file);
+              }
+            });
+
+            showNotification(
+              "Upload Berhasil",
+              `${this.files.length} foto berhasil diunggah`,
+              "success"
+            );
+          });
+        }
+      }
+
+      // Validate Room Type Form
+      function validateRoomTypeForm() {
+        let isValid = true;
+
+        // Check required fields
+        const requiredFields = document.querySelectorAll(
+          "#roomTypeForm .form-label.required + input, #roomTypeForm .form-label.required + select"
+        );
+
+        requiredFields.forEach((field) => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add("is-invalid");
+
+            // Add validation message if not exists
+            if (
+              !field.nextElementSibling ||
+              !field.nextElementSibling.classList.contains("invalid-feedback")
+            ) {
+              const feedback = document.createElement("div");
+              feedback.className = "invalid-feedback";
+              feedback.textContent = "Bidang ini wajib diisi";
+              field.after(feedback);
+            }
+          } else {
+            field.classList.remove("is-invalid");
+            if (
+              field.nextElementSibling &&
+              field.nextElementSibling.classList.contains("invalid-feedback")
+            ) {
+              field.nextElementSibling.remove();
+            }
+          }
+        });
+
+        return isValid;
+      }
+
+      // Show toast notification
+      function showNotification(title, message, type) {
+        // Create toast container if it doesn't exist
+        let toastContainer = document.querySelector(".toast-container");
+
+        if (!toastContainer) {
+          toastContainer = document.createElement("div");
+          toastContainer.className =
+            "toast-container position-fixed bottom-0 end-0 p-3";
+          toastContainer.style.zIndex = "1050";
+          document.body.appendChild(toastContainer);
+        }
+
+        // Create toast element
+        const toastId = "toast-" + Date.now();
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.id = toastId;
+        toast.setAttribute("role", "alert");
+        toast.setAttribute("aria-live", "assertive");
+        toast.setAttribute("aria-atomic", "true");
+
+        // Set toast HTML
+        const bgClass = type === "success" ? "bg-success" : "bg-danger";
+        const icon =
+          type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+
+        toast.innerHTML = `
+          <div class="toast-header ${bgClass} text-white">
+            <i class="fas ${icon} me-2"></i>
+            <strong class="me-auto">${title}</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            ${message}
+          </div>
+        `;
+
+        // Add to container
+        toastContainer.appendChild(toast);
+
+        // Initialize and show the toast
+        const bsToast = new bootstrap.Toast(toast, {
+          autohide: true,
+          delay: 5000,
+        });
+
+        bsToast.show();
+
+        // Remove from DOM after hiding
+        toast.addEventListener("hidden.bs.toast", function () {
+          toast.remove();
+        });
+      }
+
+      // Add custom bed configuration if "Lainnya" is selected
+      document
+        .getElementById("bed-config")
+        .addEventListener("change", function () {
+          if (this.value === "Lainnya") {
+            // Check if custom input already exists
+            if (!document.getElementById("custom-bed-config")) {
+              const customInput = document.createElement("div");
+              customInput.className = "mt-2";
+              customInput.innerHTML = `
+              <input type="text" class="form-control" id="custom-bed-config" placeholder="Masukkan konfigurasi tempat tidur">
+            `;
+              this.parentNode.appendChild(customInput);
+            }
+          } else {
+            // Remove custom input if exists
+            const customInput = document.getElementById("custom-bed-config");
+            if (customInput) {
+              customInput.parentNode.remove();
+            }
+          }
+        });
+
+      // Handle add facility
+      document
+        .getElementById("editRoomTypeModal")
+        .addEventListener("show.bs.modal", function () {
+          // Pre-check facility checkboxes based on existing data
+          // In a real application, this would be populated from the database
+          document
+            .querySelectorAll("#editRoomTypeForm .form-check-input")
+            .forEach((checkbox) => {
+              if (
+                [
+                  "shower",
+                  "toilet",
+                  "toiletries",
+                  "desk",
+                  "wardrobe",
+                  "tv",
+                  "ac",
+                  "wifi",
+                ].includes(checkbox.id.replace("edit-", ""))
+              ) {
+                checkbox.checked = true;
+              }
+            });
+        });
+    </script>
+  </body>
+</html>
+<!-- End of HTML -->

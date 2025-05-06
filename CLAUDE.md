@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 - Build: `npm run build` - Transpiles TypeScript code to JavaScript
 - Typecheck: `tsc --noEmit` - Checks for TypeScript errors without emitting files
+- Development: `npm run dev` - Runs TypeScript in watch mode and serves the app
 
 ## Code Style Guidelines
 - **TypeScript**: Use strict mode with proper type annotations
@@ -14,6 +15,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Colors**: Use constants defined in the codebase (PRIMARY, ACCENT, etc.)
 - **CSS**: Tailwind CSS utility classes for styling
 - **Icons**: Use the Lucide React icon library
+- **Types**: Create interfaces for external APIs and libraries
+- **Window Extensions**: Use proper TypeScript interface augmentation for global objects
 - **Error Handling**: Use proper error handling in async operations
 
 ## Project Structure

@@ -843,13 +843,6 @@
                       id="nib"
                       placeholder="Masukkan NIB"
                     />
-                    <button
-                      class="btn btn-outline-primary"
-                      type="button"
-                      id="check-nib"
-                    >
-                      <i class="fas fa-check"></i> Verifikasi
-                    </button>
                   </div>
                   <div class="mt-2 d-flex align-items-center">
                     <small class="text-muted"
@@ -863,6 +856,29 @@
                       <i class="fas fa-info"></i>
                     </span>
                   </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="company-name" class="form-label required"
+                    >Nama Perusahaan</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="company-name"
+                    placeholder="Masukkan Nama Perusahaan"
+                  />
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3">
+                  <button
+                    class="btn btn-outline-primary"
+                    type="button"
+                    id="check-nib"
+                  >
+                    <i class="fas fa-check"></i> Verifikasi
+                  </button>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="chse" class="form-label required"
@@ -940,15 +956,7 @@
                   </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="company-name" class="form-label required"
-                    >Nama Perusahaan</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="company-name"
-                    placeholder="Masukkan Nama Perusahaan"
-                  />
+                  <!-- Empty space to maintain grid layout -->
                 </div>
               </div>
 
@@ -1057,15 +1065,7 @@
               <!-- Google Maps Integration -->
               <div class="map-container mb-4">
                 <div id="map" class="w-100 h-100 position-relative">
-                  <!-- Placeholder for the map (will be replaced by actual Google Maps) -->
-                  <div
-                    class="w-100 h-100 d-flex align-items-center justify-content-center bg-light"
-                  >
-                    <div class="text-center text-muted">
-                      <i class="fas fa-map-marked-alt fa-4x mb-3"></i>
-                      <h5>Google Maps akan dimuat di sini</h5>
-                    </div>
-                  </div>
+                  <!-- The Google Maps will be loaded here by JavaScript -->
                 </div>
 
                 <!-- Search box -->
@@ -1174,22 +1174,13 @@
                   <label for="province" class="form-label required"
                     >Provinsi</label
                   >
-                  <select class="form-select" id="province">
-                    <option value="" selected disabled>Pilih Provinsi</option>
-                    <option value="dki-jakarta">DKI Jakarta</option>
-                    <option value="jawa-barat">Jawa Barat</option>
-                    <option value="jawa-tengah">Jawa Tengah</option>
-                    <option value="jawa-timur">Jawa Timur</option>
-                    <option value="bali">Bali</option>
-                  </select>
+                  <input type="text" class="form-control" id="province" placeholder="Provinsi akan terisi otomatis" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="regency" class="form-label required"
-                    >Kabupaten</label
+                    >Kabupaten/Kota</label
                   >
-                  <select class="form-select" id="regency" disabled>
-                    <option value="" selected disabled>Pilih Kabupaten</option>
-                  </select>
+                  <input type="text" class="form-control" id="regency" placeholder="Kabupaten/Kota akan terisi otomatis" readonly>
                 </div>
               </div>
 
@@ -1198,19 +1189,13 @@
                   <label for="district" class="form-label required"
                     >Kecamatan</label
                   >
-                  <select class="form-select" id="district" disabled>
-                    <option value="" selected disabled>Pilih Kecamatan</option>
-                  </select>
+                  <input type="text" class="form-control" id="district" placeholder="Kecamatan akan terisi otomatis" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="village" class="form-label required"
                     >Kelurahan / Desa</label
                   >
-                  <select class="form-select" id="village" disabled>
-                    <option value="" selected disabled>
-                      Pilih Kelurahan / Desa
-                    </option>
-                  </select>
+                  <input type="text" class="form-control" id="village" placeholder="Kelurahan/Desa akan terisi otomatis" readonly>
                 </div>
               </div>
 
@@ -1456,87 +1441,46 @@
               <div class="tab-content">
                 <!-- Transportation Tab -->
                 <div class="tab-pane active" id="transportation">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <i class="fas fa-plane me-2"></i> Bandara Terdekat
-                      </h5>
-                      <div
-                        class="d-flex justify-content-between align-items-center"
-                      >
-                        <p class="card-text mb-0">
-                          Bandara Internasional Soekarno-Hatta
-                        </p>
-                        <span class="badge bg-primary">15.2 km</span>
-                      </div>
+                  <div class="text-center my-3" id="transportation-loading">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
                     </div>
+                    <p class="mt-2">Menganalisis tempat terdekat...</p>
                   </div>
-
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <i class="fas fa-train me-2"></i> Stasiun Kereta Api
-                      </h5>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">Stasiun Gambir</p>
-                            <span class="badge bg-primary">3.5 km</span>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">Stasiun Pasar Senen</p>
-                            <span class="badge bg-primary">4.2 km</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <div id="transportation-content"></div>
                 </div>
 
                 <!-- Shopping Tab -->
                 <div class="tab-pane" id="shopping" style="display: none">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <i class="fas fa-shopping-bag me-2"></i> Pusat
-                        Perbelanjaan
-                      </h5>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">Mall Central Park</p>
-                            <span class="badge bg-primary">2.5 km</span>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div
-                            class="d-flex justify-content-between align-items-center mb-2"
-                          >
-                            <p class="card-text mb-0">Mall Taman Anggrek</p>
-                            <span class="badge bg-primary">3.1 km</span>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="text-center my-3" id="shopping-loading">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
                     </div>
+                    <p class="mt-2">Menganalisis tempat belanja terdekat...</p>
                   </div>
+                  <div id="shopping-content"></div>
                 </div>
 
                 <!-- Dining Tab -->
                 <div class="tab-pane" id="dining" style="display: none">
-                  <!-- Dining content -->
+                  <div class="text-center my-3" id="dining-loading">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Menganalisis tempat kuliner terdekat...</p>
+                  </div>
+                  <div id="dining-content"></div>
                 </div>
 
                 <!-- Attractions Tab -->
                 <div class="tab-pane" id="attractions" style="display: none">
-                  <!-- Attractions content -->
+                  <div class="text-center my-3" id="attractions-loading">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Menganalisis tempat wisata terdekat...</p>
+                  </div>
+                  <div id="attractions-content"></div>
                 </div>
               </div>
 
@@ -1716,6 +1660,7 @@
                   <input
                     type="text"
                     class="form-control"
+                    id="facility-input"
                     placeholder="Nama fasilitas"
                   />
                   <button
@@ -1730,6 +1675,13 @@
                   >Tambahkan fasilitas lain yang belum tercantum pada
                   daftar</small
                 >
+                
+                <!-- Daftar fasilitas tambahan yang telah ditambahkan -->
+                <div class="mt-3">
+                  <div id="additional-facilities-list" class="list-group">
+                    <!-- Fasilitas tambahan akan ditampilkan di sini -->
+                  </div>
+                </div>
               </div>
               <div class="d-flex justify-content-between">
                 <button
@@ -1877,10 +1829,33 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Address Autocomplete Script -->
+    <script>
+      // Penanganan error untuk script yang menggunakan Array.from
+      const originalFrom = Array.from;
+      Array.from = function(arg) {
+        if (arg === undefined || arg === null) {
+          console.warn("Array.from received undefined/null value - returning empty array");
+          return [];
+        }
+        return originalFrom.apply(Array, arguments);
+      };
+      
+      // Callback when Google Maps API is ready
+      function initMap() {
+        console.log("Google Maps API loaded and ready");
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAS5Vc3Ixr-TYcoAdmTAWqfsuQchoQtEHs&libraries=places&callback=initMap" async defer></script>
+    <script src="../dist/address-autocomplete.js"></script>
+    <script src="../dist/nearby-places-ai.js"></script>
 
     <script>
       // Current active step
       let currentStep = 1;
+      
+      // Declare loadNearbyPlaces function reference
+      let loadNearbyPlaces;
 
       // Function to show specific step
       function showStep(step) {
@@ -1900,6 +1875,12 @@
 
         // Update current step
         currentStep = step;
+        
+        // If we're going to the nearby places step (step 4), load the nearby places
+        if (step === 4 && typeof loadNearbyPlaces === 'function') {
+          // Load the initial tab content (transportation)
+          loadNearbyPlaces('transportation');
+        }
 
         // Scroll to top
         window.scrollTo({
@@ -2008,6 +1989,278 @@
         });
       }
 
+      // Initialize Google Maps
+      function initMap() {
+        // Default center location (Indonesia)
+        const defaultLocation = { lat: -6.1754, lng: 106.8272 };
+        
+        // Create map
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: defaultLocation,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: false,
+          fullscreenControl: true,
+          streetViewControl: true,
+          zoomControl: false // Custom zoom controls
+        });
+        
+        // Create marker
+        marker = new google.maps.Marker({
+          position: defaultLocation,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          title: "Lokasi Hotel"
+        });
+        
+        // Update coordinates when marker is dragged
+        google.maps.event.addListener(marker, 'dragend', function() {
+          updateCoordinates(marker.getPosition());
+          
+          // Show loading indicator
+          showNotification(
+            'Memuat Data',
+            'Sedang mengambil informasi lokasi...',
+            'success'
+          );
+          
+          // Reverse geocode the location
+          reverseGeocode(marker.getPosition());
+        });
+        
+        // Update marker on map click
+        google.maps.event.addListener(map, 'click', function(event) {
+          marker.setPosition(event.latLng);
+          updateCoordinates(event.latLng);
+          
+          // Show loading indicator
+          showNotification(
+            'Memuat Data',
+            'Sedang mengambil informasi lokasi...',
+            'success'
+          );
+          
+          // Reverse geocode the location
+          reverseGeocode(event.latLng);
+        });
+        
+        // Setup search box
+        const input = document.getElementById('hotel-search');
+        autocomplete = new google.maps.places.Autocomplete(input, {
+          types: ['establishment'],
+          componentRestrictions: { country: 'id' }, // Restrict to Indonesia
+          fields: ['address_components', 'geometry', 'name', 'formatted_address']
+        });
+        
+        // Bias search results to current map view
+        autocomplete.bindTo('bounds', map);
+        
+        // Listen for place selection
+        autocomplete.addListener('place_changed', function() {
+          const place = autocomplete.getPlace();
+          
+          if (!place.geometry || !place.geometry.location) {
+            // Place not found
+            showNotification(
+              'Lokasi Tidak Ditemukan',
+              'Tidak dapat menemukan lokasi yang dicari',
+              'error'
+            );
+            return;
+          }
+          
+          // Center map on selected place
+          map.setCenter(place.geometry.location);
+          marker.setPosition(place.geometry.location);
+          
+          // Update coordinates
+          updateCoordinates(place.geometry.location);
+          
+          // Show loading indicator
+          showNotification(
+            'Memuat Data',
+            'Sedang mengambil informasi lokasi...',
+            'success'
+          );
+          
+          // Use reverse geocoding to ensure consistent data extraction
+          reverseGeocode(place.geometry.location);
+        });
+        
+        // Setup custom map controls
+        setupMapControls();
+      }
+      
+      // Update coordinates display and hidden inputs
+      function updateCoordinates(position) {
+        const lat = position.lat();
+        const lng = position.lng();
+        
+        // Update display
+        document.getElementById('coordinates-display').textContent = 
+          lat.toFixed(6) + '° ' + (lat >= 0 ? 'N' : 'S') + ', ' + 
+          lng.toFixed(6) + '° ' + (lng >= 0 ? 'E' : 'W');
+        
+        // Update hidden inputs
+        document.getElementById('lat-input').value = lat;
+        document.getElementById('lng-input').value = lng;
+      }
+      
+      // This function has been replaced by extractAdministrativeAreas
+      // Keeping this as a placeholder to avoid breaking any potential references
+      function fillAddressFields(place) {
+        console.log("fillAddressFields is deprecated. Using extractAdministrativeAreas instead.");
+        // No implementation needed as it's replaced by extractAdministrativeAreas
+      }
+      
+      // Reverse geocode a location
+      function reverseGeocode(latlng) {
+        const geocoder = new google.maps.Geocoder();
+        
+        geocoder.geocode({ location: latlng }, function(results, status) {
+          if (status === 'OK' && results[0]) {
+            // Fill address field with formatted address
+            document.getElementById('address').value = results[0].formatted_address;
+            
+            // Update status location
+            document.getElementById('status-location').textContent = results[0].formatted_address;
+            
+            // Extract and fill administrative areas
+            extractAdministrativeAreas(results);
+          }
+        });
+      }
+      
+      // Extract administrative areas from geocoding results
+      function extractAdministrativeAreas(results) {
+        // Initialize variables for each administrative level
+        let province = '';
+        let regency = '';
+        let district = '';
+        let village = '';
+        let postalCode = '';
+        
+        // Loop through all results to find the most specific data
+        for (let i = 0; i < results.length; i++) {
+          const result = results[i];
+          
+          // Get address components
+          const components = result.address_components;
+          
+          // Extract data for each component
+          for (let j = 0; j < components.length; j++) {
+            const component = components[j];
+            const types = component.types;
+            
+            // Check for postal code
+            if (types.includes('postal_code') && !postalCode) {
+              postalCode = component.long_name;
+              document.getElementById('postal-code').value = postalCode;
+            }
+            
+            // Check for province (administrative_area_level_1)
+            if (types.includes('administrative_area_level_1') && !province) {
+              province = component.long_name;
+              document.getElementById('province').value = province;
+            }
+            
+            // Check for regency/city (administrative_area_level_2)
+            if (types.includes('administrative_area_level_2') && !regency) {
+              regency = component.long_name;
+              document.getElementById('regency').value = regency;
+            }
+            
+            // Check for district (administrative_area_level_3)
+            if (types.includes('administrative_area_level_3') && !district) {
+              district = component.long_name;
+              document.getElementById('district').value = district;
+            }
+            
+            // Check for village/subdistrict (administrative_area_level_4)
+            if (types.includes('administrative_area_level_4') && !village) {
+              village = component.long_name;
+              document.getElementById('village').value = village;
+            }
+          }
+        }
+        
+        // Update display in the status card
+        if (province || regency) {
+          let locationText = '';
+          if (regency) locationText += regency;
+          if (province) locationText += (locationText ? ', ' : '') + province;
+          
+          document.getElementById('status-location').textContent = locationText;
+        }
+        
+        // Display notification of successful geocoding if at least province is found
+        if (province) {
+          showNotification(
+            'Lokasi Ditemukan',
+            'Informasi alamat berhasil diambil dari koordinat',
+            'success'
+          );
+        }
+      }
+      
+      // Setup custom map controls
+      function setupMapControls() {
+        // Zoom in button
+        document.getElementById('btn-zoom-in').addEventListener('click', function() {
+          map.setZoom(map.getZoom() + 1);
+        });
+        
+        // Zoom out button
+        document.getElementById('btn-zoom-out').addEventListener('click', function() {
+          map.setZoom(map.getZoom() - 1);
+        });
+        
+        // My location button
+        document.getElementById('btn-my-location').addEventListener('click', function() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              
+              map.setCenter(pos);
+              marker.setPosition(pos);
+              updateCoordinates(new google.maps.LatLng(pos.lat, pos.lng));
+              reverseGeocode(new google.maps.LatLng(pos.lat, pos.lng));
+              
+              showNotification('Lokasi Ditemukan', 'Menggunakan lokasi perangkat Anda saat ini', 'success');
+            }, function(error) {
+              showNotification('Error', 'Tidak dapat mengakses lokasi perangkat', 'error');
+            });
+          } else {
+            showNotification('Error', 'Geolocation tidak didukung oleh browser Anda', 'error');
+          }
+        });
+        
+        // Map type buttons
+        document.querySelectorAll('.map-type-btn').forEach(button => {
+          button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.map-type-btn').forEach(btn => {
+              btn.classList.remove('active');
+              btn.style.backgroundColor = '';
+              btn.style.color = 'var(--text-medium)';
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            this.style.backgroundColor = 'var(--primary)';
+            this.style.color = 'white';
+            
+            // Change map type
+            const mapType = this.getAttribute('data-map-type');
+            map.setMapTypeId(mapType);
+          });
+        });
+      }
+
       // Event listeners when DOM is loaded
       document.addEventListener("DOMContentLoaded", function () {
         // Initialize tooltips
@@ -2023,7 +2276,9 @@
           .getElementById("check-nib")
           .addEventListener("click", function () {
             const nibInput = document.getElementById("nib");
-            if (nibInput.value.trim() !== "") {
+            const companyNameInput = document.getElementById("company-name");
+            
+            if (nibInput.value.trim() !== "" && companyNameInput.value.trim() !== "") {
               this.innerHTML =
                 '<i class="fas fa-check-circle"></i> Terverifikasi';
               this.classList.remove("btn-outline-primary");
@@ -2040,10 +2295,16 @@
                 "Data berhasil divalidasi melalui API OSS BKPM",
                 "success"
               );
-            } else {
+            } else if (nibInput.value.trim() === "") {
               showNotification(
                 "Verifikasi Gagal",
                 "Silakan masukkan NIB terlebih dahulu",
+                "error"
+              );
+            } else {
+              showNotification(
+                "Verifikasi Gagal",
+                "Silakan masukkan Nama Perusahaan terlebih dahulu",
                 "error"
               );
             }
@@ -2156,6 +2417,153 @@
             }, 500);
           });
 
+        // Define the global loadNearbyPlaces function
+        loadNearbyPlaces = function(tabId) {
+          // Get coordinates from inputs
+          const lat = parseFloat(document.getElementById('lat-input').value);
+          const lng = parseFloat(document.getElementById('lng-input').value);
+          
+          // Skip if coordinates aren't available yet
+          if (isNaN(lat) || isNaN(lng)) {
+            console.log("Coordinates not available yet");
+            return;
+          }
+
+          const coordinates = { lat, lng };
+          const placeTypes = getPlaceTypes();
+          
+          // Map tab ID to place type
+          let placeType;
+          switch (tabId) {
+            case 'transportation': 
+              placeType = placeTypes.TRANSPORTATION; 
+              break;
+            case 'shopping': 
+              placeType = placeTypes.SHOPPING; 
+              break;
+            case 'dining': 
+              placeType = placeTypes.DINING; 
+              break;
+            case 'attractions': 
+              placeType = placeTypes.ATTRACTIONS; 
+              break;
+            default: 
+              placeType = placeTypes.TRANSPORTATION;
+          }
+
+          // Show loading indicator
+          document.getElementById(`${tabId}-loading`).style.display = 'block';
+          document.getElementById(`${tabId}-content`).innerHTML = '';
+          
+          // Get recommendations
+          getNearbyPlaces(coordinates, placeType)
+            .then(places => {
+              // Hide loading
+              document.getElementById(`${tabId}-loading`).style.display = 'none';
+              
+              // Group places by type for better organization
+              const groupedPlaces = groupPlacesByType(places);
+              
+              // Generate HTML
+              let html = '';
+              for (const [type, items] of Object.entries(groupedPlaces)) {
+                // Skip if no places in this category
+                if (items.length === 0) continue;
+                
+                // Get icon for this type (use first item's icon)
+                const icon = items[0].icon || 'map-marker';
+                
+                // Format type name
+                const typeName = formatTypeName(type);
+                
+                html += `
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <i class="fas fa-${icon} me-2"></i> ${typeName}
+                      </h5>
+                      <div class="row">
+                        ${items.map(place => `
+                          <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                              <p class="card-text mb-0">${place.name}</p>
+                              <span class="badge bg-primary">${place.distance}</span>
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }
+              
+              // Display results
+              document.getElementById(`${tabId}-content`).innerHTML = html || '<div class="alert alert-info">Tidak ada rekomendasi tempat di sekitar lokasi ini.</div>';
+            })
+            .catch(error => {
+              console.error("Error loading nearby places:", error);
+              document.getElementById(`${tabId}-loading`).style.display = 'none';
+              document.getElementById(`${tabId}-content`).innerHTML = 
+                '<div class="alert alert-danger">Gagal memuat rekomendasi tempat terdekat.</div>';
+            });
+        }
+        
+        // Helper function to group places by type
+        function groupPlacesByType(places) {
+          const grouped = {};
+          
+          places.forEach(place => {
+            const type = place.type;
+            if (!grouped[type]) {
+              grouped[type] = [];
+            }
+            grouped[type].push(place);
+          });
+          
+          return grouped;
+        }
+        
+        // Helper function to format type names
+        function formatTypeName(type) {
+          const typeMap = {
+            'airport': 'Bandara',
+            'train_station': 'Stasiun Kereta Api',
+            'bus_station': 'Terminal Bus',
+            'subway_station': 'Stasiun MRT',
+            'transit_station': 'Stasiun Transit',
+            'ferry_terminal': 'Terminal Kapal',
+            'shopping_mall': 'Mall',
+            'supermarket': 'Supermarket',
+            'convenience_store': 'Mini Market',
+            'market': 'Pasar',
+            'clothing_store': 'Toko Pakaian',
+            'fast_food': 'Restoran Cepat Saji',
+            'cafe': 'Kafe',
+            'restaurant': 'Restoran',
+            'local_restaurant': 'Restoran Lokal',
+            'fine_dining': 'Restoran Mewah',
+            'seafood_restaurant': 'Restoran Seafood',
+            'bakery': 'Toko Roti',
+            'food_court': 'Food Court',
+            'park': 'Taman',
+            'museum': 'Museum',
+            'zoo': 'Kebun Binatang',
+            'amusement_park': 'Taman Hiburan',
+            'monument': 'Monumen',
+            'historic_site': 'Situs Bersejarah',
+            'palace': 'Istana',
+            'beach': 'Pantai',
+            'temple': 'Candi/Kuil',
+            'place_of_worship': 'Tempat Ibadah',
+            'natural_feature': 'Fitur Alam',
+            'tourist_attraction': 'Objek Wisata'
+          };
+          
+          return typeMap[type] || type.split('_').map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1)
+          ).join(' ');
+        }
+
         // Tab navigation
         document.querySelectorAll(".custom-tab").forEach((tab) => {
           tab.addEventListener("click", function () {
@@ -2179,17 +2587,21 @@
             if (tabPane) {
               tabPane.style.display = "block";
               tabPane.classList.add("active");
+              
+                    // Always load nearby places when tab is selected
+              loadNearbyPlaces(tabId);
             }
           });
         });
 
+        // Array untuk menyimpan daftar fasilitas tambahan
+        const additionalFacilities = [];
+        
         // Add facility button
         document
           .getElementById("add-facility")
           .addEventListener("click", function () {
-            const facilityInput = document.querySelector(
-              'input[placeholder="Nama fasilitas"]'
-            );
+            const facilityInput = document.getElementById("facility-input");
             const facilityName = facilityInput.value.trim();
 
             if (facilityName) {
@@ -2213,6 +2625,15 @@
                 ".row:has(.form-check.form-switch)"
               );
               facilitiesContainer.insertAdjacentHTML("beforeend", facilityHtml);
+              
+              // Add to the additional facilities list
+              additionalFacilities.push({
+                id: facilityId,
+                name: facilityName
+              });
+              
+              // Update the additional facilities list display
+              updateAdditionalFacilitiesList();
 
               // Clear the input field
               facilityInput.value = "";
@@ -2230,6 +2651,70 @@
               );
             }
           });
+          
+        // Function to update the additional facilities list display
+        function updateAdditionalFacilitiesList() {
+          const listContainer = document.getElementById("additional-facilities-list");
+          
+          // Clear current list
+          listContainer.innerHTML = "";
+          
+          // If there are no facilities, show a message
+          if (additionalFacilities.length === 0) {
+            listContainer.innerHTML = '<div class="text-muted small py-2">Belum ada fasilitas tambahan</div>';
+            return;
+          }
+          
+          // Create a list item for each facility
+          additionalFacilities.forEach((facility, index) => {
+            const listItem = document.createElement("div");
+            listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            
+            // Create the facility name with icon
+            const nameSpan = document.createElement("span");
+            nameSpan.innerHTML = `<i class="fas fa-check-circle text-success me-2"></i> ${facility.name}`;
+            
+            // Create delete button
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "btn btn-sm btn-outline-danger";
+            deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+            deleteBtn.setAttribute("data-index", index);
+            deleteBtn.addEventListener("click", function() {
+              // Remove from the array
+              const facilityIndex = parseInt(this.getAttribute("data-index"));
+              const removedFacility = additionalFacilities.splice(facilityIndex, 1)[0];
+              
+              // Remove from the facilities switches if it exists
+              const facilitySwitch = document.getElementById(removedFacility.id);
+              if (facilitySwitch) {
+                const switchContainer = facilitySwitch.closest(".col-md-4");
+                if (switchContainer) {
+                  switchContainer.remove();
+                }
+              }
+              
+              // Update the list
+              updateAdditionalFacilitiesList();
+              
+              // Show notification
+              showNotification(
+                "Fasilitas Dihapus",
+                `${removedFacility.name} berhasil dihapus dari daftar`,
+                "success"
+              );
+            });
+            
+            // Add elements to the list item
+            listItem.appendChild(nameSpan);
+            listItem.appendChild(deleteBtn);
+            
+            // Add list item to the container
+            listContainer.appendChild(listItem);
+          });
+        }
+        
+        // Initialize the list
+        updateAdditionalFacilitiesList();
 
         // Form submission
         document

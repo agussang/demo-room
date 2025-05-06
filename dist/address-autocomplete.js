@@ -141,9 +141,30 @@ function initMap() {
 
   // Function to place marker at clicked location
   function placeMarker(location) {
-    marker.setPosition(location);
-    updateCoordinates(location);
-    fetchAddressDetails(location);
+    try {
+      marker.setPosition(location);
+      updateCoordinates(location);
+      fetchAddressDetails(location);
+      
+      // Load nearby places if we're on the nearby places step
+      if (window.currentStep === 4) {
+        // Trigger loading of nearby places data
+        if (typeof window.loadNearbyPlaces === 'function') {
+          // Try to get place types
+          const placeTypes = window.getPlaceTypes ? window.getPlaceTypes() : null;
+          
+          if (placeTypes) {
+            // Load all place types
+            window.loadNearbyPlaces('transportation');
+            window.loadNearbyPlaces('shopping');
+            window.loadNearbyPlaces('dining');
+            window.loadNearbyPlaces('attractions');
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error placing marker:", error);
+    }
   }
 
   // Update coordinate display and hidden inputs
@@ -162,60 +183,160 @@ function initMap() {
     const lngInput = document.getElementById('lng-input');
     if (latInput) latInput.value = lat;
     if (lngInput) lngInput.value = lng;
-
-    // Update location status in the business card if it exists
-    updateLocationStatus(lat, lng);
   }
 
   // Fetch address details from coordinates using Google Geocoding API
   function fetchAddressDetails(location) {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ location: location }, function(results, status) {
-      if (status === 'OK' && results[0]) {
-        fillAddressFields(results[0]);
+      if (status === 'OK' && results && results.length > 0) {
+        console.log("Geocode results:", results[0]);
+        
+        // Get detailed address components from Google Maps
+        const result = results[0];
+        const addressComponents = result.address_components;
+        
+        // Extract address details directly
+        if (addressComponents && addressComponents.length > 0) {
+          // Fill standard address field
+          const addressInput = document.getElementById('address');
+          if (addressInput) {
+            addressInput.value = result.formatted_address || '';
+          }
+          
+          // Set postal code
+          const postalCode = extractAddressComponent(addressComponents, 'postal_code');
+          const postalCodeInput = document.getElementById('postal-code');
+          if (postalCodeInput && postalCode) {
+            postalCodeInput.value = postalCode;
+          }
+          
+          // Set province
+          const province = extractAddressComponent(addressComponents, 'administrative_area_level_1');
+          const provinceInput = document.getElementById('province');
+          if (provinceInput && province) {
+            provinceInput.value = province;
+          }
+          
+          // Set regency/city
+          const regency = extractAddressComponent(addressComponents, ['administrative_area_level_2', 'locality']);
+          const regencyInput = document.getElementById('regency');
+          if (regencyInput && regency) {
+            regencyInput.value = regency;
+          }
+          
+          // Set district
+          const district = extractAddressComponent(addressComponents, ['sublocality_level_1', 'sublocality']);
+          const districtInput = document.getElementById('district');
+          if (districtInput && district) {
+            districtInput.value = district;
+          }
+          
+          // Set village
+          const village = extractAddressComponent(addressComponents, ['sublocality_level_2', 'neighborhood']);
+          const villageInput = document.getElementById('village');
+          if (villageInput) {
+            villageInput.value = village || 'N/A';
+          }
+          
+          // Update location status
+          updateLocationStatus(result);
+        } else {
+          console.warn("No address components found in geocode result");
+        }
       } else {
         console.error('Geocoder failed due to: ' + status);
       }
     });
+  }
+  
+  // Helper function to extract address component by type
+  function extractAddressComponent(components, types) {
+    if (!components || !Array.isArray(components)) return '';
+    
+    // If types is a string, convert to array
+    const typeArray = Array.isArray(types) ? types : [types];
+    
+    // Find first matching component
+    for (const type of typeArray) {
+      const component = components.find(comp => comp.types.includes(type));
+      if (component) {
+        return component.long_name;
+      }
+    }
+    
+    return '';
   }
 
   // Fill in address fields based on selected place or geocoded result
   function fillAddressFields(place) {
     const addressInput = document.getElementById('address');
     const postalCodeInput = document.getElementById('postal-code');
+    const provinceInput = document.getElementById('province');
+    const regencyInput = document.getElementById('regency');
+    const districtInput = document.getElementById('district');
+    const villageInput = document.getElementById('village');
     
-    if (!place.address_components) return;
+    // Defensive check if place or address_components is undefined
+    if (!place || !place.address_components) {
+      console.log("No valid place data available:", place);
+      
+      // At least populate the address from formatted_address if available
+      if (place && place.formatted_address && addressInput) {
+        addressInput.value = place.formatted_address;
+      }
+      
+      return;
+    }
     
     // Extract address components
     let postalCode = '';
     let street = '';
     let city = '';
     let district = '';
+    let subdistrict = '';
     let province = '';
     let formattedAddress = place.formatted_address || '';
+    let villageName = '';
     
-    // Populate address fields from components
-    for (const component of place.address_components) {
-      const componentType = component.types[0];
-      
-      switch (componentType) {
-        case 'postal_code':
+    try {
+      // Populate address fields from components
+      for (const component of place.address_components) {
+        // Look for all types of the component
+        const types = component.types;
+        
+        // Postal code
+        if (types.includes('postal_code')) {
           postalCode = component.long_name;
-          break;
-        case 'route':
+        }
+        
+        // Street
+        if (types.includes('route')) {
           street = component.long_name;
-          break;
-        case 'sublocality_level_1':
-        case 'sublocality':
+        }
+        
+        // Village/Kelurahan (usually sublocality_level_2 in Indonesia)
+        if (types.includes('sublocality_level_2') || types.includes('neighborhood')) {
+          villageName = component.long_name;
+        }
+        
+        // District/Kecamatan (usually sublocality_level_1 in Indonesia)
+        if (types.includes('sublocality_level_1') || types.includes('sublocality')) {
           district = component.long_name;
-          break;
-        case 'administrative_area_level_2':
+        }
+        
+        // City/Regency/Kabupaten (administrative_area_level_2 in Indonesia)
+        if (types.includes('administrative_area_level_2') || types.includes('locality')) {
           city = component.long_name;
-          break;
-        case 'administrative_area_level_1':
+        }
+        
+        // Province (administrative_area_level_1 in Indonesia)
+        if (types.includes('administrative_area_level_1')) {
           province = component.long_name;
-          break;
+        }
       }
+    } catch (error) {
+      console.error("Error processing address components:", error);
     }
     
     // Fill address textarea with formatted address
@@ -228,42 +349,42 @@ function initMap() {
       postalCodeInput.value = postalCode;
     }
     
-    // Try to select matching province if available
-    const provinceSelect = document.getElementById('province');
-    if (provinceSelect && province) {
-      selectOptionByText(provinceSelect, province);
-      // Trigger change event to load regencies
-      const event = new Event('change');
-      provinceSelect.dispatchEvent(event);
-      
-      // Set a timeout to allow regencies to load, then try to select city
-      setTimeout(() => {
-        const regencySelect = document.getElementById('regency');
-        if (regencySelect && city) {
-          selectOptionByText(regencySelect, city);
-          // Trigger change event to load districts
-          const event = new Event('change');
-          regencySelect.dispatchEvent(event);
-          
-          // Set another timeout for districts
-          setTimeout(() => {
-            const districtSelect = document.getElementById('district');
-            if (districtSelect && district) {
-              selectOptionByText(districtSelect, district);
-            }
-          }, 500);
-        }
-      }, 500);
+    // Fill in province, regency, district, and village inputs
+    if (provinceInput && province) {
+      provinceInput.value = province;
     }
+    
+    if (regencyInput && city) {
+      regencyInput.value = city;
+    }
+    
+    if (districtInput && district) {
+      districtInput.value = district;
+    }
+    
+    if (villageInput) {
+      villageInput.value = villageName || 'N/A';
+    }
+    
+    // Update location status in the business card
+    updateLocationStatus(place);
   }
   
-  // Helper function to select option by text
+  // Helper function to select option by text (no longer used for input fields)
   function selectOptionByText(selectElement, text) {
-    for (let i = 0; i < selectElement.options.length; i++) {
-      if (selectElement.options[i].text.includes(text) || text.includes(selectElement.options[i].text)) {
-        selectElement.selectedIndex = i;
-        return true;
+    try {
+      if (!selectElement || !selectElement.options || typeof selectElement.options.length !== 'number') {
+        return false;
       }
+      
+      for (let i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].text.includes(text) || text.includes(selectElement.options[i].text)) {
+          selectElement.selectedIndex = i;
+          return true;
+        }
+      }
+    } catch (error) {
+      console.error("Error in selectOptionByText:", error);
     }
     return false;
   }
@@ -312,18 +433,34 @@ function initMapControls(map) {
 }
 
 // Update location status in the business card
-function updateLocationStatus(lat, lng) {
+function updateLocationStatus(place) {
   const locationStatus = document.getElementById('status-location');
   if (!locationStatus) return;
   
-  const provinceSelect = document.getElementById('province');
+  const lat = document.getElementById('lat-input')?.value;
+  const lng = document.getElementById('lng-input')?.value;
+  
   let locationText = 'Koordinat dipilih';
   
-  if (provinceSelect && provinceSelect.selectedIndex > 0) {
-    const provinceOption = provinceSelect.options[provinceSelect.selectedIndex];
-    locationText = `${provinceOption.text} (${lat}° S, ${lng}° E)`;
-  } else {
-    locationText = `Koordinat: ${lat}° S, ${lng}° E`;
+  try {
+    if (place && place.formatted_address) {
+      // Get a shortened version of the address for display
+      const shortAddress = place.formatted_address.split(',').slice(0, 2).join(',');
+      locationText = shortAddress;
+      
+      // Add coordinates if available
+      if (lat && lng) {
+        locationText += ` (${lat}° S, ${lng}° E)`;
+      }
+    } else if (lat && lng) {
+      locationText = `Koordinat: ${lat}° S, ${lng}° E`;
+    }
+  } catch (error) {
+    console.error("Error updating location status:", error);
+    // Fall back to coordinates only
+    if (lat && lng) {
+      locationText = `Koordinat: ${lat}° S, ${lng}° E`;
+    }
   }
   
   locationStatus.textContent = locationText;

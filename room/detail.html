@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Kamar - MICE ID INVENTORY</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #2a4061;
+        --primary-light: #3a5680;
+        --primary-dark: #1a2c45;
+        --accent: #e5bc6d;
+        --accent-light: #f1d196;
+        --accent-dark: #d6a955;
+        --light: #ffffff;
+        --light-gray: #f8f9fa;
+        --mid-gray: #e2e8f0;
+        --text-dark: #1a202c;
+        --text-medium: #4a5568;
+        --text-light: #718096;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        --transition: all 0.25s ease;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--text-dark);
+        background-color: var(--light-gray);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      /* Navbar styling */
+      .navbar {
+        background-color: var(--primary);
+        padding: 0.75rem 1rem;
+        box-shadow: var(--box-shadow);
+      }
+
+      .navbar-brand {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        color: var(--light) !important;
+        font-size: 1.5rem;
+      }
+
+      .navbar-brand span {
+        color: var(--accent);
+      }
+
+      .navbar-brand-subtitle {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        display: block;
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+      }
+
+      /* Content container styling */
+      .content-container {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        margin-bottom: 2rem;
+      }
+
+      .content-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1.25rem 1.5rem;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .content-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: 100%;
+        background: var(--accent);
+      }
+
+      .content-header h3 {
+        color: var(--light);
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .content-body {
+        padding: 2rem;
+      }
+
+      /* Room detail specific styling */
+      .room-header {
+        position: relative;
+        background-color: var(--primary);
+        color: var(--light);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+      }
+
+      .room-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: 100%;
+        background: var(--accent);
+      }
+
+      .room-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .room-title h2 {
+        color: var(--light);
+        margin: 0;
+      }
+
+      .room-section {
+        margin-bottom: 2rem;
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+      }
+
+      .room-section-header {
+        background-color: var(--light-gray);
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--mid-gray);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .room-section-header h4 {
+        margin: 0;
+        color: var(--primary);
+      }
+
+      .room-section-body {
+        padding: 1.5rem;
+      }
+
+      .room-info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .room-info-list li {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--light-gray);
+      }
+
+      .room-info-list li:last-child {
+        border-bottom: none;
+      }
+
+      .room-info-list li i {
+        width: 24px;
+        margin-right: 0.75rem;
+        color: var(--primary);
+      }
+
+      .facility-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .facility-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+      }
+
+      .facility-item:hover {
+        background-color: var(--light-gray);
+        transform: translateY(-2px);
+      }
+
+      .facility-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(42, 64, 97, 0.1);
+        color: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .gallery-item {
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        position: relative;
+        aspect-ratio: 4/3;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.05);
+      }
+
+      .gallery-item .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .gallery-item:hover .overlay {
+        opacity: 1;
+      }
+
+      .gallery-item .overlay-content {
+        color: var(--light);
+        text-align: center;
+      }
+
+      .room-actions {
+        position: sticky;
+        bottom: 0;
+        background: var(--light);
+        padding: 1rem 0;
+        border-top: 1px solid var(--mid-gray);
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        z-index: 10;
+        margin-top: 2rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--light);
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-light);
+        border-color: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(42, 64, 97, 0.2);
+      }
+
+      .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+      }
+
+      .btn-outline-primary:hover {
+        background: var(--primary);
+        color: var(--light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(42, 64, 97, 0.2);
+      }
+
+      .btn-accent {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--primary-dark);
+      }
+
+      .btn-accent:hover {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(229, 188, 109, 0.2);
+      }
+
+      /* Edit mode styling */
+      .edit-controls {
+        display: none;
+      }
+
+      .view-controls {
+        display: block;
+      }
+
+      body.edit-mode .edit-controls {
+        display: block;
+      }
+
+      body.edit-mode .view-controls {
+        display: none;
+      }
+
+      body.edit-mode .editable {
+        background-color: rgba(229, 188, 109, 0.1);
+        border: 1px dashed var(--accent);
+        border-radius: var(--border-radius);
+        padding: 0.5rem;
+      }
+
+      body.edit-mode .facility-item {
+        cursor: pointer;
+      }
+
+      body.edit-mode .facility-item:hover {
+        border-color: var(--accent);
+      }
+
+      /* Footer styling */
+      footer {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 0;
+        margin-top: auto;
+        position: relative;
+      }
+
+      footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent);
+      }
+
+      footer p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      footer a {
+        color: var(--light);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      footer a:hover {
+        color: var(--accent);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .content-body {
+          padding: 1.5rem 1rem;
+        }
+
+        .room-header {
+          padding: 1.5rem;
+        }
+
+        .room-title {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .room-title .badge {
+          margin-top: 0.5rem;
+        }
+
+        .facility-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+
+        .gallery-container {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .room-section {
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      .room-section:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+
+      .room-section:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .room-section:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      /* Add a nice tab system */
+      .room-tabs {
+        display: flex;
+        background-color: var(--light);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin-bottom: 2rem;
+        border: 1px solid var(--mid-gray);
+        position: sticky;
+        top: 1rem;
+        z-index: 100;
+      }
+
+      .room-tab {
+        padding: 1rem 1.5rem;
+        font-weight: 500;
+        color: var(--text-medium);
+        cursor: pointer;
+        transition: var(--transition);
+        text-align: center;
+        flex: 1;
+        border-bottom: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .room-tab.active {
+        color: var(--primary);
+        border-bottom-color: var(--accent);
+        background-color: rgba(42, 64, 97, 0.05);
+      }
+
+      .room-tab:hover:not(.active) {
+        background-color: var(--light-gray);
+        color: var(--primary);
+      }
+
+      .room-tab i {
+        font-size: 1rem;
+      }
+
+      /* Tab content */
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Status Badge */
+      .status-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 30px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .floor-plan {
+        background-color: var(--light-gray);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .floor-plan img {
+        max-width: 100%;
+        height: auto;
+        box-shadow: var(--box-shadow);
+        border-radius: var(--border-radius);
+      }
+
+      /* Pricing information */
+      .pricing-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+
+      .pricing-table th,
+      .pricing-table td {
+        padding: 1rem;
+        border: 1px solid var(--mid-gray);
+      }
+
+      .pricing-table th {
+        background-color: var(--light-gray);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .pricing-table tr:nth-child(even) {
+        background-color: var(--light-gray);
+      }
+
+      .pricing-table tr:hover {
+        background-color: rgba(42, 64, 97, 0.05);
+      }
+
+      /* Inventory section */
+      .inventory-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .inventory-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+      }
+
+      .inventory-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(42, 64, 97, 0.1);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+
+      .inventory-info {
+        flex-grow: 1;
+      }
+
+      .inventory-title {
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .inventory-quantity {
+        color: var(--text-medium);
+        margin: 0;
+      }
+
+      /* Maintenance history */
+      .maintenance-timeline {
+        position: relative;
+        padding-left: 2rem;
+        margin-top: 1rem;
+      }
+
+      .maintenance-timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 8px;
+        width: 2px;
+        background-color: var(--mid-gray);
+      }
+
+      .maintenance-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .maintenance-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .maintenance-dot {
+        position: absolute;
+        left: -2rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        top: 4px;
+      }
+
+      .maintenance-content {
+        background-color: var(--light);
+        border: 1px solid var(--mid-gray);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+      }
+
+      .maintenance-date {
+        color: var(--text-medium);
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .maintenance-title {
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 0.5rem;
+      }
+
+      .maintenance-description {
+        margin: 0;
+        color: var(--text-medium);
+      }
+
+      /* Chart container */
+      .chart-container {
+        background-color: var(--light);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        box-shadow: var(--box-shadow);
+        margin-top: 1rem;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          MICE<span>ID</span> INVENTORY
+          <span class="navbar-brand-subtitle"
+            >Professional Data Management for Business</span
+          >
+        </a>
+        <a href="index.html" class="btn btn-outline-light btn-sm">
+          <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar Kamar
+        </a>
+      </div>
+    </nav>
+
+    <div class="container py-4">
+      <!-- Room Detail Header -->
+      <div class="room-header">
+        <div class="room-title">
+          <h2>Standard Room</h2>
+          <span class="badge bg-success">30 Kamar</span>
+        </div>
+        <p class="text-light mb-0">
+          ID Kamar: STD-001 | Terakhir diperbarui: 05 Mei, 2025
+        </p>
+
+        <!-- Status Badge -->
+        <div class="status-badge bg-success text-white">
+          <i class="fas fa-check-circle"></i> Aktif
+        </div>
+      </div>
+
+      <!-- Room Tabs -->
+      <div class="room-tabs">
+        <div class="room-tab active" data-tab="general">
+          <i class="fas fa-info-circle"></i> Informasi Umum
+        </div>
+        <div class="room-tab" data-tab="facilities">
+          <i class="fas fa-concierge-bell"></i> Fasilitas
+        </div>
+        <div class="room-tab" data-tab="gallery">
+          <i class="fas fa-images"></i> Galeri
+        </div>
+      </div>
+
+      <!-- General Information Tab -->
+      <div class="tab-content active" id="general-tab">
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Basic Information Section -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4><i class="fas fa-info-circle me-2"></i> Informasi Dasar</h4>
+                <button
+                  class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+                >
+                  <i class="fas fa-edit me-1"></i> Edit
+                </button>
+                <div class="edit-controls">
+                  <button class="btn btn-sm btn-success save-edit me-2">
+                    <i class="fas fa-save me-1"></i> Simpan
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary cancel-edit">
+                    <i class="fas fa-times me-1"></i> Batal
+                  </button>
+                </div>
+              </div>
+              <div class="room-section-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <ul class="room-info-list">
+                      <li>
+                        <i class="fas fa-ruler-combined"></i>
+                        <div>
+                          <strong>Luas Kamar:</strong>
+                          <span class="editable" data-field="room-size"
+                            >24 m²</span
+                          >
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fas fa-user-friends"></i>
+                        <div>
+                          <strong>Kapasitas:</strong>
+                          <span class="editable" data-field="capacity"
+                            >2 orang</span
+                          >
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fas fa-bed"></i>
+                        <div>
+                          <strong>Tempat Tidur:</strong>
+                          <span class="editable" data-field="bed-config"
+                            >1 Double Bed</span
+                          >
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fas fa-eye"></i>
+                        <div>
+                          <strong>Pemandangan:</strong>
+                          <span class="editable" data-field="view-type"
+                            >City View</span
+                          >
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <ul class="room-info-list">
+                      <li>
+                        <i class="fas fa-smoking-ban"></i>
+                        <div>
+                          <strong>Merokok:</strong>
+                          <span class="editable" data-field="smoking"
+                            >Tidak Diperbolehkan</span
+                          >
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fas fa-building"></i>
+                        <div>
+                          <strong>Lantai:</strong>
+                          <span class="editable" data-field="floor">2-4</span>
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fas fa-door-open"></i>
+                        <div>
+                          <strong>Jumlah Kamar:</strong>
+                          <span class="editable" data-field="room-count"
+                            >30</span
+                          >
+                        </div>
+                      </li>
+                      <li>
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                          <strong>Tanggal Renovasi Terakhir:</strong>
+                          <span class="editable" data-field="renovation-date"
+                            >Januari 2025</span
+                          >
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Room Description -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4><i class="fas fa-align-left me-2"></i> Deskripsi Kamar</h4>
+                <button
+                  class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+                >
+                  <i class="fas fa-edit me-1"></i> Edit
+                </button>
+                <div class="edit-controls">
+                  <button class="btn btn-sm btn-success save-edit me-2">
+                    <i class="fas fa-save me-1"></i> Simpan
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary cancel-edit">
+                    <i class="fas fa-times me-1"></i> Batal
+                  </button>
+                </div>
+              </div>
+              <div class="room-section-body">
+                <div class="editable" data-field="room-description">
+                  <p>
+                    Standard Room kami menawarkan kombinasi sempurna antara
+                    kenyamanan dan nilai yang baik. Dengan luas 24 m², kamar
+                    yang elegan ini dilengkapi dengan tempat tidur double yang
+                    nyaman, semua kebutuhan modern termasuk WiFi gratis, TV LED
+                    32 inci, dan kamar mandi pribadi dengan shower.
+                  </p>
+                  <p>
+                    Ideal untuk wisatawan bisnis atau liburan singkat, kamar ini
+                    menawarkan pemandangan kota yang menarik dan menjadi tempat
+                    yang sempurna untuk bersantai setelah hari yang panjang.
+                    Tersedia di lantai 2 hingga 4, semua Standard Room kami
+                    adalah area bebas rokok untuk menjamin kenyamanan semua
+                    tamu.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floor Plan -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4><i class="fas fa-map me-2"></i> Denah Kamar</h4>
+                <button
+                  class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+                >
+                  <i class="fas fa-edit me-1"></i> Edit
+                </button>
+                <div class="edit-controls">
+                  <button class="btn btn-sm btn-success save-edit me-2">
+                    <i class="fas fa-save me-1"></i> Simpan
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary cancel-edit">
+                    <i class="fas fa-times me-1"></i> Batal
+                  </button>
+                </div>
+              </div>
+              <div class="room-section-body">
+                <div class="floor-plan">
+                  <img
+                    src="/api/placeholder/800/400"
+                    alt="Standard Room Floor Plan"
+                  />
+                  <p class="mt-3 text-muted">Denah Standard Room 24 m²</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <!-- Room Status Card -->
+            <div class="room-section mb-4">
+              <div class="room-section-header">
+                <h4><i class="fas fa-info-circle me-2"></i> Status Kamar</h4>
+              </div>
+              <div class="room-section-body">
+                <div class="d-flex justify-content-center mb-4">
+                  <div class="text-center">
+                    <div
+                      class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                      style="width: 80px; height: 80px"
+                    >
+                      <i class="fas fa-check fa-2x"></i>
+                    </div>
+                    <h5>Aktif</h5>
+                    <p class="text-muted mb-0">Siap untuk dipesan</p>
+                  </div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Kamar Tersedia:</span>
+                    <span class="fw-bold">27/30</span>
+                  </div>
+                  <div class="progress mb-3" style="height: 8px">
+                    <div
+                      class="progress-bar bg-success"
+                      role="progressbar"
+                      style="width: 90%"
+                      aria-valuenow="90"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Tingkat Okupansi (30 hari):</span>
+                    <span class="fw-bold">82%</span>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div
+                      class="progress-bar bg-primary"
+                      role="progressbar"
+                      style="width: 82%"
+                      aria-valuenow="82"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="room-section mb-4">
+              <div class="room-section-header">
+                <h4><i class="fas fa-link me-2"></i> Akses Cepat</h4>
+              </div>
+              <div class="room-section-body">
+                <div class="list-group">
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <i class="fas fa-calendar-alt me-3 text-primary"></i>
+                    <span>Lihat Ketersediaan Kamar</span>
+                  </a>
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <i class="fas fa-image me-3 text-primary"></i>
+                    <span>Kelola Galeri Foto</span>
+                  </a>
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <i class="fas fa-tag me-3 text-primary"></i>
+                    <span>Atur Harga & Promosi</span>
+                  </a>
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <i class="fas fa-clipboard-list me-3 text-primary"></i>
+                    <span>Riwayat Pemesanan</span>
+                  </a>
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                  >
+                    <i class="fas fa-tools me-3 text-primary"></i>
+                    <span>Jadwal Pemeliharaan</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4><i class="fas fa-history me-2"></i> Aktivitas Terbaru</h4>
+              </div>
+              <div class="room-section-body">
+                <div class="timeline">
+                  <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                      <div
+                        class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </div>
+                    </div>
+                    <div class="ms-3">
+                      <div class="fw-bold">Informasi Diperbarui</div>
+                      <div class="text-muted">5 Mei, 2025 - 10:30</div>
+                      <div class="small">Admin memperbarui informasi kamar</div>
+                    </div>
+                  </div>
+                  <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                      <div
+                        class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px"
+                      >
+                        <i class="fas fa-check"></i>
+                      </div>
+                    </div>
+                    <div class="ms-3">
+                      <div class="fw-bold">Status Diaktifkan</div>
+                      <div class="text-muted">3 Mei, 2025 - 15:45</div>
+                      <div class="small">Room status changed to active</div>
+                    </div>
+                  </div>
+                  <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                      <div
+                        class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px"
+                      >
+                        <i class="fas fa-image"></i>
+                      </div>
+                    </div>
+                    <div class="ms-3">
+                      <div class="fw-bold">Foto Ditambahkan</div>
+                      <div class="text-muted">1 Mei, 2025 - 13:20</div>
+                      <div class="small">3 foto baru ditambahkan ke galeri</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Facilities Tab -->
+      <div class="tab-content" id="facilities-tab">
+        <div class="room-section">
+          <div class="room-section-header">
+            <h4><i class="fas fa-concierge-bell me-2"></i> Fasilitas Kamar</h4>
+            <button
+              class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+            >
+              <i class="fas fa-edit me-1"></i> Edit Fasilitas
+            </button>
+            <div class="edit-controls">
+              <button class="btn btn-sm btn-success save-edit me-2">
+                <i class="fas fa-save me-1"></i> Simpan
+              </button>
+              <button class="btn btn-sm btn-outline-secondary cancel-edit">
+                <i class="fas fa-times me-1"></i> Batal
+              </button>
+            </div>
+          </div>
+          <div class="room-section-body">
+            <h5 class="mb-3">Kamar Mandi</h5>
+            <div class="facility-grid mb-4">
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-shower"></i>
+                </div>
+                <div>Shower</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-wind"></i>
+                </div>
+                <div>Hair Dryer</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-toilet"></i>
+                </div>
+                <div>Toilet</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-pump-soap"></i>
+                </div>
+                <div>Toiletries</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-tshirt"></i>
+                </div>
+                <div>Handuk</div>
+              </div>
+            </div>
+
+            <h5 class="mb-3">Elektronik</h5>
+            <div class="facility-grid mb-4">
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-tv"></i>
+                </div>
+                <div>TV LED 32"</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div>Telepon</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-snowflake"></i>
+                </div>
+                <div>AC</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-wifi"></i>
+                </div>
+                <div>WiFi Gratis</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-coffee"></i>
+                </div>
+                <div>Electric Kettle</div>
+              </div>
+            </div>
+
+            <h5 class="mb-3">Furnitur</h5>
+            <div class="facility-grid mb-4">
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-bed"></i>
+                </div>
+                <div>Double Bed</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-archive"></i>
+                </div>
+                <div>Lemari Pakaian</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-desktop"></i>
+                </div>
+                <div>Meja Kerja</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-chair"></i>
+                </div>
+                <div>Kursi</div>
+              </div>
+            </div>
+
+            <h5 class="mb-3">Layanan</h5>
+            <div class="facility-grid">
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-broom"></i>
+                </div>
+                <div>Pembersihan Harian</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-concierge-bell"></i>
+                </div>
+                <div>Room Service</div>
+              </div>
+              <div class="facility-item">
+                <div class="facility-icon">
+                  <i class="fas fa-bell"></i>
+                </div>
+                <div>Layanan Wake-up Call</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Equipment and Inventory -->
+        <div class="room-section">
+          <div class="room-section-header">
+            <h4><i class="fas fa-box me-2"></i> Inventaris Kamar</h4>
+            <button
+              class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+            >
+              <i class="fas fa-edit me-1"></i> Edit Inventaris
+            </button>
+            <div class="edit-controls">
+              <button class="btn btn-sm btn-success save-edit me-2">
+                <i class="fas fa-save me-1"></i> Simpan
+              </button>
+              <button class="btn btn-sm btn-outline-secondary cancel-edit">
+                <i class="fas fa-times me-1"></i> Batal
+              </button>
+            </div>
+          </div>
+          <div class="room-section-body">
+            <div class="inventory-grid">
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-bed"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Tempat Tidur Double</h6>
+                  <p class="inventory-quantity">1 unit per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-tv"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">TV LED 32"</h6>
+                  <p class="inventory-quantity">1 unit per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-chair"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Kursi Kerja</h6>
+                  <p class="inventory-quantity">1 unit per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-tshirt"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Handuk Mandi</h6>
+                  <p class="inventory-quantity">2 unit per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-shower"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Set Toiletries</h6>
+                  <p class="inventory-quantity">1 set per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-glass-martini-alt"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Gelas Minum</h6>
+                  <p class="inventory-quantity">2 unit per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-coffee"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Set Kopi & Teh</h6>
+                  <p class="inventory-quantity">1 set per kamar</p>
+                </div>
+              </div>
+              <div class="inventory-item">
+                <div class="inventory-icon">
+                  <i class="fas fa-archive"></i>
+                </div>
+                <div class="inventory-info">
+                  <h6 class="inventory-title">Lemari Pakaian</h6>
+                  <p class="inventory-quantity">1 unit per kamar</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery Tab -->
+      <div class="tab-content" id="gallery-tab">
+        <div class="room-section">
+          <div class="room-section-header">
+            <h4><i class="fas fa-images me-2"></i> Galeri Foto</h4>
+            <button
+              class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+            >
+              <i class="fas fa-edit me-1"></i> Kelola Foto
+            </button>
+            <div class="edit-controls">
+              <button class="btn btn-sm btn-success me-2">
+                <i class="fas fa-plus me-1"></i> Tambah Foto
+              </button>
+              <button class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-times me-1"></i> Batal
+              </button>
+            </div>
+          </div>
+          <div class="room-section-body">
+            <div class="gallery-container">
+              <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Standard Room" />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <button class="btn btn-light btn-sm">
+                      <i class="fas fa-search-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="/api/placeholder/400/300"
+                  alt="Standard Room Bathroom"
+                />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <button class="btn btn-light btn-sm">
+                      <i class="fas fa-search-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Standard Room View" />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <button class="btn btn-light btn-sm">
+                      <i class="fas fa-search-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Standard Room Desk" />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <button class="btn btn-light btn-sm">
+                      <i class="fas fa-search-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="/api/placeholder/400/300"
+                  alt="Standard Room Amenities"
+                />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <button class="btn btn-light btn-sm">
+                      <i class="fas fa-search-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="gallery-item">
+                <img
+                  src="/api/placeholder/400/300"
+                  alt="Standard Room Wardrobe"
+                />
+                <div class="overlay">
+                  <div class="overlay-content">
+                    <button class="btn btn-light btn-sm">
+                      <i class="fas fa-search-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 360 View Section -->
+        <div class="room-section">
+          <div class="room-section-header">
+            <h4><i class="fas fa-vr-cardboard me-2"></i> Tampilan 360°</h4>
+          </div>
+          <div class="room-section-body">
+            <div class="text-center p-5 bg-light rounded">
+              <i class="fas fa-cube fa-3x mb-3 text-primary"></i>
+              <h5>Virtual Tour 360°</h5>
+              <p class="text-muted">Tampilan 360 derajat dari Standard Room.</p>
+              <button class="btn btn-primary">
+                <i class="fas fa-play me-1"></i> Mulai Virtual Tour
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Tab -->
+      {{/*
+      <div class="tab-content" id="pricing-tab">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4><i class="fas fa-tag me-2"></i> Informasi Harga</h4>
+                <button
+                  class="btn btn-sm btn-outline-primary view-controls edit-trigger"
+                >
+                  <i class="fas fa-edit me-1"></i> Edit Harga
+                </button>
+                <div class="edit-controls">
+                  <button class="btn btn-sm btn-success save-edit me-2">
+                    <i class="fas fa-save me-1"></i> Simpan
+                  </button>
+                  <button class="btn btn-sm btn-outline-secondary cancel-edit">
+                    <i class="fas fa-times me-1"></i> Batal
+                  </button>
+                </div>
+              </div>
+              <div class="room-section-body">
+                <div class="editable" data-field="room-pricing">
+                  <div class="table-responsive">
+                    <table class="pricing-table">
+                      <thead>
+                        <tr>
+                          <th>Tipe Tarif</th>
+                          <th>Weekday (Senin-Kamis)</th>
+                          <th>Weekend (Jumat-Minggu)</th>
+                          <th>Musim Tinggi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Tarif Reguler</td>
+                          <td>Rp 850.000</td>
+                          <td>Rp 950.000</td>
+                          <td>Rp 1.150.000</td>
+                        </tr>
+                        <tr>
+                          <td>Member Rate</td>
+                          <td>Rp 765.000</td>
+                          <td>Rp 855.000</td>
+                          <td>Rp 1.035.000</td>
+                        </tr>
+                        <tr>
+                          <td>Corporate Rate</td>
+                          <td>Rp 720.000</td>
+                          <td>Rp 820.000</td>
+                          <td>Rp 990.000</td>
+                        </tr>
+                        <tr>
+                          <td>Paket Menginap (2 malam)</td>
+                          <td>Rp 1.600.000</td>
+                          <td>Rp 1.800.000</td>
+                          <td>Rp 2.200.000</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <p class="text-muted">
+                    <strong>Catatan:</strong> Semua tarif termasuk pajak dan
+                    biaya layanan. Periode musim tinggi berlaku pada waktu libur
+                    nasional dan akhir tahun (20 Desember - 10 Januari).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Availability Chart -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4>
+                  <i class="fas fa-chart-line me-2"></i> Grafik Ketersediaan
+                </h4>
+              </div>
+              <div class="room-section-body">
+                <div class="chart-container">
+                  <!-- Placeholder for chart -->
+                  <div
+                    class="d-flex align-items-center justify-content-center h-100"
+                  >
+                    <div class="text-center">
+                      <i class="fas fa-chart-bar fa-3x mb-3 text-primary"></i>
+                      <h5>Grafik Ketersediaan Kamar</h5>
+                      <p class="text-muted mb-0">
+                        Menampilkan data ketersediaan 30 hari ke depan
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <!-- Current Pricing -->
+            <div class="room-section mb-4">
+              <div class="room-section-header">
+                <h4>
+                  <i class="fas fa-money-bill-wave me-2"></i> Harga Saat Ini
+                </h4>
+              </div>
+              <div class="room-section-body">
+                <div class="text-center mb-4">
+                  <h3 class="mb-0">Rp 850.000</h3>
+                  <p class="text-muted">Tarif weekday reguler per malam</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>Harga Tertinggi (12 bulan)</span>
+                    <span class="fw-bold">Rp 1.250.000</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>Harga Terendah (12 bulan)</span>
+                    <span class="fw-bold">Rp 750.000</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>Harga Rata-rata</span>
+                    <span class="fw-bold">Rp 895.000</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Active Promotions -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4><i class="fas fa-percentage me-2"></i> Promosi Aktif</h4>
+              </div>
+              <div class="room-section-body">
+                <div class="list-group">
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Early Bird Discount</h6>
+                      <small class="text-success">Aktif</small>
+                    </div>
+                    <p class="mb-1">
+                      Diskon 15% untuk pemesanan 30 hari sebelum check-in
+                    </p>
+                    <small class="text-muted">Berakhir: 30 Juli 2025</small>
+                  </div>
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Stay 3 Pay 2</h6>
+                      <small class="text-success">Aktif</small>
+                    </div>
+                    <p class="mb-1">Menginap 3 malam, bayar 2 malam</p>
+                    <small class="text-muted">Berakhir: 15 Juni 2025</small>
+                  </div>
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">MICE Special Rate</h6>
+                      <small class="text-success">Aktif</small>
+                    </div>
+                    <p class="mb-1">Diskon khusus untuk peserta event MICE</p>
+                    <small class="text-muted">Berakhir: 31 Desember 2025</small>
+                  </div>
+                </div>
+                <div class="d-grid mt-3">
+                  <button class="btn btn-outline-primary">
+                    <i class="fas fa-plus me-1"></i> Tambah Promosi Baru
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      */}}
+
+      <!-- Maintenance Tab -->
+      {{/*
+      <div class="tab-content" id="maintenance-tab">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4>
+                  <i class="fas fa-history me-2"></i> Riwayat Pemeliharaan
+                </h4>
+                <button class="btn btn-sm btn-primary">
+                  <i class="fas fa-plus me-1"></i> Tambah Catatan
+                </button>
+              </div>
+              <div class="room-section-body">
+                <div class="maintenance-timeline">
+                  <div class="maintenance-item">
+                    <div class="maintenance-dot"></div>
+                    <div class="maintenance-content">
+                      <div class="maintenance-date">15 April 2025</div>
+                      <h6 class="maintenance-title">Penggantian AC</h6>
+                      <p class="maintenance-description">
+                        Penggantian unit AC di 5 kamar standard room (nomor 201,
+                        203, 205, 207, 209) dengan model baru yang lebih hemat
+                        energi.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="maintenance-item">
+                    <div class="maintenance-dot"></div>
+                    <div class="maintenance-content">
+                      <div class="maintenance-date">5 Maret 2025</div>
+                      <h6 class="maintenance-title">Pembaruan Perabotan</h6>
+                      <p class="maintenance-description">
+                        Penggantian semua meja kerja dan kursi di standard room
+                        dengan model yang lebih ergonomis.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="maintenance-item">
+                    <div class="maintenance-dot"></div>
+                    <div class="maintenance-content">
+                      <div class="maintenance-date">20 Januari 2025</div>
+                      <h6 class="maintenance-title">Renovasi Kamar Mandi</h6>
+                      <p class="maintenance-description">
+                        Renovasi kamar mandi di semua standard room, termasuk
+                        penggantian shower, keran, dan perlengkapan lainnya.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="maintenance-item">
+                    <div class="maintenance-dot"></div>
+                    <div class="maintenance-content">
+                      <div class="maintenance-date">10 Desember 2024</div>
+                      <h6 class="maintenance-title">Pengecatan Ulang</h6>
+                      <p class="maintenance-description">
+                        Pengecatan ulang seluruh standard room dengan warna yang
+                        lebih menyegarkan dan modern.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <!-- Maintenance Schedule -->
+            <div class="room-section mb-4">
+              <div class="room-section-header">
+                <h4>
+                  <i class="fas fa-calendar-alt me-2"></i> Jadwal Pemeliharaan
+                </h4>
+              </div>
+              <div class="room-section-body">
+                <div class="list-group">
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Inspeksi Perabotan</h6>
+                      <small class="text-warning">10 Mei 2025</small>
+                    </div>
+                    <p class="mb-1">
+                      Inspeksi rutin semua perabotan di standard room
+                    </p>
+                  </div>
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Service AC</h6>
+                      <small class="text-warning">15 Juni 2025</small>
+                    </div>
+                    <p class="mb-1">
+                      Pembersihan dan service AC di semua standard room
+                    </p>
+                  </div>
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Inspeksi Kamar Mandi</h6>
+                      <small class="text-warning">22 Juli 2025</small>
+                    </div>
+                    <p class="mb-1">
+                      Inspeksi pipa, saluran air, dan perlengkapan kamar mandi
+                    </p>
+                  </div>
+                </div>
+                <div class="d-grid mt-3">
+                  <button class="btn btn-outline-primary">
+                    <i class="fas fa-plus me-1"></i> Tambah Jadwal
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Maintenance Summary -->
+            <div class="room-section">
+              <div class="room-section-header">
+                <h4>
+                  <i class="fas fa-tools me-2"></i> Ringkasan Pemeliharaan
+                </h4>
+              </div>
+              <div class="room-section-body">
+                <div class="d-flex justify-content-center mb-4">
+                  <div class="text-center">
+                    <div
+                      class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
+                      style="width: 80px; height: 80px"
+                    >
+                      <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                    <h5>Baik</h5>
+                    <p class="text-muted mb-0">Status pemeliharaan saat ini</p>
+                  </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>Total Pemeliharaan (12 bulan)</span>
+                    <span class="fw-bold">12</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>Biaya Pemeliharaan (12 bulan)</span>
+                    <span class="fw-bold">Rp 45.000.000</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>Pemeliharaan Terjadwal</span>
+                    <span class="fw-bold">3</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      */}}
+
+      <!-- Room Actions -->
+      <div class="room-actions">
+        <button class="btn btn-outline-primary me-2" id="btn-back">
+          <i class="fas fa-arrow-left me-1"></i> Kembali
+        </button>
+        <button class="btn btn-outline-primary me-2" id="btn-toggle-edit">
+          <i class="fas fa-edit me-1"></i> Edit Data
+        </button>
+        <button
+          class="btn btn-primary"
+          id="btn-save-changes"
+          style="display: none"
+        >
+          <i class="fas fa-save me-1"></i> Simpan Perubahan
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-3 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2025 MICE ID INVENTORY. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="#" class="me-3"
+              ><i class="fas fa-envelope me-1"></i> Kontak</a
+            >
+            <a href="#"><i class="fas fa-info-circle me-1"></i> Bantuan</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Tab functionality
+        const tabs = document.querySelectorAll(".room-tab");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            // Remove active class from all tabs
+            tabs.forEach((t) => t.classList.remove("active"));
+
+            // Add active class to clicked tab
+            this.classList.add("active");
+
+            // Hide all tab contents
+            tabContents.forEach((content) =>
+              content.classList.remove("active")
+            );
+
+            // Show the selected tab content
+            const tabId = this.getAttribute("data-tab") + "-tab";
+            document.getElementById(tabId).classList.add("active");
+          });
+        });
+
+        // Edit mode toggle
+        const editTriggers = document.querySelectorAll(".edit-trigger");
+        const saveEdits = document.querySelectorAll(".save-edit");
+        const cancelEdits = document.querySelectorAll(".cancel-edit");
+        const btnToggleEdit = document.getElementById("btn-toggle-edit");
+        const btnSaveChanges = document.getElementById("btn-save-changes");
+        const btnBack = document.getElementById("btn-back");
+
+        // Store original values of editable elements
+        const originalValues = {};
+
+        // Function to enter edit mode
+        function enterEditMode() {
+          document.body.classList.add("edit-mode");
+          btnToggleEdit.style.display = "none";
+          btnSaveChanges.style.display = "inline-block";
+
+          // Store current values of editable elements
+          document.querySelectorAll(".editable").forEach((el) => {
+            const fieldName = el.getAttribute("data-field");
+            originalValues[fieldName] = el.innerHTML;
+
+            // Make editable
+            el.setAttribute("contenteditable", "true");
+            el.focus();
+          });
+
+          // Show edit-controls and hide view-controls
+          document.querySelectorAll(".view-controls").forEach((el) => {
+            el.style.display = "none";
+          });
+
+          document.querySelectorAll(".edit-controls").forEach((el) => {
+            el.style.display = "block";
+          });
+        }
+
+        // Function to exit edit mode
+        function exitEditMode(save = false) {
+          document.body.classList.remove("edit-mode");
+          btnToggleEdit.style.display = "inline-block";
+          btnSaveChanges.style.display = "none";
+
+          // If not saving, restore original values
+          if (!save) {
+            document.querySelectorAll(".editable").forEach((el) => {
+              const fieldName = el.getAttribute("data-field");
+              if (originalValues[fieldName]) {
+                el.innerHTML = originalValues[fieldName];
+              }
+            });
+          } else {
+            // Show success notification
+            showNotification(
+              "Berhasil",
+              "Data kamar berhasil diperbarui",
+              "success"
+            );
+          }
+
+          // Make elements non-editable
+          document.querySelectorAll(".editable").forEach((el) => {
+            el.removeAttribute("contenteditable");
+          });
+
+          // Hide edit-controls and show view-controls
+          document.querySelectorAll(".view-controls").forEach((el) => {
+            el.style.display = "block";
+          });
+
+          document.querySelectorAll(".edit-controls").forEach((el) => {
+            el.style.display = "none";
+          });
+        }
+
+        // Toggle edit mode when clicking on edit triggers
+        editTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", function () {
+            enterEditMode();
+          });
+        });
+
+        // Save edits when clicking on save buttons
+        saveEdits.forEach((button) => {
+          button.addEventListener("click", function () {
+            exitEditMode(true);
+          });
+        });
+
+        // Cancel edits when clicking on cancel buttons
+        cancelEdits.forEach((button) => {
+          button.addEventListener("click", function () {
+            exitEditMode(false);
+          });
+        });
+
+        // Toggle edit mode with main button
+        btnToggleEdit.addEventListener("click", function () {
+          enterEditMode();
+        });
+
+        // Save changes with main button
+        btnSaveChanges.addEventListener("click", function () {
+          exitEditMode(true);
+        });
+
+        // Back button
+        btnBack.addEventListener("click", function () {
+          window.location.href = "index.html";
+        });
+
+        // Function to show notifications
+        function showNotification(title, message, type) {
+          // Create toast container if it doesn't exist
+          let toastContainer = document.querySelector(".toast-container");
+
+          if (!toastContainer) {
+            toastContainer = document.createElement("div");
+            toastContainer.className =
+              "toast-container position-fixed bottom-0 end-0 p-3";
+            toastContainer.style.zIndex = "1050";
+            document.body.appendChild(toastContainer);
+          }
+
+          // Create toast element
+          const toastId = "toast-" + Date.now();
+          const toast = document.createElement("div");
+          toast.className = "toast";
+          toast.id = toastId;
+          toast.setAttribute("role", "alert");
+          toast.setAttribute("aria-live", "assertive");
+          toast.setAttribute("aria-atomic", "true");
+
+          // Set toast HTML
+          const bgClass = type === "success" ? "bg-success" : "bg-danger";
+          const icon =
+            type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+
+          toast.innerHTML = `
+            <div class="toast-header ${bgClass} text-white">
+              <i class="fas ${icon} me-2"></i>
+              <strong class="me-auto">${title}</strong>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              ${message}
+            </div>
+          `;
+
+          // Add to container
+          toastContainer.appendChild(toast);
+
+          // Initialize and show the toast
+          const bsToast = new bootstrap.Toast(toast, {
+            autohide: true,
+            delay: 5000,
+          });
+
+          bsToast.show();
+
+          // Remove from DOM after hiding
+          toast.addEventListener("hidden.bs.toast", function () {
+            toast.remove();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

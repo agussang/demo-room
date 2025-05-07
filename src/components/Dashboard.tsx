@@ -35,7 +35,7 @@ export default function HotelDashboard() {
     { id: 'location', name: 'Lokasi Properti', progress: 100 },
     { id: 'contact', name: 'Informasi Kontak', progress: 75 },
     { id: 'room', name: 'Data Kamar', progress: 25 },
-    { id: 'venue', name: 'Data Venue', progress: 0 },
+    { id: 'venue', name: 'Data MICE', progress: 0 },
     { id: 'facilities', name: 'Fasilitas Hotel', progress: 50 },
     { id: 'gallery', name: 'Galeri Foto', progress: 30 },
   ]);
@@ -266,7 +266,7 @@ export default function HotelDashboard() {
                   </li>
                   <li>
                     <a href="../venue/index.html" className="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-l-4 transition-colors rounded">
-                      <Layout size={18} className="mr-3" /> Data Venue
+                      <Layout size={18} className="mr-3" /> Data MICE
                     </a>
                   </li>
                   <li>

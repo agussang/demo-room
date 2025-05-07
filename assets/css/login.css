@@ -1,0 +1,125 @@
+.hotel-header {
+  background: var(--primary);
+  color: var(--light);
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  box-shadow: var(--box-shadow);
+  position: relative;
+}
+
+.hotel-header h1 {
+  color: var(--light);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.hotel-header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.hotel-header .accent-bar {
+  height: 4px;
+  width: 100%;
+  background: var(--accent);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.login-container {
+  max-width: 450px;
+  margin: 2rem auto;
+  background: var(--light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
+.login-header {
+  background: var(--primary);
+  color: var(--light);
+  padding: 1.5rem;
+  border-bottom: 4px solid var(--accent);
+}
+
+.login-body {
+  padding: 2rem;
+}
+
+.form-check-input:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(19, 43, 80, 0.25);
+  border-color: var(--primary-light);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-medium);
+}
+
+.system-info {
+  margin-top: 3rem;
+  background: var(--light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+}
+
+.system-info h2 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.system-info h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--accent);
+}
+
+.feature-item {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.feature-icon {
+  background: var(--light-gray);
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  color: var(--primary);
+}
+
+.feature-text h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.feature-text p {
+  color: var(--text-medium);
+  margin: 0;
+}
+
+footer .accent-bar {
+  height: 4px;
+  width: 100%;
+  background: var(--accent);
+  margin-bottom: 1.5rem;
+}

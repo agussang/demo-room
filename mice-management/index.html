@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Data MICE - MICE ID INVENTORY</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Main CSS -->
+    <link href="../assets/css/main.css" rel="stylesheet" />
+    <!-- Form Page CSS -->
+    <link href="../assets/css/form.css" rel="stylesheet" />
+    <style>
+      /* Simplified custom styles */
+      .venue-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .venue-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      }
+      .venue-type-badge {
+        background-color: #2a4061;
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        display: inline-block;
+      }
+      .capacity-item {
+        display: flex;
+        align-items: center;
+        color: #4a5568;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+      .capacity-item i {
+        width: 20px;
+        margin-right: 0.5rem;
+        color: #2a4061;
+      }
+      .info-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+      }
+      .info-card-header {
+        background: #e5bc6d;
+        color: #2a4061;
+        padding: 1rem 1.5rem;
+        font-weight: 500;
+      }
+      .info-card-body {
+        padding: 1.5rem;
+      }
+      .config-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        background-color: #fff;
+      }
+      .config-icon {
+        width: 50px;
+        height: 50px;
+        background-color: #e6f0ff;
+        color: #2a4061;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.75rem;
+      }
+      .form-section {
+        display: none;
+      }
+      .form-section.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          MICE<span>ID</span> INVENTORY
+          <span class="navbar-brand-subtitle"
+            >Professional Data Management for Business</span
+          >
+        </a>
+        <a href="../dashboard/" class="btn btn-outline-light btn-sm">
+          <i class="fas fa-arrow-left me-1"></i> Kembali ke Dashboard
+        </a>
+      </div>
+    </nav>
+
+    <div class="container py-4">
+      <div class="row mb-4">
+        <div class="col-12">
+          <h2 class="mb-1" style="color: #2a4061">
+            <i class="fas fa-chalkboard me-2"></i> Manajemen Data MICE
+          </h2>
+          <p class="text-muted">
+            Kelola informasi Meetings, Incentives, Conferences, dan Exhibitions
+            hotel
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Form Container -->
+        <div class="col-lg-8">
+          <div class="form-container">
+            <div class="step-indicator">
+              <div class="step active" id="step1" onclick="showStep(1)">
+                1
+                <div class="step-text">Informasi Umum</div>
+              </div>
+              <div class="step" id="step2" onclick="showStep(2)">
+                2
+                <div class="step-text">Kapasitas</div>
+              </div>
+              <div class="step" id="step3" onclick="showStep(3)">
+                3
+                <div class="step-text">Dimensi</div>
+              </div>
+              <div class="step" id="step4" onclick="showStep(4)">
+                4
+                <div class="step-text">Fasilitas</div>
+              </div>
+              <div class="step" id="step5" onclick="showStep(5)">
+                5
+                <div class="step-text">Konfirmasi</div>
+              </div>
+            </div>
+
+            <!-- Step 1: Informasi Umum Venue MICE -->
+            <div class="form-section active" id="section1">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-chalkboard me-2"></i> Informasi Umum Venue
+                  MICE
+                </h3>
+              </div>
+
+              <div class="p-4">
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-3">
+                    <label for="venue-name" class="form-label required"
+                      >Nama Ruangan</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="venue-name"
+                      placeholder="Contoh: Ballroom Malang"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="venue-type" class="form-label required"
+                      >Tipe Ruangan</label
+                    >
+                    <select class="form-select" id="venue-type">
+                      <option value="meeting-room">Meeting Room</option>
+                      <option value="ballroom">Ballroom</option>
+                      <option value="function-room">Function Room</option>
+                      <option value="board-room">Board Room</option>
+                      <option value="conference-hall">Conference Hall</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="alert alert-info mb-4">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <i class="fas fa-info-circle fs-4"></i>
+                    </div>
+                    <div>
+                      <h5 class="alert-heading">Tips pengisian data</h5>
+                      <p class="mb-0">
+                        Pastikan mengisi nama yang unik dan deskriptif untuk
+                        memudahkan identifikasi ruangan. Contoh: "Ballroom
+                        Malang", "Meeting Room Executive", dsb.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="form-label">Upload Foto Ruangan</label>
+                  <div class="upload-area">
+                    <div class="upload-icon">
+                      <i class="fas fa-image"></i>
+                    </div>
+                    <p class="upload-text">
+                      Upload foto ruangan untuk ditampilkan dalam sistem
+                    </p>
+                    <label for="venue-image" class="upload-button">
+                      <i class="fas fa-cloud-upload-alt me-1"></i> Pilih File
+                    </label>
+                    <input
+                      type="file"
+                      id="venue-image"
+                      class="d-none"
+                      accept="image/*"
+                    />
+                  </div>
+                  <small class="text-muted d-block mt-2"
+                    >Format: JPG, PNG (Maks. 5MB)</small
+                  >
+                </div>
+
+                <div class="mb-4">
+                  <label for="venue-notes" class="form-label"
+                    >Catatan Tambahan</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="venue-notes"
+                    rows="3"
+                    placeholder="Informasi tambahan tentang ruangan..."
+                  ></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary me-2"
+                    onclick="resetForm()"
+                  >
+                    <i class="fas fa-redo me-1"></i> Reset
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="nextStep(1)"
+                  >
+                    Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Kapasitas Ruangan -->
+            <div class="form-section" id="section2">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-users me-2"></i> Kapasitas Ruangan per
+                  Konfigurasi
+                </h3>
+              </div>
+
+              <div class="p-4">
+                <div class="alert alert-info mb-4">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <i class="fas fa-info-circle fs-4"></i>
+                    </div>
+                    <div>
+                      <p class="mb-0">
+                        Isikan kapasitas maksimum ruangan untuk setiap
+                        konfigurasi yang tersedia. Anda dapat mengosongkan
+                        konfigurasi yang tidak didukung.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-4 mb-3">
+                    <div class="config-card">
+                      <div class="config-icon">
+                        <i class="fas fa-users"></i>
+                      </div>
+                      <h5>Theater Style</h5>
+                      <p class="text-muted small mb-2">
+                        Tempat duduk menghadap ke satu arah
+                      </p>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          id="capacity-theater"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span class="input-group-text">orang</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="config-card">
+                      <div class="config-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                      </div>
+                      <h5>Classroom Style</h5>
+                      <p class="text-muted small mb-2">
+                        Tempat duduk dengan meja
+                      </p>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          id="capacity-classroom"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span class="input-group-text">orang</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="config-card">
+                      <div class="config-icon">
+                        <i class="fas fa-compress-alt"></i>
+                      </div>
+                      <h5>U-Shape Style</h5>
+                      <p class="text-muted small mb-2">
+                        Meja dan kursi berbentuk U
+                      </p>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          id="capacity-ushape"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span class="input-group-text">orang</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="config-card">
+                      <div class="config-icon">
+                        <i class="fas fa-border-all"></i>
+                      </div>
+                      <h5>Boardroom Style</h5>
+                      <p class="text-muted small mb-2">
+                        Satu meja besar dengan kursi di sekeliling
+                      </p>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          id="capacity-boardroom"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span class="input-group-text">orang</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="config-card">
+                      <div class="config-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                      </div>
+                      <h5>Banquet Style</h5>
+                      <p class="text-muted small mb-2">
+                        Meja bundar untuk jamuan makan
+                      </p>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          id="capacity-banquet"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span class="input-group-text">orang</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="config-card">
+                      <div class="config-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                      </div>
+                      <h5>Reception Style</h5>
+                      <p class="text-muted small mb-2">
+                        Standing (berdiri) untuk resepsi
+                      </p>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control text-center"
+                          id="capacity-reception"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span class="input-group-text">orang</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onclick="prevStep(2)"
+                  >
+                    <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="nextStep(2)"
+                  >
+                    Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Dimensi dan Spesifikasi -->
+            <div class="form-section" id="section3">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-expand-arrows-alt me-2"></i> Dimensi dan
+                  Spesifikasi Ruangan
+                </h3>
+              </div>
+
+              <div class="p-4">
+                <h4 class="section-title">Dimensi Ruangan</h4>
+                <div class="row mb-4">
+                  <div class="col-md-3 mb-3">
+                    <label for="room-area" class="form-label"
+                      >Luas Ruangan (m²)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="room-area"
+                      placeholder="0"
+                      readonly
+                    />
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label for="room-length" class="form-label"
+                      >Panjang (m)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="room-length"
+                      placeholder="0"
+                      step="0.1"
+                      min="0"
+                      onchange="calculateArea()"
+                    />
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label for="room-width" class="form-label">Lebar (m)</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="room-width"
+                      placeholder="0"
+                      step="0.1"
+                      min="0"
+                      onchange="calculateArea()"
+                    />
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <label for="room-height" class="form-label"
+                      >Tinggi (m)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="room-height"
+                      placeholder="0"
+                      step="0.1"
+                      min="0"
+                    />
+                  </div>
+                </div>
+
+                <h4 class="section-title">Spesifikasi Teknis</h4>
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="spec-audiovisual"
+                      />
+                      <label class="form-check-label" for="spec-audiovisual">
+                        <i class="fas fa-tv text-primary me-2"></i> Sistem Audio
+                        Visual Built-in
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="spec-lighting"
+                      />
+                      <label class="form-check-label" for="spec-lighting">
+                        <i class="fas fa-lightbulb text-primary me-2"></i>
+                        Sistem Pencahayaan Khusus
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="spec-soundproof"
+                      />
+                      <label class="form-check-label" for="spec-soundproof">
+                        <i class="fas fa-volume-mute text-primary me-2"></i>
+                        Soundproofing
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="spec-stage"
+                      />
+                      <label class="form-check-label" for="spec-stage">
+                        <i class="fas fa-camera text-primary me-2"></i>
+                        Backdrop/Stage Area
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-3">
+                    <label for="flooring-type" class="form-label"
+                      >Jenis Lantai</label
+                    >
+                    <select class="form-select" id="flooring-type">
+                      <option value="carpet">Karpet</option>
+                      <option value="marble">Marmer</option>
+                      <option value="wood">Kayu</option>
+                      <option value="vinyl">Vinyl</option>
+                      <option value="ceramic">Keramik</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label class="form-label">Upload Denah/Layout Ruangan</label>
+                  <div class="upload-area">
+                    <div class="upload-icon">
+                      <i class="fas fa-map"></i>
+                    </div>
+                    <p class="upload-text">
+                      Upload denah ruangan dalam format digital
+                    </p>
+                    <label for="room-layout" class="upload-button">
+                      <i class="fas fa-cloud-upload-alt me-1"></i> Pilih File
+                    </label>
+                    <input
+                      type="file"
+                      id="room-layout"
+                      class="d-none"
+                      accept="image/*,.pdf"
+                    />
+                  </div>
+                  <small class="text-muted d-block mt-2"
+                    >Format: JPG, PNG, PDF (Maks. 5MB)</small
+                  >
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onclick="prevStep(3)"
+                  >
+                    <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="nextStep(3)"
+                  >
+                    Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Koneksi dan Fasilitas Pendukung -->
+            <div class="form-section" id="section4">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-wifi me-2"></i> Koneksi dan Fasilitas
+                  Pendukung
+                </h3>
+              </div>
+
+              <div class="p-4">
+                <h4 class="section-title">Koneksi Internet & Daya</h4>
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="conn-wifi"
+                      />
+                      <label class="form-check-label" for="conn-wifi">
+                        <i class="fas fa-wifi text-primary me-2"></i> Tersedia
+                        WiFi Khusus
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="conn-backup"
+                      />
+                      <label class="form-check-label" for="conn-backup">
+                        <i class="fas fa-bolt text-primary me-2"></i> Tersedia
+                        Generator Cadangan
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="bandwidth" class="form-label"
+                      >Bandwidth Internet (Mbps)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="bandwidth"
+                      placeholder="0"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="power-outlets" class="form-label"
+                      >Jumlah Stop Kontak</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="power-outlets"
+                      placeholder="0"
+                      min="0"
+                    />
+                  </div>
+                </div>
+
+                <h4 class="section-title">Fasilitas Pendukung MICE</h4>
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="fac-prefunction"
+                      />
+                      <label class="form-check-label" for="fac-prefunction">
+                        <i class="fas fa-door-open text-primary me-2"></i>
+                        Pre-function Area
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="fac-business"
+                      />
+                      <label class="form-check-label" for="fac-business">
+                        <i class="fas fa-laptop text-primary me-2"></i> Business
+                        Center
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="fac-secretariat"
+                      />
+                      <label class="form-check-label" for="fac-secretariat">
+                        <i class="fas fa-briefcase text-primary me-2"></i> Ruang
+                        Sekretariat
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="fac-vip"
+                      />
+                      <label class="form-check-label" for="fac-vip">
+                        <i class="fas fa-user-tie text-primary me-2"></i> VIP
+                        Room / Holding Room
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="fac-registration"
+                      />
+                      <label class="form-check-label" for="fac-registration">
+                        <i class="fas fa-clipboard-list text-primary me-2"></i>
+                        Area Registrasi
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="fac-exhibition"
+                      />
+                      <label class="form-check-label" for="fac-exhibition">
+                        <i class="fas fa-booth-curtain text-primary me-2"></i>
+                        Area Pameran
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <h4 class="section-title">Layanan MICE</h4>
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="support-technical"
+                      />
+                      <label class="form-check-label" for="support-technical">
+                        <i class="fas fa-headset text-primary me-2"></i> Staf
+                        Teknis Tersedia
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="support-planning"
+                      />
+                      <label class="form-check-label" for="support-planning">
+                        <i class="fas fa-calendar-check text-primary me-2"></i>
+                        Dukungan Event Planning
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="support-catering"
+                      />
+                      <label class="form-check-label" for="support-catering">
+                        <i class="fas fa-utensils text-primary me-2"></i>
+                        Layanan Katering Khusus Event
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onclick="prevStep(4)"
+                  >
+                    <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="nextStep(4)"
+                  >
+                    Selanjutnya <i class="fas fa-arrow-right ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5: Konfirmasi Data -->
+            <div class="form-section" id="section5">
+              <div class="form-header">
+                <h3>
+                  <i class="fas fa-check-circle me-2"></i> Konfirmasi Data
+                </h3>
+              </div>
+
+              <div class="p-4">
+                <div class="alert alert-info mb-4">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <i class="fas fa-info-circle fs-4"></i>
+                    </div>
+                    <div>
+                      <h5 class="alert-heading">Periksa Kembali Data Anda</h5>
+                      <p class="mb-0">
+                        Pastikan semua data yang dimasukkan sudah benar sebelum
+                        menyimpan. Data yang tersimpan akan ditampilkan pada
+                        sistem MICE ID INVENTORY.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-light rounded p-3 mb-3">
+                  <h5 class="text-primary">Informasi Umum</h5>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="mb-1">
+                        <strong>Nama Ruangan:</strong>
+                        <span id="summary-name">Ballroom Malang</span>
+                      </p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="mb-1">
+                        <strong>Tipe Ruangan:</strong>
+                        <span id="summary-type">Ballroom</span>
+                      </p>
+                    </div>
+                  </div>
+                  <p class="mb-0">
+                    <strong>Catatan:</strong>
+                    <span id="summary-notes"
+                      >Ruangan ini baru direnovasi dan memiliki view menghadap
+                      gunung.</span
+                    >
+                  </p>
+                </div>
+
+                <div class="bg-light rounded p-3 mb-3">
+                  <h5 class="text-primary">Kapasitas Ruangan</h5>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <p class="mb-1">
+                        <strong>Theater:</strong>
+                        <span id="summary-theater">200</span> orang
+                      </p>
+                    </div>
+                    <div class="col-md-4">
+                      <p class="mb-1">
+                        <strong>Classroom:</strong>
+                        <span id="summary-classroom">120</span> orang
+                      </p>
+                    </div>
+                    <div class="col-md-4">
+                      <p class="mb-1">
+                        <strong>U-Shape:</strong>
+                        <span id="summary-ushape">50</span> orang
+                      </p>
+                    </div>
+                    <div class="col-md-4">
+                      <p class="mb-1">
+                        <strong>Boardroom:</strong>
+                        <span id="summary-boardroom">40</span> orang
+                      </p>
+                    </div>
+                    <div class="col-md-4">
+                      <p class="mb-1">
+                        <strong>Banquet:</strong>
+                        <span id="summary-banquet">150</span> orang
+                      </p>
+                    </div>
+                    <div class="col-md-4">
+                      <p class="mb-1">
+                        <strong>Reception:</strong>
+                        <span id="summary-reception">250</span> orang
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-light rounded p-3 mb-3">
+                  <h5 class="text-primary">Dimensi Ruangan</h5>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <p class="mb-1">
+                        <strong>Luas:</strong>
+                        <span id="summary-area">250</span> m²
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <p class="mb-1">
+                        <strong>Panjang:</strong>
+                        <span id="summary-length">25</span> m
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <p class="mb-1">
+                        <strong>Lebar:</strong>
+                        <span id="summary-width">10</span> m
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <p class="mb-1">
+                        <strong>Tinggi:</strong>
+                        <span id="summary-height">4.5</span> m
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-light rounded p-3 mb-3">
+                  <h5 class="text-primary">Spesifikasi & Fasilitas</h5>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <p class="mb-2"><strong>Spesifikasi:</strong></p>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Sistem Audio Visual
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Sistem Pencahayaan
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Soundproofing
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Stage Area
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Lantai: Karpet
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="mb-2"><strong>Koneksi:</strong></p>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          WiFi Khusus
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          Generator Cadangan
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-info-circle text-primary me-2"></i>
+                          Bandwidth: 100 Mbps
+                        </li>
+                        <li class="list-group-item bg-transparent px-0 py-1">
+                          <i class="fas fa-info-circle text-primary me-2"></i>
+                          Stop Kontak: 24 buah
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="mb-2"><strong>Fasilitas Pendukung:</strong></p>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                      <span class="badge bg-primary">Pre-function Area</span>
+                      <span class="badge bg-primary">Business Center</span>
+                      <span class="badge bg-primary">Ruang Sekretariat</span>
+                      <span class="badge bg-primary">VIP Room</span>
+                      <span class="badge bg-primary">Area Registrasi</span>
+                      <span class="badge bg-primary">Area Pameran</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="mb-2"><strong>Layanan MICE:</strong></p>
+                    <div class="d-flex flex-wrap gap-2">
+                      <span class="badge bg-success">Staf Teknis</span>
+                      <span class="badge bg-success">Event Planning</span>
+                      <span class="badge bg-success">Katering Event</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onclick="prevStep(5)"
+                  >
+                    <i class="fas fa-arrow-left me-2"></i> Sebelumnya
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-accent"
+                    id="save-form"
+                    onclick="saveVenue()"
+                  >
+                    <i class="fas fa-save me-2"></i> Simpan & Selesai
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Content -->
+        <div class="col-lg-4">
+          <!-- Daftar Venue -->
+          <div class="info-card mb-4">
+            <div
+              class="info-card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Daftar Venue MICE</h5>
+              <span class="badge rounded-pill bg-primary">2 Venue</span>
+            </div>
+            <div class="info-card-body">
+              <div class="venue-card">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <h5 class="mb-0">Ballroom Malang</h5>
+                  <span class="venue-type-badge">Ballroom</span>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <div class="capacity-item">
+                      <i class="fas fa-users"></i> Theater: 200
+                    </div>
+                    <div class="capacity-item">
+                      <i class="fas fa-chalkboard-teacher"></i> Classroom: 120
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="capacity-item">
+                      <i class="fas fa-expand-arrows-alt"></i> 250 m²
+                    </div>
+                    <div class="capacity-item">
+                      <i class="fas fa-concierge-bell"></i> Banquet: 150
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex mt-2">
+                  <button
+                    class="btn btn-sm btn-outline-primary flex-grow-1 me-2"
+                    onclick="editVenue(1)"
+                  >
+                    <i class="fas fa-edit me-1"></i> Edit
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    onclick="deleteVenue(1)"
+                  >
+                    <i class="fas fa-trash me-1"></i> Hapus
+                  </button>
+                </div>
+              </div>
+
+              <div class="venue-card">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <h5 class="mb-0">Meeting Room A</h5>
+                  <span class="venue-type-badge">Meeting Room</span>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <div class="capacity-item">
+                      <i class="fas fa-users"></i> Theater: 50
+                    </div>
+                    <div class="capacity-item">
+                      <i class="fas fa-chalkboard-teacher"></i> Classroom: 30
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="capacity-item">
+                      <i class="fas fa-expand-arrows-alt"></i> 75 m²
+                    </div>
+                    <div class="capacity-item">
+                      <i class="fas fa-compress-alt"></i> U-Shape: 20
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex mt-2">
+                  <button
+                    class="btn btn-sm btn-outline-primary flex-grow-1 me-2"
+                    onclick="editVenue(2)"
+                  >
+                    <i class="fas fa-edit me-1"></i> Edit
+                  </button>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    onclick="deleteVenue(2)"
+                  >
+                    <i class="fas fa-trash me-1"></i> Hapus
+                  </button>
+                </div>
+              </div>
+
+              <button
+                class="btn btn-primary w-100 mt-3"
+                onclick="addNewVenue()"
+              >
+                <i class="fas fa-plus-circle me-1"></i> Tambah Venue Baru
+              </button>
+            </div>
+          </div>
+
+          <!-- Informasi MICE -->
+          <div class="info-card">
+            <div class="info-card-header">
+              <h5 class="mb-0">Informasi MICE</h5>
+            </div>
+            <div class="info-card-body">
+              <p>MICE adalah singkatan dari:</p>
+              <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item bg-transparent px-0 py-2">
+                  <strong>M</strong>eetings (Pertemuan)
+                </li>
+                <li class="list-group-item bg-transparent px-0 py-2">
+                  <strong>I</strong>ncentives (Insentif)
+                </li>
+                <li class="list-group-item bg-transparent px-0 py-2">
+                  <strong>C</strong>onferences (Konferensi)
+                </li>
+                <li class="list-group-item bg-transparent px-0 py-2">
+                  <strong>E</strong>xhibitions (Pameran)
+                </li>
+              </ul>
+              <p class="mb-0">
+                MICE merupakan jenis kegiatan pariwisata bisnis yang fokus pada
+                penyelenggaraan acara-acara yang melibatkan pertemuan kelompok
+                besar untuk tujuan bisnis, profesional, atau edukasi.
+              </p>
+
+              <div class="alert alert-warning mt-3">
+                <i class="fas fa-lightbulb me-2"></i>
+                Data yang lengkap dan akurat akan membantu meningkatkan
+                visibilitas venue MICE hotel Anda dalam sistem.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-3 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2025 MICE ID INVENTORY. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="#" class="me-3"
+              ><i class="fas fa-envelope me-1"></i> Kontak</a
+            >
+            <a href="#"><i class="fas fa-info-circle me-1"></i> Bantuan</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Venue data array
+      const venues = [
+        {
+          id: 1, name: "Ballroom Malang", type: "Ballroom",
+          capacity: {theater: 200, classroom: 120, ushape: 50, boardroom: 40, banquet: 150, reception: 250},
+          dimensions: {area: 250, length: 25, width: 10, height: 4.5},
+          notes: "Ruangan ini baru direnovasi dan memiliki view menghadap gunung."
+        },
+        {
+          id: 2, name: "Meeting Room A", type: "Meeting Room",
+          capacity: {theater: 50, classroom: 30, ushape: 20, boardroom: 16, banquet: 0, reception: 60},
+          dimensions: {area: 75, length: 15, width: 5, height: 3},
+          notes: ""
+        }
+      ];
+
+      // Current active step
+      let currentStep = 1;
+
+      // Show specific step
+      function showStep(step) {
+        document.querySelectorAll(".form-section").forEach(section => {
+          section.classList.remove("active");
+        });
+        document.getElementById("section" + step).classList.add("active");
+        
+        // Update step indicators
+        document.querySelectorAll(".step").forEach((stepEl, index) => {
+          const stepNum = index + 1;
+          stepEl.classList.remove("active", "completed");
+          if (stepNum < step) stepEl.classList.add("completed");
+          else if (stepNum === step) stepEl.classList.add("active");
+        });
+        
+        currentStep = step;
+        window.scrollTo({top: 0, behavior: "smooth"});
+        return true;
+      }
+
+      // Navigation functions
+      function nextStep(current) {
+        if (current < 5) showStep(current + 1);
+      }
+
+      function prevStep(current) {
+        if (current > 1) showStep(current - 1);
+      }
+
+      // Calculate area from length and width
+      function calculateArea() {
+        const length = parseFloat(document.getElementById("room-length").value) || 0;
+        const width = parseFloat(document.getElementById("room-width").value) || 0;
+        document.getElementById("room-area").value = (length * width).toFixed(2);
+      }
+
+      // Reset form after confirmation
+      function resetForm() {
+        if (confirm("Apakah Anda yakin ingin mereset form? Semua data yang telah dimasukkan akan hilang.")) {
+          // Reset text inputs and selects
+          document.querySelectorAll('input[type="text"], input[type="number"], textarea, select').forEach(input => {
+            input.value = "";
+          });
+          
+          // Reset checkboxes
+          document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          
+          // Reset to first step
+          showStep(1);
+          
+          // Show notification
+          showNotification("Form Direset", "Semua data telah direset", "info");
+        }
+      }
+
+      // Add new venue
+      function addNewVenue() {
+        resetForm();
+        showStep(1);
+      }
+
+      // Edit venue
+      function editVenue(id) {
+        const venue = venues.find(v => v.id === id);
+        if (venue) {
+          // Populate form with venue data
+          document.getElementById("venue-name").value = venue.name;
+          document.getElementById("venue-type").value = venue.type.toLowerCase().replace(" ", "-");
+          document.getElementById("venue-notes").value = venue.notes || "";
+          
+          // Populate capacity fields
+          for (const type in venue.capacity) {
+            const input = document.getElementById("capacity-" + type);
+            if (input) input.value = venue.capacity[type] || "";
+          }
+          
+          // Populate dimensions
+          for (const dim in venue.dimensions) {
+            const input = document.getElementById("room-" + dim);
+            if (input) input.value = venue.dimensions[dim] || "";
+          }
+          
+          showStep(1);
+          showNotification("Edit Venue", `Mengedit venue: ${venue.name}`, "info");
+        }
+      }
+
+      // Delete venue
+      function deleteVenue(id) {
+        if (confirm("Apakah Anda yakin ingin menghapus venue ini?")) {
+          showNotification("Venue Dihapus", "Venue berhasil dihapus dari sistem", "success");
+        }
+      }
+
+      // Save venue
+      function saveVenue() {
+        showNotification("Venue Tersimpan", "Data venue berhasil disimpan", "success");
+        setTimeout(() => { window.location.href = "../dashboard/"; }, 2000);
+      }
+
+      // Show toast notification
+      function showNotification(title, message, type) {
+        // Get or create toast container
+        let container = document.querySelector(".toast-container");
+        if (!container) {
+          container = document.createElement("div");
+          container.className = "toast-container position-fixed bottom-0 end-0 p-3";
+          container.style.zIndex = "1050";
+          document.body.appendChild(container);
+        }
+        
+        // Create toast element
+        const toastId = "toast-" + Date.now();
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.id = toastId;
+        toast.setAttribute("role", "alert");
+        toast.setAttribute("aria-live", "assertive");
+        toast.setAttribute("aria-atomic", "true");
+        
+        // Set style based on notification type
+        const bgClass = type === "success" ? "bg-success" : 
+                        type === "error" ? "bg-danger" : 
+                        type === "info" ? "bg-primary" : "bg-warning";
+        const icon = type === "success" ? "fa-check-circle" : 
+                     type === "error" ? "fa-exclamation-circle" : 
+                     type === "info" ? "fa-info-circle" : "fa-exclamation-triangle";
+        
+        // Set toast HTML
+        toast.innerHTML = `
+          <div class="toast-header ${bgClass} text-white">
+            <i class="fas ${icon} me-2"></i>
+            <strong class="me-auto">${title}</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">${message}</div>
+        `;
+        
+        // Add to container and show
+        container.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast, {autohide: true, delay: 5000});
+        bsToast.show();
+        
+        // Remove from DOM after hiding
+        toast.addEventListener("hidden.bs.toast", function() {
+          toast.remove();
+        });
+      }
+    </script>
+  </body>
+</html>

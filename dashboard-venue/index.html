@@ -835,8 +835,8 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fas fa-building"></i> Informasi Venue
+                  <a class="nav-link" href="../form-venue/" classs="quick-link">
+                    <i class="fas fa-building"></i> Informasi umum Venue
                   </a>
                 </li>
                 <li class="nav-item">
@@ -934,13 +934,13 @@
               <div class="card-container">
                 <div class="stat-card">
                   <div class="stat-icon warning">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-database"></i>
                   </div>
                   <div class="stat-content">
-                    <p class="stat-title">Tingkat Okupansi</p>
+                    <p class="stat-title">Kapasitas Terdaftar</p>
                     <p class="stat-value">
-                      78%<span class="stat-badge up"
-                        ><i class="fas fa-arrow-up"></i>5%</span
+                      1225<span class="stat-badge up"
+                        ><i class="fas fa-arrow-up"></i>125</span
                       >
                     </p>
                   </div>
@@ -1015,8 +1015,8 @@
                             Lengkap
                           </div>
                           <div class="capacity-item">
-                            <i class="fas fa-calendar-alt"></i> Tersedia: 24 Mei
-                            2025
+                            <i class="fas fa-map-marker-alt"></i> Malang,
+                            Jawa Timur
                           </div>
                         </div>
                       </div>
@@ -1060,8 +1060,8 @@
                             Lengkap
                           </div>
                           <div class="capacity-item">
-                            <i class="fas fa-calendar-alt"></i> Tersedia: 15 Mei
-                            2025
+                            <i class="fas fa-map-marker-alt"></i> Surabaya,
+                            Jawa Timur
                           </div>
                         </div>
                       </div>
@@ -1105,8 +1105,8 @@
                             Premium
                           </div>
                           <div class="capacity-item">
-                            <i class="fas fa-calendar-alt"></i> Tersedia: 19 Mei
-                            2025
+                            <i class="fas fa-map-marker-alt"></i> Jakarta,
+                            DKI Jakarta
                           </div>
                         </div>
                       </div>
@@ -1132,18 +1132,18 @@
               <!-- Charts & Statistics -->
               <div class="dashboard-card">
                 <div class="card-header">
-                  <h5>Statistik Penggunaan Venue</h5>
+                  <h5>Distribusi Jenis Venue</h5>
                   <div>
                     <button class="btn btn-sm btn-outline-light me-2">
-                      Mingguan
+                      Kapasitas
                     </button>
                     <button class="btn btn-sm btn-outline-light active">
-                      Bulanan
+                      Jenis
                     </button>
                   </div>
                 </div>
                 <div class="card-body">
-                  <canvas id="venueOccupancyChart" height="250"></canvas>
+                  <canvas id="venueDistributionChart" height="250"></canvas>
                 </div>
               </div>
             </div>
@@ -1350,7 +1350,7 @@
                   </div>
                   <div class="progress-item">
                     <div class="progress-title">
-                      <span class="progress-label">Tarif & Paket</span>
+                      <span class="progress-label">Kebijakan Venue</span>
                       <span class="progress-percentage">75%</span>
                     </div>
                     <div class="progress">
@@ -1444,16 +1444,15 @@
                       </div>
                       <div class="timeline-item">
                         <div class="timeline-icon warning">
-                          <i class="fas fa-calendar-alt"></i>
+                          <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div class="timeline-content">
                           <div class="timeline-title">
-                            <h6>Booking Baru</h6>
+                            <h6>Lokasi Venue Diperbarui</h6>
                             <span class="timeline-time">Kemarin, 10:15</span>
                           </div>
                           <p class="timeline-text">
-                            Konferensi Teknologi Informasi dijadwalkan pada 22
-                            Mei 2025
+                            Informasi lokasi dan akses Meeting Room telah diperbarui
                           </p>
                         </div>
                       </div>
@@ -1497,11 +1496,11 @@
                 <div class="col-md-4 mb-3">
                   <a href="#" class="quick-link">
                     <div class="quick-link-icon">
-                      <i class="fas fa-calendar-plus"></i>
+                      <i class="fas fa-map-marked-alt"></i>
                     </div>
                     <div class="quick-link-text">
-                      <h4>Jadwalkan Acara</h4>
-                      <p>Tambahkan acara baru ke kalender venue</p>
+                      <h4>Lokasi & Akses</h4>
+                      <p>Kelola informasi lokasi dan akses venue</p>
                     </div>
                   </a>
                 </div>
@@ -1530,11 +1529,11 @@
                 <div class="col-md-4 mb-3">
                   <a href="#" class="quick-link">
                     <div class="quick-link-icon">
-                      <i class="fas fa-file-invoice-dollar"></i>
+                      <i class="fas fa-clipboard-list"></i>
                     </div>
                     <div class="quick-link-text">
-                      <h4>Tarif & Paket</h4>
-                      <p>Atur harga dan paket venue MICE</p>
+                      <h4>Kebijakan Venue</h4>
+                      <p>Kelola kebijakan penggunaan venue</p>
                     </div>
                   </a>
                 </div>
@@ -1617,33 +1616,33 @@
           },
         });
 
-        // Venue Occupancy Chart
-        const venueOccupancyCtx = document
-          .getElementById("venueOccupancyChart")
+        // Venue Distribution Chart
+        const venueDistributionCtx = document
+          .getElementById("venueDistributionChart")
           .getContext("2d");
-        const venueOccupancyChart = new Chart(venueOccupancyCtx, {
+        const venueDistributionChart = new Chart(venueDistributionCtx, {
           type: "bar",
           data: {
             labels: [
-              "Ballroom Malang",
-              "Meeting Room A",
-              "Meeting Room B",
-              "Meeting Room Executive",
-              "Board Room Diamond",
+              "Ballroom",
+              "Meeting Room",
+              "Board Room",
               "Function Room",
+              "Exhibition Hall",
+              "Auditorium",
             ],
             datasets: [
               {
-                label: "Tingkat Okupansi (%)",
-                data: [85, 72, 65, 90, 78, 60],
+                label: "Jumlah Venue",
+                data: [3, 5, 2, 2, 1, 1],
                 backgroundColor: "#3a5680",
                 borderColor: "#2A4061",
                 borderWidth: 1,
                 borderRadius: 5,
               },
               {
-                label: "Target Okupansi (%)",
-                data: [75, 75, 75, 75, 75, 75],
+                label: "Kapasitas Rata-rata (orang)",
+                data: [200, 50, 16, 80, 350, 120],
                 backgroundColor: "rgba(229, 188, 109, 0.5)",
                 borderColor: "#e5bc6d",
                 borderWidth: 1,
@@ -1651,6 +1650,7 @@
                 type: "line",
                 fill: false,
                 pointBackgroundColor: "#e5bc6d",
+                yAxisID: 'y1',
               },
             ],
           },
@@ -1660,13 +1660,22 @@
             scales: {
               y: {
                 beginAtZero: true,
-                max: 100,
-                ticks: {
-                  callback: function (value) {
-                    return value + "%";
-                  },
-                },
+                title: {
+                  display: true,
+                  text: 'Jumlah Venue'
+                }
               },
+              y1: {
+                beginAtZero: true,
+                position: 'right',
+                grid: {
+                  drawOnChartArea: false,
+                },
+                title: {
+                  display: true,
+                  text: 'Kapasitas Rata-rata'
+                }
+              }
             },
             plugins: {
               legend: {
@@ -1675,9 +1684,12 @@
               tooltip: {
                 callbacks: {
                   label: function (context) {
-                    return (
-                      context.dataset.label + ": " + context.parsed.y + "%"
-                    );
+                    const label = context.dataset.label;
+                    if (label === "Jumlah Venue") {
+                      return label + ": " + context.parsed.y + " unit";
+                    } else {
+                      return label + ": " + context.parsed.y + " orang";
+                    }
                   },
                 },
               },

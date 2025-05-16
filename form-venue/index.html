@@ -51,6 +51,8 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        padding-bottom: 0;
+        position: relative;
       }
 
       h1,
@@ -197,6 +199,8 @@
         padding: 1rem 0;
         margin-top: auto;
         position: relative;
+        width: 100%;
+        clear: both;
       }
 
       footer::before {
@@ -207,6 +211,13 @@
         width: 100%;
         height: 4px;
         background: var(--accent);
+      }
+      
+      /* Clearfix utility */
+      .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
       }
 
       footer p {
@@ -835,7 +846,7 @@
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#"
+                  <a class="dropdown-item" href="../index.html"
                     ><i class="fas fa-sign-out-alt"></i> Logout</a
                   >
                 </li>
@@ -858,13 +869,13 @@
             <div class="sidebar-menu">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="../dashboard-venue/">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link active" href="#">
-                    <i class="fas fa-building"></i> Informasi Venue
+                    <i class="fas fa-building"></i> Informasi umum Venue
                   </a>
                 </li>
                 <li class="nav-item">
@@ -873,8 +884,8 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <i class="fas fa-users"></i> Kapasitas & Konfigurasi
+                  <a class="nav-link" href="../venue-management/">
+                    <i class="fas fa-users"></i> Setup Data Venue
                   </a>
                 </li>
                 <li class="nav-item">
@@ -1207,24 +1218,7 @@ Ballroom Malang Convention Center adalah venue premium yang menawarkan ruang aca
                 </div>
 
                 <div class="row mb-4">
-                  <div class="col-md-6">
-                    <div class="info-item">
-                      <label class="info-label"
-                        >Klasifikasi/Peringkat Venue</label
-                      >
-                      <div class="info-content readonly-view">5 Star</div>
-                      <div class="edit-view">
-                        <select class="form-select">
-                          <option>Pilih Klasifikasi</option>
-                          <option selected>5 Star</option>
-                          <option>4 Star</option>
-                          <option>3 Star</option>
-                          <option>Belum Diklasifikasi</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="info-item">
                       <label class="info-label">Status Operasional</label>
                       <div class="info-content readonly-view">
@@ -2457,9 +2451,11 @@ Ballroom Malang Convention Center diresmikan pada tahun 2018 sebagai bagian dari
         </div>
       </div>
     </div>
+    
+    <div style="margin-bottom: 80px;"></div>
 
     <!-- Footer -->
-    <footer class="py-3 mt-5">
+    <footer class="py-3" style="margin-top: auto;">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">

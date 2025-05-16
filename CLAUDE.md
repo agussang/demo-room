@@ -3,13 +3,9 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build Commands
-- Build: `npm run build` - Transpiles TypeScript code to JavaScript
-- Development: `npm run dev` - Runs TypeScript in watch mode and serves the app
-- Typecheck: `tsc --noEmit` - Checks for TypeScript errors without emitting files
+- Start: `npm start` - Serves the app using the serve package
 
 ## Project Structure
-- `src/` - TypeScript source files and React components
-  - `components/` - React components (Dashboard.tsx, etc.)
 - `assets/` - Static assets
   - `css/` - CSS stylesheets (main.css, form.css, login.css)
   - `js/` - JavaScript files
@@ -20,16 +16,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `form-venue/` - Venue information form
   - `mice-management/` - MICE management forms 
 - Dashboard pages:
-  - `dashboard/` - Hotel dashboard view
+  - `dashboard/` - Hotel dashboard view (index.html, hotel-dashboard.html)
   - `dashboard-venue/` - Venue dashboard view
 - `room/` - Room detail and management pages
 
 ## Code Style Guidelines
-- **TypeScript**: Use strict mode with proper type annotations
-- **Components**: React functional components with hooks
-- **Naming**: PascalCase for components, camelCase for variables/functions
+- **JavaScript**: Vanilla JavaScript for functionality
+- **Naming**: camelCase for variables/functions
 - **Colors**:
-  - Use consistent color variables defined in stylesheets (PRIMARY, ACCENT, etc.)
+  - Use consistent color variables defined in stylesheets (--primary, --accent, etc.)
   - Primary color: #2A4061 (blue)
   - Accent color: #E5BC6D (gold)
 - **CSS**: Include appropriate classes for styling

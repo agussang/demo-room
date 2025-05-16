@@ -2093,23 +2093,9 @@
                                                             <option value="none">Tidak Tersedia</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="internet-bandwidth" class="form-label">Bandwidth</label>
-                                                        <div class="input-with-unit">
-                                                            <input type="number" class="form-control" id="internet-bandwidth" placeholder="Contoh: 100">
-                                                            <span class="input-unit">Mbps</span>
-                                                        </div>
-                                                    </div>
                                                 </div>
-
+                                                
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="internet-connections" class="form-label">Maksimum Koneksi Simultan</label>
-                                                        <div class="input-with-unit">
-                                                            <input type="number" class="form-control" id="internet-connections" placeholder="Contoh: 200">
-                                                            <span class="input-unit">koneksi</span>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="internet-provider" class="form-label">Provider/ISP</label>
                                                         <input type="text" class="form-control" id="internet-provider" placeholder="Contoh: Indihome, Biznet, FirstMedia...">
@@ -2480,31 +2466,10 @@
                                                     <label class="form-label">Fasilitas Toilet <span class="text-danger">*</span></label>
                                                     <div class="row">
                                                         <div class="col-md-3 mb-3">
-                                                            <label for="male-toilet" class="form-label">Toilet Pria</label>
+                                                            <label for="male-toilet" class="form-label">Jumlah Toilet</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text"><i class="fas fa-male"></i></span>
-                                                                <input type="number" class="form-control" id="male-toilet" placeholder="Bilik" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 mb-3">
-                                                            <label for="urinal-count" class="form-label">Urinoir</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-text"><i class="fas fa-male"></i></span>
-                                                                <input type="number" class="form-control" id="urinal-count" placeholder="Unit">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 mb-3">
-                                                            <label for="female-toilet" class="form-label">Toilet Wanita</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-text"><i class="fas fa-female"></i></span>
-                                                                <input type="number" class="form-control" id="female-toilet" placeholder="Bilik" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 mb-3">
-                                                            <label for="disable-toilet" class="form-label">Toilet Disabilitas</label>
-                                                            <div class="input-group">
-                                                                <span class="input-group-text"><i class="fas fa-wheelchair"></i></span>
-                                                                <input type="number" class="form-control" id="disable-toilet" placeholder="Unit">
+                                                                <input type="number" class="form-control" id="male-toilet" placeholder="Jumlah" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3096,33 +3061,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Visibility Options -->
-                                        <div class="mb-4">
-                                            <h5 class="section-title">Opsi Publikasi</h5>
-                                            <div class="mb-3">
-                                                <label for="visibility" class="form-label">Visibilitas Data <span class="text-danger">*</span></label>
-                                                <select class="form-select" id="visibility" required>
-                                                    <option value="" selected disabled>Pilih opsi visibilitas...</option>
-                                                    <option value="public">Publik (Terlihat oleh semua)</option>
-                                                    <option value="limited">Terbatas (Terlihat oleh pengguna terverifikasi)</option>
-                                                    <option value="private">Private (Terlihat oleh Anda dan admin saja)</option>
-                                                </select>
-                                            </div>
-                                            
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" type="checkbox" id="show-contact" checked>
-                                                <label class="form-check-label" for="show-contact">
-                                                    Tampilkan Informasi Kontak
-                                                </label>
-                                            </div>
-                                            
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" type="checkbox" id="show-price" checked>
-                                                <label class="form-check-label" for="show-price">
-                                                    Tampilkan Informasi Harga
-                                                </label>
-                                            </div>
-                                        </div>
+                                        <!-- Visibility Options removed as requested -->
 
                                         <!-- Submit Section -->
                                         <div class="mb-4">
@@ -3308,6 +3247,78 @@
     <script src="../js/venue-management.js"></script>
     <script>
     // Additional script with original functions preserved
+    
+    // Function to save form data to localStorage
+    function saveFormData() {
+        const formData = {};
+        
+        // Get all input, select, and textarea elements
+        const inputs = document.querySelectorAll('input, select, textarea');
+        
+        // Save each element's value
+        inputs.forEach(input => {
+            if (input.id) {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    formData[input.id] = input.checked;
+                } else {
+                    formData[input.id] = input.value;
+                }
+            }
+        });
+        
+        // Save layout selection data
+        const selectedLayouts = document.querySelectorAll('.layout-option.selected');
+        const layoutData = [];
+        selectedLayouts.forEach(layout => {
+            layoutData.push(layout.getAttribute('data-layout'));
+        });
+        formData['selectedLayouts'] = layoutData;
+        
+        // Save to localStorage
+        localStorage.setItem('venueManagementFormData', JSON.stringify(formData));
+    }
+    
+    // Function to load form data from localStorage
+    function loadFormData() {
+        const savedData = localStorage.getItem('venueManagementFormData');
+        
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            
+            // Set values for all saved inputs
+            Object.keys(formData).forEach(key => {
+                const element = document.getElementById(key);
+                
+                if (element && key !== 'selectedLayouts') {
+                    if (element.type === 'checkbox' || element.type === 'radio') {
+                        element.checked = formData[key];
+                    } else {
+                        element.value = formData[key];
+                    }
+                }
+            });
+            
+            // Restore layout selections
+            if (formData.selectedLayouts && formData.selectedLayouts.length > 0) {
+                formData.selectedLayouts.forEach(layoutType => {
+                    const layoutElement = document.querySelector(`.layout-option[data-layout="${layoutType}"]`);
+                    if (layoutElement) {
+                        layoutElement.classList.add('selected');
+                        // Update the checkbox within the layout
+                        const checkbox = layoutElement.querySelector('input[type="checkbox"]');
+                        if (checkbox) checkbox.checked = true;
+                    }
+                });
+            }
+            
+            // Update status and UI elements
+            updateDimensionsStatus();
+            updateLayoutStatus();
+            updateTechnicalStatus();
+            updateFacilitiesStatus();
+            updateCompletionPercentage();
+        }
+    }
 
 // Function to show specific step
 function showStep(step) {
@@ -3426,6 +3437,9 @@ function showNotification(title, message, type) {
 
 // Document ready function
 document.addEventListener("DOMContentLoaded", function() {
+    // Load saved form data from localStorage
+    loadFormData();
+    
     // Initialize tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
@@ -3439,6 +3453,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     
+    // Setup event listeners to save form data on input changes
+    const allInputs = document.querySelectorAll('input, select, textarea');
+    allInputs.forEach(input => {
+        input.addEventListener('change', saveFormData);
+        input.addEventListener('input', function() {
+            // Debounce input events to prevent excessive saves
+            clearTimeout(input.saveTimeout);
+            input.saveTimeout = setTimeout(saveFormData, 500);
+        });
+    });
+    
     // Layout option selection
     document.querySelectorAll(".layout-option").forEach(option => {
         option.addEventListener("click", function() {
@@ -3446,6 +3471,9 @@ document.addEventListener("DOMContentLoaded", function() {
             
             // Update status card
             updateLayoutStatus();
+            
+            // Save form data when layout changes
+            saveFormData();
         });
     });
     
@@ -3458,30 +3486,37 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Form navigation buttons
     document.getElementById("next-btn-1").addEventListener("click", function() {
+        saveFormData();
         showStep(2);
     });
     
     document.getElementById("prev-btn-2").addEventListener("click", function() {
+        saveFormData();
         showStep(1);
     });
     
     document.getElementById("next-btn-2").addEventListener("click", function() {
+        saveFormData();
         showStep(3);
     });
     
     document.getElementById("prev-btn-3").addEventListener("click", function() {
+        saveFormData();
         showStep(2);
     });
     
     document.getElementById("next-btn-3").addEventListener("click", function() {
+        saveFormData();
         showStep(4);
     });
     
     document.getElementById("prev-btn-4").addEventListener("click", function() {
+        saveFormData();
         showStep(3);
     });
     
     document.getElementById("next-btn-4").addEventListener("click", function() {
+        saveFormData();
         showStep(5);
         
         // Update summary data
@@ -3489,6 +3524,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     document.getElementById("prev-btn-5").addEventListener("click", function() {
+        saveFormData();
         showStep(4);
     });
     
@@ -3496,18 +3532,32 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("submit-btn").addEventListener("click", function(e) {
         e.preventDefault();
         
-        // Validate required fields
-        const form = document.getElementById("venue-setup-form");
+        // Save form data one last time
+        saveFormData();
         
+        // Show success modal without validation
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        successModal.show();
+        
+        // Add event listener to clear localStorage when clicking "Lihat Daftar Venue" in the success modal
+        const viewVenuesBtn = document.getElementById('view-venues-btn');
+        if (viewVenuesBtn) {
+            viewVenuesBtn.addEventListener('click', function() {
+                // Clear form data from localStorage after successful submission
+                localStorage.removeItem('venueManagementFormData');
+            });
+        }
+        
+        /* Validation removed as requested
         if (form.checkValidity()) {
             // Show success modal
             const successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
-        } else {
-            form.classList.add("was-validated");
+        } else {*/
+            /*form.classList.add("was-validated");
             
             // Show notification
-            showNotification("Validasi Gagal", "Harap lengkapi semua field yang wajib diisi", "error");
+            showNotification("Validasi Gagal", "Harap lengkapi semua field yang wajib diisi", "error");*/
         }
     });
     

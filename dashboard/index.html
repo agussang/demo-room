@@ -726,6 +726,39 @@
         height: 100%;
         margin-bottom: 20px;
       }
+      
+      /* Pulsing button animation */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(229, 188, 109, 0.7);
+          transform: scale(1);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(229, 188, 109, 0);
+          transform: scale(1.02);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(229, 188, 109, 0);
+          transform: scale(1);
+        }
+      }
+
+      .pulse-button {
+        animation: pulse 2s infinite;
+        background-color: var(--accent);
+        color: var(--primary-dark);
+        border: none;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+      
+      .pulse-button:hover {
+        background-color: var(--accent-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(229, 188, 109, 0.3);
+        animation: none;
+        color: var(--primary-dark);
+      }
     </style>
   </head>
   <body>
@@ -863,6 +896,11 @@
                 Hotel Mulia Malang Dashboard | Terakhir diperbarui: Hari ini,
                 10:30 WIB
               </p>
+            </div>
+            <div>
+              <a href="../welcome.html" class="btn btn-accent btn-lg pulse-button">
+                <i class="fas fa-exchange-alt me-2"></i> Beralih ke Mode Venue
+              </a>
             </div>
           </div>
 
@@ -1373,6 +1411,11 @@
         </div>
       </div>
     </div>
+
+    <!-- Floating action button -->
+    <a href="../welcome.html" class="floating-action-button" title="Beralih ke Venue">
+      <i class="fas fa-exchange-alt"></i>
+    </a>
 
     <!-- Footer -->
     <footer class="py-3 mt-5">

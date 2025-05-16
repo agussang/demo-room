@@ -731,7 +731,7 @@
                       </li>
                       <li>
                         <i class="fas fa-bed"></i>
-                        <strong>Tempat Tidur:</strong> 1 Double Bed
+                        <strong>Tempat Tidur:</strong> 1
                       </li>
                       <li>
                         <i class="fas fa-eye"></i>
@@ -812,14 +812,7 @@
                 </div>
               </div>
               <div class="room-type-footer">
-                <button
-                  class="btn btn-sm btn-outline-primary me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editRoomTypeModal"
-                >
-                  <i class="fas fa-edit me-1"></i> Edit
-                </button>
-                <a href="detail.html" class="btn btn-sm btn-primary">
+                <a href="/room/detail.html" class="btn btn-sm btn-primary">
                   <i class="fas fa-eye me-1"></i> Detail
                 </a>
               </div>
@@ -846,7 +839,7 @@
                       </li>
                       <li>
                         <i class="fas fa-bed"></i>
-                        <strong>Tempat Tidur:</strong> 1 King Bed
+                        <strong>Tempat Tidur:</strong> 1
                       </li>
                       <li>
                         <i class="fas fa-eye"></i>
@@ -927,10 +920,7 @@
                 </div>
               </div>
               <div class="room-type-footer">
-                <button class="btn btn-sm btn-outline-primary me-2">
-                  <i class="fas fa-edit me-1"></i> Edit
-                </button>
-                <a href="detail.html" class="btn btn-sm btn-primary">
+                <a href="/room/detail.html" class="btn btn-sm btn-primary">
                   <i class="fas fa-eye me-1"></i> Detail
                 </a>
               </div>
@@ -957,7 +947,7 @@
                       </li>
                       <li>
                         <i class="fas fa-bed"></i>
-                        <strong>Tempat Tidur:</strong> 1 King Bed + 1 Sofa Bed
+                        <strong>Tempat Tidur:</strong> 2
                       </li>
                       <li>
                         <i class="fas fa-eye"></i>
@@ -1038,10 +1028,7 @@
                 </div>
               </div>
               <div class="room-type-footer">
-                <button class="btn btn-sm btn-outline-primary me-2">
-                  <i class="fas fa-edit me-1"></i> Edit
-                </button>
-                <a href="detail.html" class="btn btn-sm btn-primary">
+                <a href="/room/detail.html" class="btn btn-sm btn-primary">
                   <i class="fas fa-eye me-1"></i> Detail
                 </a>
               </div>
@@ -1328,7 +1315,7 @@
                             <i class="fas fa-bed"></i>
                             <div>
                               <label
-                                for="bed-config"
+                                for="bed-count"
                                 class="form-label required mb-1"
                                 >Ketersediaan Tempat Tidur</label>
                                 <input
@@ -1337,8 +1324,6 @@
                                   id="bed-count"
                                   placeholder="Masukkan jumlah tempat tidur"
                                 />
-                                </div>
-                              </div>
                             </div>
                           </li>
                         </ul>
@@ -2430,28 +2415,7 @@
             }, 1500);
           });
 
-        // Add custom bed configuration if "Lainnya" is selected
-        document
-          .getElementById("bed-config")
-          .addEventListener("change", function () {
-            if (this.value === "Lainnya") {
-              // Check if custom input already exists
-              if (!document.getElementById("custom-bed-config")) {
-                const customInput = document.createElement("div");
-                customInput.className = "mt-2";
-                customInput.innerHTML = `
-                <input type="text" class="form-control" id="custom-bed-config" placeholder="Masukkan konfigurasi tempat tidur">
-              `;
-                this.parentNode.appendChild(customInput);
-              }
-            } else {
-              // Remove custom input if exists
-              const customInput = document.getElementById("custom-bed-config");
-              if (customInput) {
-                customInput.parentNode.remove();
-              }
-            }
-          });
+        // No custom bed configuration needed
       });
     </script>
   </body>

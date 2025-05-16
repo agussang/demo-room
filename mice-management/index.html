@@ -549,7 +549,7 @@
                       />
                       <label class="form-check-label" for="spec-stage">
                         <i class="fas fa-camera text-primary me-2"></i>
-                        Backdrop/Stage Area
+                        Backdrop/Stage dedicated
                       </label>
                     </div>
                   </div>
@@ -558,7 +558,7 @@
                 <div class="row mb-4">
                   <div class="col-md-6 mb-3">
                     <label for="flooring-type" class="form-label"
-                      >Jenis Lantai</label
+                      >Jenis Penutup Lantai</label
                     >
                     <select class="form-select" id="flooring-type">
                       <option value="carpet">Karpet</option>
@@ -650,30 +650,6 @@
                         Generator Cadangan
                       </label>
                     </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="bandwidth" class="form-label"
-                      >Bandwidth Internet (Mbps)</label
-                    >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="bandwidth"
-                      placeholder="0"
-                      min="0"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="power-outlets" class="form-label"
-                      >Jumlah Stop Kontak</label
-                    >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="power-outlets"
-                      placeholder="0"
-                      min="0"
-                    />
                   </div>
                 </div>
 
@@ -784,19 +760,6 @@
                       <label class="form-check-label" for="support-planning">
                         <i class="fas fa-calendar-check text-primary me-2"></i>
                         Dukungan Event Planning
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <div class="form-check form-switch">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="support-catering"
-                      />
-                      <label class="form-check-label" for="support-catering">
-                        <i class="fas fa-utensils text-primary me-2"></i>
-                        Layanan Katering Khusus Event
                       </label>
                     </div>
                   </div>
@@ -963,7 +926,7 @@
                         </li>
                         <li class="list-group-item bg-transparent px-0 py-1">
                           <i class="fas fa-check-circle text-success me-2"></i>
-                          Stage Area
+                          Stage dedicated
                         </li>
                         <li class="list-group-item bg-transparent px-0 py-1">
                           <i class="fas fa-check-circle text-success me-2"></i>
@@ -1200,17 +1163,36 @@
       // Venue data array
       const venues = [
         {
-          id: 1, name: "Ballroom Malang", type: "Ballroom",
-          capacity: {theater: 200, classroom: 120, ushape: 50, boardroom: 40, banquet: 150, reception: 250},
-          dimensions: {area: 250, length: 25, width: 10, height: 4.5},
-          notes: "Ruangan ini baru direnovasi dan memiliki view menghadap gunung."
+          id: 1,
+          name: "Ballroom Malang",
+          type: "Ballroom",
+          capacity: {
+            theater: 200,
+            classroom: 120,
+            ushape: 50,
+            boardroom: 40,
+            banquet: 150,
+            reception: 250,
+          },
+          dimensions: { area: 250, length: 25, width: 10, height: 4.5 },
+          notes:
+            "Ruangan ini baru direnovasi dan memiliki view menghadap gunung.",
         },
         {
-          id: 2, name: "Meeting Room A", type: "Meeting Room",
-          capacity: {theater: 50, classroom: 30, ushape: 20, boardroom: 16, banquet: 0, reception: 60},
-          dimensions: {area: 75, length: 15, width: 5, height: 3},
-          notes: ""
-        }
+          id: 2,
+          name: "Meeting Room A",
+          type: "Meeting Room",
+          capacity: {
+            theater: 50,
+            classroom: 30,
+            ushape: 20,
+            boardroom: 16,
+            banquet: 0,
+            reception: 60,
+          },
+          dimensions: { area: 75, length: 15, width: 5, height: 3 },
+          notes: "",
+        },
       ];
 
       // Current active step
@@ -1218,11 +1200,11 @@
 
       // Show specific step
       function showStep(step) {
-        document.querySelectorAll(".form-section").forEach(section => {
+        document.querySelectorAll(".form-section").forEach((section) => {
           section.classList.remove("active");
         });
         document.getElementById("section" + step).classList.add("active");
-        
+
         // Update step indicators
         document.querySelectorAll(".step").forEach((stepEl, index) => {
           const stepNum = index + 1;
@@ -1230,9 +1212,9 @@
           if (stepNum < step) stepEl.classList.add("completed");
           else if (stepNum === step) stepEl.classList.add("active");
         });
-        
+
         currentStep = step;
-        window.scrollTo({top: 0, behavior: "smooth"});
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return true;
       }
 
@@ -1247,27 +1229,41 @@
 
       // Calculate area from length and width
       function calculateArea() {
-        const length = parseFloat(document.getElementById("room-length").value) || 0;
-        const width = parseFloat(document.getElementById("room-width").value) || 0;
-        document.getElementById("room-area").value = (length * width).toFixed(2);
+        const length =
+          parseFloat(document.getElementById("room-length").value) || 0;
+        const width =
+          parseFloat(document.getElementById("room-width").value) || 0;
+        document.getElementById("room-area").value = (length * width).toFixed(
+          2
+        );
       }
 
       // Reset form after confirmation
       function resetForm() {
-        if (confirm("Apakah Anda yakin ingin mereset form? Semua data yang telah dimasukkan akan hilang.")) {
+        if (
+          confirm(
+            "Apakah Anda yakin ingin mereset form? Semua data yang telah dimasukkan akan hilang."
+          )
+        ) {
           // Reset text inputs and selects
-          document.querySelectorAll('input[type="text"], input[type="number"], textarea, select').forEach(input => {
-            input.value = "";
-          });
-          
+          document
+            .querySelectorAll(
+              'input[type="text"], input[type="number"], textarea, select'
+            )
+            .forEach((input) => {
+              input.value = "";
+            });
+
           // Reset checkboxes
-          document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = false;
-          });
-          
+          document
+            .querySelectorAll('input[type="checkbox"]')
+            .forEach((checkbox) => {
+              checkbox.checked = false;
+            });
+
           // Reset to first step
           showStep(1);
-          
+
           // Show notification
           showNotification("Form Direset", "Semua data telah direset", "info");
         }
@@ -1281,41 +1277,57 @@
 
       // Edit venue
       function editVenue(id) {
-        const venue = venues.find(v => v.id === id);
+        const venue = venues.find((v) => v.id === id);
         if (venue) {
           // Populate form with venue data
           document.getElementById("venue-name").value = venue.name;
-          document.getElementById("venue-type").value = venue.type.toLowerCase().replace(" ", "-");
+          document.getElementById("venue-type").value = venue.type
+            .toLowerCase()
+            .replace(" ", "-");
           document.getElementById("venue-notes").value = venue.notes || "";
-          
+
           // Populate capacity fields
           for (const type in venue.capacity) {
             const input = document.getElementById("capacity-" + type);
             if (input) input.value = venue.capacity[type] || "";
           }
-          
+
           // Populate dimensions
           for (const dim in venue.dimensions) {
             const input = document.getElementById("room-" + dim);
             if (input) input.value = venue.dimensions[dim] || "";
           }
-          
+
           showStep(1);
-          showNotification("Edit Venue", `Mengedit venue: ${venue.name}`, "info");
+          showNotification(
+            "Edit Venue",
+            `Mengedit venue: ${venue.name}`,
+            "info"
+          );
         }
       }
 
       // Delete venue
       function deleteVenue(id) {
         if (confirm("Apakah Anda yakin ingin menghapus venue ini?")) {
-          showNotification("Venue Dihapus", "Venue berhasil dihapus dari sistem", "success");
+          showNotification(
+            "Venue Dihapus",
+            "Venue berhasil dihapus dari sistem",
+            "success"
+          );
         }
       }
 
       // Save venue
       function saveVenue() {
-        showNotification("Venue Tersimpan", "Data venue berhasil disimpan", "success");
-        setTimeout(() => { window.location.href = "../dashboard/"; }, 2000);
+        showNotification(
+          "Venue Tersimpan",
+          "Data venue berhasil disimpan",
+          "success"
+        );
+        setTimeout(() => {
+          window.location.href = "../dashboard/";
+        }, 2000);
       }
 
       // Show toast notification
@@ -1324,11 +1336,12 @@
         let container = document.querySelector(".toast-container");
         if (!container) {
           container = document.createElement("div");
-          container.className = "toast-container position-fixed bottom-0 end-0 p-3";
+          container.className =
+            "toast-container position-fixed bottom-0 end-0 p-3";
           container.style.zIndex = "1050";
           document.body.appendChild(container);
         }
-        
+
         // Create toast element
         const toastId = "toast-" + Date.now();
         const toast = document.createElement("div");
@@ -1337,15 +1350,25 @@
         toast.setAttribute("role", "alert");
         toast.setAttribute("aria-live", "assertive");
         toast.setAttribute("aria-atomic", "true");
-        
+
         // Set style based on notification type
-        const bgClass = type === "success" ? "bg-success" : 
-                        type === "error" ? "bg-danger" : 
-                        type === "info" ? "bg-primary" : "bg-warning";
-        const icon = type === "success" ? "fa-check-circle" : 
-                     type === "error" ? "fa-exclamation-circle" : 
-                     type === "info" ? "fa-info-circle" : "fa-exclamation-triangle";
-        
+        const bgClass =
+          type === "success"
+            ? "bg-success"
+            : type === "error"
+            ? "bg-danger"
+            : type === "info"
+            ? "bg-primary"
+            : "bg-warning";
+        const icon =
+          type === "success"
+            ? "fa-check-circle"
+            : type === "error"
+            ? "fa-exclamation-circle"
+            : type === "info"
+            ? "fa-info-circle"
+            : "fa-exclamation-triangle";
+
         // Set toast HTML
         toast.innerHTML = `
           <div class="toast-header ${bgClass} text-white">
@@ -1355,14 +1378,17 @@
           </div>
           <div class="toast-body">${message}</div>
         `;
-        
+
         // Add to container and show
         container.appendChild(toast);
-        const bsToast = new bootstrap.Toast(toast, {autohide: true, delay: 5000});
+        const bsToast = new bootstrap.Toast(toast, {
+          autohide: true,
+          delay: 5000,
+        });
         bsToast.show();
-        
+
         // Remove from DOM after hiding
-        toast.addEventListener("hidden.bs.toast", function() {
+        toast.addEventListener("hidden.bs.toast", function () {
           toast.remove();
         });
       }

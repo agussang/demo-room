@@ -65,6 +65,10 @@ function showNotification(title, message, type) {
   const bgClass = type === "success" ? "bg-success" : "bg-danger";
   const icon = type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
   
+  // Make the toast wider for better readability of error messages
+  toast.style.maxWidth = type === "error" ? "400px" : "350px";
+  toast.style.width = type === "error" ? "400px" : "auto";
+  
   toast.innerHTML = `
     <div class="toast-header ${bgClass} text-white">
       <i class="fas ${icon} me-2"></i>
@@ -79,10 +83,24 @@ function showNotification(title, message, type) {
   // Add to container
   toastContainer.appendChild(toast);
   
-  // Initialize and show the toast
+  // Enhance toast styling for error messages
+  if (type === "error") {
+    const toastBody = toast.querySelector('.toast-body');
+    if (toastBody) {
+      toastBody.style.maxHeight = "300px";
+      toastBody.style.overflowY = "auto";
+      
+      // Add some padding for list items if there's a list
+      if (message.includes('<ul')) {
+        toastBody.style.paddingBottom = "8px";
+      }
+    }
+  }
+  
+  // Initialize and show the toast with longer display for errors
   const bsToast = new bootstrap.Toast(toast, {
     autohide: true,
-    delay: 5000
+    delay: type === "error" ? 8000 : 5000
   });
   
   bsToast.show();
@@ -119,6 +137,8 @@ function validateStep(step) {
     
     // Reset validation state
     element.classList.remove('is-invalid');
+    element.style.borderColor = '';
+    element.style.boxShadow = '';
     
     // Check validity based on element type
     let fieldValid = true;
@@ -136,14 +156,40 @@ function validateStep(step) {
       isValid = false;
       invalidFields.push(field.name);
       element.classList.add('is-invalid');
+      
+      // Add red border and shadow for better visibility
+      element.style.borderColor = '#dc3545';
+      element.style.boxShadow = '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
+      
+      // Scroll to first invalid field
+      if (invalidFields.length === 1) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Focus the element for better UX
+          element.focus();
+        }, 100);
+      }
     }
   });
   
   if (!isValid) {
-    // Show notification with missing fields
+    // Get step name for more specific error message
+    let stepName = "";
+    switch(step) {
+      case 1: stepName = "Spesifikasi Utama"; break;
+      case 2: stepName = "Konfigurasi Layout"; break;
+      case 3: stepName = "Infrastruktur Teknis"; break;
+      case 4: stepName = "Fasilitas Pendukung"; break;
+      case 5: stepName = "Konfirmasi & Publikasi"; break;
+      default: stepName = "Langkah " + step;
+    }
+    
+    // Show notification with missing fields and step name
     showNotification(
-      "Validasi Gagal", 
-      `Harap lengkapi field wajib berikut: ${invalidFields.join(', ')}`, 
+      `Validasi ${stepName} Gagal`, 
+      `Harap lengkapi field wajib berikut:<br><ul style="margin-top: 8px; padding-left: 20px;">
+        ${invalidFields.map(field => `<li>${field}</li>`).join('')}
+      </ul>`, 
       "error"
     );
   }
@@ -446,6 +492,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to validate a single field
   function validateField(field) {
     field.classList.remove('is-invalid');
+    field.style.borderColor = '';
+    field.style.boxShadow = '';
     
     let isValid = true;
     
@@ -459,10 +507,40 @@ document.addEventListener("DOMContentLoaded", function() {
     
     if (!isValid) {
       field.classList.add('is-invalid');
+      field.style.borderColor = '#dc3545';
+      field.style.boxShadow = '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
     }
     
     return isValid;
   }
+  
+  // Add event listeners to clear validation errors on input
+  document.querySelectorAll('input, select, textarea').forEach(element => {
+    element.addEventListener('input', function() {
+      if (this.classList.contains('is-invalid')) {
+        // If the field is now valid, clear the error styling
+        if (this.type === 'checkbox') {
+          if (this.checked) {
+            this.classList.remove('is-invalid');
+            this.style.borderColor = '';
+            this.style.boxShadow = '';
+          }
+        } else if (this.tagName === 'SELECT') {
+          if (this.selectedIndex > 0) {
+            this.classList.remove('is-invalid');
+            this.style.borderColor = '';
+            this.style.boxShadow = '';
+          }
+        } else {
+          if (this.value.trim() !== '') {
+            this.classList.remove('is-invalid');
+            this.style.borderColor = '';
+            this.style.boxShadow = '';
+          }
+        }
+      }
+    });
+  });
   
   // Material selection change handlers
   const materialFields = ["floor-material", "wall-material", "ceiling-material"];

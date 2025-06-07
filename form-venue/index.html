@@ -212,7 +212,7 @@
         height: 4px;
         background: var(--accent);
       }
-      
+
       /* Clearfix utility */
       .clearfix::after {
         content: "";
@@ -345,7 +345,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border: 1px solid var(--mid-gray);
       }
-      
+
       /* Ensure map controls are above cards */
       .gm-style .gm-style-iw-c,
       .gm-style .gm-style-iw-t,
@@ -353,7 +353,7 @@
       .gm-control-active {
         z-index: 950 !important;
       }
-      
+
       /* Map floating controls */
       .map-floating-control {
         background-color: white;
@@ -684,7 +684,7 @@
         font-size: 0.8rem;
         z-index: 1;
       }
-      
+
       /* Venue Image Thumbnails Styling */
       .venue-thumbnails {
         display: flex;
@@ -693,7 +693,7 @@
         overflow-x: auto;
         padding-bottom: 5px;
       }
-      
+
       .venue-thumbnails .thumbnail {
         width: 60px;
         height: 60px;
@@ -705,17 +705,17 @@
         border: 2px solid transparent;
         transition: all 0.2s ease;
       }
-      
+
       .venue-thumbnails .thumbnail.active {
         border-color: var(--primary);
       }
-      
+
       .venue-thumbnails .thumbnail img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-      
+
       .venue-thumbnails .thumbnail .add-image {
         width: 100%;
         height: 100%;
@@ -724,12 +724,12 @@
         font-size: 18px;
         border: 1px dashed #ccc;
       }
-      
+
       .venue-thumbnails .thumbnail:hover .add-image {
         background-color: #e8e8e8;
         color: var(--primary);
       }
-      
+
       .main-image-container {
         height: 200px;
         overflow: hidden;
@@ -739,18 +739,18 @@
         background-color: #f8f8f8;
         border-radius: 8px;
       }
-      
+
       .main-image-container img {
         max-height: 100%;
         object-fit: contain;
       }
-      
+
       #view360-btn {
         opacity: 0.8;
         width: 36px;
         height: 36px;
       }
-      
+
       #view360-btn:hover {
         opacity: 1;
       }
@@ -1117,13 +1117,19 @@ Ballroom Malang Convention Center adalah venue premium yang menawarkan ruang aca
 
                   <div class="col-md-4">
                     <div class="card h-100">
-                      <div class="card-header d-flex justify-content-between align-items-center">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
                         <h5>Gambar Venue</h5>
-                        <span class="badge bg-primary" id="image-counter">1/5</span>
+                        <span class="badge bg-primary" id="image-counter"
+                          >1/5</span
+                        >
                       </div>
                       <div class="card-body">
                         <!-- Main Image Preview -->
-                        <div class="text-center mb-3 position-relative main-image-container">
+                        <div
+                          class="text-center mb-3 position-relative main-image-container"
+                        >
                           <img
                             src="/api/placeholder/400/250"
                             alt="Venue Image"
@@ -1131,34 +1137,57 @@ Ballroom Malang Convention Center adalah venue premium yang menawarkan ruang aca
                             class="img-fluid rounded"
                           />
                           <div class="position-absolute top-0 end-0 m-2">
-                            <button class="btn btn-sm btn-light rounded-circle shadow" title="Lihat 360°" id="view360-btn" style="display: none;">
+                            <button
+                              class="btn btn-sm btn-light rounded-circle shadow"
+                              title="Lihat 360°"
+                              id="view360-btn"
+                              style="display: none"
+                            >
                               <i class="fas fa-vr-cardboard text-primary"></i>
                             </button>
                           </div>
                         </div>
 
                         <!-- Image Gallery Thumbnails -->
-                        <div class="venue-thumbnails mb-3 d-flex justify-content-center">
-                          <div class="thumbnail active" data-image="/api/placeholder/400/250" data-view360="">
-                            <img src="/api/placeholder/400/250" alt="Thumbnail 1" class="img-thumbnail">
+                        <div
+                          class="venue-thumbnails mb-3 d-flex justify-content-center"
+                        >
+                          <div
+                            class="thumbnail active"
+                            data-image="/api/placeholder/400/250"
+                            data-view360=""
+                          >
+                            <img
+                              src="/api/placeholder/400/250"
+                              alt="Thumbnail 1"
+                              class="img-thumbnail"
+                            />
                           </div>
                           <div class="thumbnail" data-image="" data-view360="">
-                            <div class="add-image d-flex justify-content-center align-items-center">
+                            <div
+                              class="add-image d-flex justify-content-center align-items-center"
+                            >
                               <i class="fas fa-plus"></i>
                             </div>
                           </div>
                           <div class="thumbnail" data-image="" data-view360="">
-                            <div class="add-image d-flex justify-content-center align-items-center">
+                            <div
+                              class="add-image d-flex justify-content-center align-items-center"
+                            >
                               <i class="fas fa-plus"></i>
                             </div>
                           </div>
                           <div class="thumbnail" data-image="" data-view360="">
-                            <div class="add-image d-flex justify-content-center align-items-center">
+                            <div
+                              class="add-image d-flex justify-content-center align-items-center"
+                            >
                               <i class="fas fa-plus"></i>
                             </div>
                           </div>
                           <div class="thumbnail" data-image="" data-view360="">
-                            <div class="add-image d-flex justify-content-center align-items-center">
+                            <div
+                              class="add-image d-flex justify-content-center align-items-center"
+                            >
                               <i class="fas fa-plus"></i>
                             </div>
                           </div>
@@ -1166,22 +1195,50 @@ Ballroom Malang Convention Center adalah venue premium yang menawarkan ruang aca
 
                         <!-- 360° View Link Input -->
                         <div class="edit-view mb-3">
-                          <label for="view360-link" class="form-label text-start d-block"><i class="fas fa-vr-cardboard me-1 text-primary"></i> Link View 360°</label>
+                          <label
+                            for="view360-link"
+                            class="form-label text-start d-block"
+                            ><i
+                              class="fas fa-vr-cardboard me-1 text-primary"
+                            ></i>
+                            Link View 360°</label
+                          >
                           <div class="input-group">
-                            <input type="text" class="form-control" id="view360-link" placeholder="Masukkan URL view 360°">
-                            <button class="btn btn-outline-primary" type="button" id="set-view360-btn">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="view360-link"
+                              placeholder="Masukkan URL view 360°"
+                            />
+                            <button
+                              class="btn btn-outline-primary"
+                              type="button"
+                              id="set-view360-btn"
+                            >
                               <i class="fas fa-check"></i>
                             </button>
                           </div>
-                          <small class="text-muted d-block text-start mt-1">Paste link Google Maps atau Matterport untuk tampilan 360°</small>
+                          <small class="text-muted d-block text-start mt-1"
+                            >Paste link Google Maps atau Matterport untuk
+                            tampilan 360°</small
+                          >
                         </div>
 
                         <!-- Upload Button -->
                         <div class="edit-view">
-                          <button class="btn btn-outline-primary btn-sm" id="upload-venue-image">
+                          <button
+                            class="btn btn-outline-primary btn-sm"
+                            id="upload-venue-image"
+                          >
                             <i class="fas fa-upload me-1"></i> Upload Gambar
                           </button>
-                          <input type="file" id="venue-image-input" class="d-none" accept="image/*" multiple>
+                          <input
+                            type="file"
+                            id="venue-image-input"
+                            class="d-none"
+                            accept="image/*"
+                            multiple
+                          />
                         </div>
 
                         <div class="mt-3">
@@ -1499,8 +1556,14 @@ Jl. Veteran No. 18, Klojen, Kota Malang, Jawa Timur 65145</textarea
                       <div class="row">
                         <div class="col-md-12">
                           <div class="info-item">
-                            <label class="info-label"><i class="fas fa-plane me-2 text-primary"></i> Jarak dari Bandara</label>
-                            <div class="info-content readonly-view" id="airport-info-display">
+                            <label class="info-label"
+                              ><i class="fas fa-plane me-2 text-primary"></i>
+                              Jarak dari Bandara</label
+                            >
+                            <div
+                              class="info-content readonly-view"
+                              id="airport-info-display"
+                            >
                               15 km dari Bandara Abdulrachman Saleh (MLG)
                             </div>
                             <div class="edit-view">
@@ -1528,9 +1591,13 @@ Jl. Veteran No. 18, Klojen, Kota Malang, Jawa Timur 65145</textarea
                         <div class="col-md-12">
                           <div class="info-item">
                             <label class="info-label"
-                              ><i class="fas fa-train me-2 text-primary"></i> Jarak dari Stasiun Kereta</label
+                              ><i class="fas fa-train me-2 text-primary"></i>
+                              Jarak dari Stasiun Kereta</label
                             >
-                            <div class="info-content readonly-view" id="train-info-display">
+                            <div
+                              class="info-content readonly-view"
+                              id="train-info-display"
+                            >
                               3 km dari Stasiun Malang
                             </div>
                             <div class="edit-view">
@@ -1558,9 +1625,13 @@ Jl. Veteran No. 18, Klojen, Kota Malang, Jawa Timur 65145</textarea
                         <div class="col-md-12">
                           <div class="info-item">
                             <label class="info-label"
-                              ><i class="fas fa-bus me-2 text-primary"></i> Transportasi Umum Terdekat</label
+                              ><i class="fas fa-bus me-2 text-primary"></i>
+                              Transportasi Umum Terdekat</label
                             >
-                            <div class="info-content readonly-view" id="public-transport-display">
+                            <div
+                              class="info-content readonly-view"
+                              id="public-transport-display"
+                            >
                               <ul class="mb-0 ps-3">
                                 <li>Bus Trans Malang - Halte Tugu (350m)</li>
                                 <li>Taxi Online tersedia</li>
@@ -1568,7 +1639,11 @@ Jl. Veteran No. 18, Klojen, Kota Malang, Jawa Timur 65145</textarea
                               </ul>
                             </div>
                             <div class="edit-view">
-                              <textarea class="form-control" rows="3" id="public-transport">
+                              <textarea
+                                class="form-control"
+                                rows="3"
+                                id="public-transport"
+                              >
 - Bus Trans Malang - Halte Tugu (350m)
 - Taxi Online tersedia
 - Rental kendaraan tersedia</textarea
@@ -1600,76 +1675,133 @@ Kapasitas: 200 mobil, 100 motor. Tersedia valet dan area drop-off VIP.</textarea
                   <div class="col-md-6">
                     <!-- Search Bar Above Map -->
                     <div class="position-relative mb-3">
-                      <div class="input-group" style="box-shadow: 0 2px 8px rgba(0,0,0,0.15); border-radius: var(--border-radius);">
+                      <div
+                        class="input-group"
+                        style="
+                          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                          border-radius: var(--border-radius);
+                        "
+                      >
                         <span class="input-group-text bg-white border-0">
                           <i class="fas fa-search text-primary"></i>
                         </span>
-                        <input type="text" class="form-control border-0 py-3" id="venue-search" 
-                               placeholder="Cari lokasi atau alamat venue..." 
-                               style="font-size: 1rem;">
+                        <input
+                          type="text"
+                          class="form-control border-0 py-3"
+                          id="venue-search"
+                          placeholder="Cari lokasi atau alamat venue..."
+                          style="font-size: 1rem"
+                        />
                       </div>
                       <small class="text-muted mt-1 ms-1">
-                        <i class="fas fa-info-circle me-1"></i> 
-                        Klik tombol <i class="fas fa-crosshairs text-primary mx-1"></i> di peta untuk menggunakan lokasi Anda
+                        <i class="fas fa-info-circle me-1"></i>
+                        Klik tombol
+                        <i class="fas fa-crosshairs text-primary mx-1"></i> di
+                        peta untuk menggunakan lokasi Anda
                       </small>
                     </div>
-                    
+
                     <!-- Map Container with Search Controls -->
                     <div class="position-relative mb-4">
                       <div class="map-container" id="venue-map">
                         <!-- Map will be loaded here by Google Maps API -->
                       </div>
-                      
+
                       <!-- Floating Map Controls -->
-                      <div class="position-absolute" style="top: 70px; right: 10px; z-index: 1002;">
+                      <div
+                        class="position-absolute"
+                        style="top: 70px; right: 10px; z-index: 1002"
+                      >
                         <div class="d-flex flex-column gap-2">
                           <div class="btn-group-vertical map-floating-control">
-                            <button class="btn btn-sm btn-light" id="btn-zoom-in" title="Perbesar">
+                            <button
+                              class="btn btn-sm btn-light"
+                              id="btn-zoom-in"
+                              title="Perbesar"
+                            >
                               <i class="fas fa-plus"></i>
                             </button>
-                            <button class="btn btn-sm btn-light" id="btn-zoom-out" title="Perkecil">
+                            <button
+                              class="btn btn-sm btn-light"
+                              id="btn-zoom-out"
+                              title="Perkecil"
+                            >
                               <i class="fas fa-minus"></i>
                             </button>
                           </div>
                         </div>
                       </div>
-                      
+
                       <!-- My Location Button -->
-                      <div class="position-absolute" style="top: 10px; right: 10px; z-index: 1002;">
-                        <button class="btn btn-primary map-floating-control" id="btn-my-location" title="Gunakan Lokasi Saya">
+                      <div
+                        class="position-absolute"
+                        style="top: 10px; right: 10px; z-index: 1002"
+                      >
+                        <button
+                          class="btn btn-primary map-floating-control"
+                          id="btn-my-location"
+                          title="Gunakan Lokasi Saya"
+                        >
                           <i class="fas fa-crosshairs"></i>
                         </button>
                       </div>
-                      
+
                       <!-- Map Types -->
-                      <div class="position-absolute" style="bottom: 30px; left: 10px; z-index: 1002;">
+                      <div
+                        class="position-absolute"
+                        style="bottom: 30px; left: 10px; z-index: 1002"
+                      >
                         <div class="btn-group map-floating-control">
-                          <button class="btn btn-sm btn-light map-type-btn active" data-map-type="roadmap">
+                          <button
+                            class="btn btn-sm btn-light map-type-btn active"
+                            data-map-type="roadmap"
+                          >
                             <i class="fas fa-road me-1"></i> Jalan
                           </button>
-                          <button class="btn btn-sm btn-light map-type-btn" data-map-type="satellite">
+                          <button
+                            class="btn btn-sm btn-light map-type-btn"
+                            data-map-type="satellite"
+                          >
                             <i class="fas fa-satellite me-1"></i> Satelit
                           </button>
                         </div>
                       </div>
                     </div>
-                    
+
                     <!-- Coordinates Display and Save Button -->
-                    <div class="card mb-3" style="border-radius: var(--border-radius); box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div
+                      class="card mb-3"
+                      style="
+                        border-radius: var(--border-radius);
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                      "
+                    >
                       <div class="card-body py-3">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
                           <div>
-                            <div class="text-primary fw-bold mb-1" style="font-size: 0.9rem;">Lokasi Dipilih</div>
-                            <span id="coordinates-display" class="fw-bold text-dark" style="font-size: 1.05rem;">-7.9546° S, 112.6129° E</span>
+                            <div
+                              class="text-primary fw-bold mb-1"
+                              style="font-size: 0.9rem"
+                            >
+                              Lokasi Dipilih
+                            </div>
+                            <span
+                              id="coordinates-display"
+                              class="fw-bold text-dark"
+                              style="font-size: 1.05rem"
+                              >-7.9546° S, 112.6129° E</span
+                            >
                           </div>
                           <button class="btn btn-primary px-4">
                             <i class="fas fa-save me-2"></i> Simpan Lokasi
                           </button>
                         </div>
-                        
+
                         <!-- Hidden inputs for coordinates -->
-                        <input type="hidden" id="lat-input" value="-7.9546">
-                        <input type="hidden" id="lng-input" value="112.6129">
+                        <input type="hidden" id="lat-input" value="-7.9546" />
+                        <input type="hidden" id="lng-input" value="112.6129" />
                       </div>
                     </div>
 
@@ -2345,7 +2477,7 @@ Ballroom Malang Convention Center diresmikan pada tahun 2018 sebagai bagian dari
                       </div>
                     </div>
 
-                    <div class="section-title">Testimoni Klien</div>
+                    <div class="section-title">Ulasan Pengguna</div>
 
                     <div class="card mb-3">
                       <div class="card-body">
@@ -2451,11 +2583,11 @@ Ballroom Malang Convention Center diresmikan pada tahun 2018 sebagai bagian dari
         </div>
       </div>
     </div>
-    
-    <div style="margin-bottom: 80px;"></div>
+
+    <div style="margin-bottom: 80px"></div>
 
     <!-- Footer -->
-    <footer class="py-3" style="margin-top: auto;">
+    <footer class="py-3" style="margin-top: auto">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">
@@ -2671,30 +2803,32 @@ Ballroom Malang Convention Center diresmikan pada tahun 2018 sebagai bagian dari
 
     <script>
       // Toast notification function
-      function showToast(title, message, type = 'success') {
+      function showToast(title, message, type = "success") {
         // Create toast container if it doesn't exist
-        let toastContainer = document.querySelector('.toast-container');
-        
+        let toastContainer = document.querySelector(".toast-container");
+
         if (!toastContainer) {
-          toastContainer = document.createElement('div');
-          toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-          toastContainer.style.zIndex = '1050';
+          toastContainer = document.createElement("div");
+          toastContainer.className =
+            "toast-container position-fixed bottom-0 end-0 p-3";
+          toastContainer.style.zIndex = "1050";
           document.body.appendChild(toastContainer);
         }
-        
+
         // Create toast element
-        const toastId = 'toast-' + Date.now();
-        const toast = document.createElement('div');
-        toast.className = 'toast';
+        const toastId = "toast-" + Date.now();
+        const toast = document.createElement("div");
+        toast.className = "toast";
         toast.id = toastId;
-        toast.setAttribute('role', 'alert');
-        toast.setAttribute('aria-live', 'assertive');
-        toast.setAttribute('aria-atomic', 'true');
-        
+        toast.setAttribute("role", "alert");
+        toast.setAttribute("aria-live", "assertive");
+        toast.setAttribute("aria-atomic", "true");
+
         // Set toast HTML
-        const bgClass = type === 'success' ? 'bg-success' : 'bg-danger';
-        const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-        
+        const bgClass = type === "success" ? "bg-success" : "bg-danger";
+        const icon =
+          type === "success" ? "fa-check-circle" : "fa-exclamation-circle";
+
         toast.innerHTML = `
           <div class="toast-header ${bgClass} text-white">
             <i class="fas ${icon} me-2"></i>
@@ -2705,24 +2839,24 @@ Ballroom Malang Convention Center diresmikan pada tahun 2018 sebagai bagian dari
             ${message}
           </div>
         `;
-        
+
         // Add to container
         toastContainer.appendChild(toast);
-        
+
         // Initialize and show the toast
         const bsToast = new bootstrap.Toast(toast, {
           autohide: true,
-          delay: 3000
+          delay: 3000,
         });
-        
+
         bsToast.show();
-        
+
         // Remove from DOM after hiding
-        toast.addEventListener('hidden.bs.toast', function() {
+        toast.addEventListener("hidden.bs.toast", function () {
           toast.remove();
         });
       }
-      
+
       document.addEventListener("DOMContentLoaded", function () {
         // Tab switching
         const tabs = document.querySelectorAll(".venue-tab");
@@ -2882,196 +3016,231 @@ Ballroom Malang Convention Center diresmikan pada tahun 2018 sebagai bagian dari
             });
           });
         }
-        
+
         // Venue image gallery functionality
         function initVenueImageGallery() {
-          const mainImage = document.getElementById('main-venue-image');
-          const thumbnails = document.querySelectorAll('.venue-thumbnails .thumbnail');
-          const uploadButton = document.getElementById('upload-venue-image');
-          const fileInput = document.getElementById('venue-image-input');
-          const view360Btn = document.getElementById('view360-btn');
-          const view360Link = document.getElementById('view360-link');
-          const setView360Btn = document.getElementById('set-view360-btn');
-          const imageCounter = document.getElementById('image-counter');
-          
+          const mainImage = document.getElementById("main-venue-image");
+          const thumbnails = document.querySelectorAll(
+            ".venue-thumbnails .thumbnail"
+          );
+          const uploadButton = document.getElementById("upload-venue-image");
+          const fileInput = document.getElementById("venue-image-input");
+          const view360Btn = document.getElementById("view360-btn");
+          const view360Link = document.getElementById("view360-link");
+          const setView360Btn = document.getElementById("set-view360-btn");
+          const imageCounter = document.getElementById("image-counter");
+
           if (!mainImage || !thumbnails.length) return;
-          
+
           // Handle thumbnail clicks
-          thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', function() {
-              const imageSrc = this.getAttribute('data-image');
-              const view360Url = this.getAttribute('data-view360');
-              
+          thumbnails.forEach((thumbnail) => {
+            thumbnail.addEventListener("click", function () {
+              const imageSrc = this.getAttribute("data-image");
+              const view360Url = this.getAttribute("data-view360");
+
               // If this is an empty thumbnail slot, trigger file upload
               if (!imageSrc) {
                 fileInput.click();
                 return;
               }
-              
+
               // Update active thumbnail
-              thumbnails.forEach(t => t.classList.remove('active'));
-              this.classList.add('active');
-              
+              thumbnails.forEach((t) => t.classList.remove("active"));
+              this.classList.add("active");
+
               // Update main image
               mainImage.src = imageSrc;
-              
+
               // Update 360° view button visibility
-              if (view360Url && view360Url.trim() !== '') {
-                view360Btn.style.display = 'block';
-                view360Btn.onclick = () => window.open(view360Url, '_blank');
+              if (view360Url && view360Url.trim() !== "") {
+                view360Btn.style.display = "block";
+                view360Btn.onclick = () => window.open(view360Url, "_blank");
               } else {
-                view360Btn.style.display = 'none';
+                view360Btn.style.display = "none";
               }
-              
+
               // Update image counter
               updateImageCounter();
             });
           });
-          
+
           // Handle upload button click
           if (uploadButton && fileInput) {
-            uploadButton.addEventListener('click', () => {
+            uploadButton.addEventListener("click", () => {
               fileInput.click();
             });
-            
+
             // Handle file selection
-            fileInput.addEventListener('change', function() {
+            fileInput.addEventListener("change", function () {
               if (this.files && this.files.length > 0) {
                 const maxImages = 5;
                 const filesToProcess = Math.min(this.files.length, maxImages);
                 let processedCount = 0;
-                
+
                 // Process each selected file
                 for (let i = 0; i < filesToProcess; i++) {
                   const file = this.files[i];
                   const reader = new FileReader();
-                  
-                  reader.onload = function(e) {
+
+                  reader.onload = function (e) {
                     processedCount++;
-                    
+
                     // Find the next empty thumbnail slot
-                    const emptyThumbnail = Array.from(thumbnails).find(t => !t.getAttribute('data-image') || t.getAttribute('data-image') === '');
-                    
+                    const emptyThumbnail = Array.from(thumbnails).find(
+                      (t) =>
+                        !t.getAttribute("data-image") ||
+                        t.getAttribute("data-image") === ""
+                    );
+
                     if (emptyThumbnail) {
                       // Update thumbnail
-                      emptyThumbnail.setAttribute('data-image', e.target.result);
+                      emptyThumbnail.setAttribute(
+                        "data-image",
+                        e.target.result
+                      );
                       emptyThumbnail.innerHTML = `<img src="${e.target.result}" alt="Thumbnail" class="img-thumbnail">`;
-                      
+
                       // If this is the first image, set it as active
                       if (processedCount === 1) {
-                        thumbnails.forEach(t => t.classList.remove('active'));
-                        emptyThumbnail.classList.add('active');
+                        thumbnails.forEach((t) => t.classList.remove("active"));
+                        emptyThumbnail.classList.add("active");
                         mainImage.src = e.target.result;
                       }
                     }
-                    
+
                     // Update image counter after all files are processed
                     if (processedCount === filesToProcess) {
                       updateImageCounter();
-                      
+
                       // Show success toast
-                      const message = filesToProcess > 1 
-                        ? `${filesToProcess} gambar berhasil ditambahkan` 
-                        : `Gambar berhasil ditambahkan`;
-                      
-                      showToast('Upload Berhasil', message, 'success');
+                      const message =
+                        filesToProcess > 1
+                          ? `${filesToProcess} gambar berhasil ditambahkan`
+                          : `Gambar berhasil ditambahkan`;
+
+                      showToast("Upload Berhasil", message, "success");
                     }
                   };
-                  
+
                   reader.readAsDataURL(file);
                 }
-                
+
                 // Reset file input
-                this.value = '';
+                this.value = "";
               }
             });
           }
-          
+
           // Handle 360° view link
           if (setView360Btn && view360Link) {
-            setView360Btn.addEventListener('click', function() {
+            setView360Btn.addEventListener("click", function () {
               const url = view360Link.value.trim();
-              const activeThumbnail = document.querySelector('.venue-thumbnails .thumbnail.active');
-              
+              const activeThumbnail = document.querySelector(
+                ".venue-thumbnails .thumbnail.active"
+              );
+
               if (url && activeThumbnail) {
                 // Update thumbnail's 360° data attribute
-                activeThumbnail.setAttribute('data-view360', url);
-                
+                activeThumbnail.setAttribute("data-view360", url);
+
                 // Show 360° button
-                view360Btn.style.display = 'block';
-                view360Btn.onclick = () => window.open(url, '_blank');
-                
+                view360Btn.style.display = "block";
+                view360Btn.onclick = () => window.open(url, "_blank");
+
                 // Show success toast
-                showToast('Link 360° Ditambahkan', 'Link view 360° berhasil disimpan', 'success');
+                showToast(
+                  "Link 360° Ditambahkan",
+                  "Link view 360° berhasil disimpan",
+                  "success"
+                );
               } else if (!url) {
-                showToast('Error', 'Link view 360° tidak boleh kosong', 'error');
+                showToast(
+                  "Error",
+                  "Link view 360° tidak boleh kosong",
+                  "error"
+                );
               }
             });
           }
-          
+
           // Function to update image counter
           function updateImageCounter() {
             if (!imageCounter) return;
-            
+
             const totalSlots = thumbnails.length;
-            const usedSlots = Array.from(thumbnails).filter(t => t.getAttribute('data-image') && t.getAttribute('data-image') !== '').length;
-            
+            const usedSlots = Array.from(thumbnails).filter(
+              (t) =>
+                t.getAttribute("data-image") &&
+                t.getAttribute("data-image") !== ""
+            ).length;
+
             imageCounter.textContent = `${usedSlots}/${totalSlots}`;
           }
-          
+
           // Handle delete with right-click (context menu)
-          thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('contextmenu', function(e) {
+          thumbnails.forEach((thumbnail) => {
+            thumbnail.addEventListener("contextmenu", function (e) {
               e.preventDefault();
-              
-              const imageSrc = this.getAttribute('data-image');
-              if (!imageSrc || imageSrc === '') return;
-              
-              if (confirm('Hapus gambar ini?')) {
+
+              const imageSrc = this.getAttribute("data-image");
+              if (!imageSrc || imageSrc === "") return;
+
+              if (confirm("Hapus gambar ini?")) {
                 // Clear thumbnail
-                this.setAttribute('data-image', '');
-                this.setAttribute('data-view360', '');
+                this.setAttribute("data-image", "");
+                this.setAttribute("data-view360", "");
                 this.innerHTML = `<div class="add-image d-flex justify-content-center align-items-center">
                   <i class="fas fa-plus"></i>
                 </div>`;
-                
+
                 // If this was the active thumbnail, activate the first available image
-                if (this.classList.contains('active')) {
-                  this.classList.remove('active');
-                  
-                  const firstImageThumbnail = Array.from(thumbnails).find(t => t.getAttribute('data-image') && t.getAttribute('data-image') !== '');
-                  
+                if (this.classList.contains("active")) {
+                  this.classList.remove("active");
+
+                  const firstImageThumbnail = Array.from(thumbnails).find(
+                    (t) =>
+                      t.getAttribute("data-image") &&
+                      t.getAttribute("data-image") !== ""
+                  );
+
                   if (firstImageThumbnail) {
-                    firstImageThumbnail.classList.add('active');
-                    mainImage.src = firstImageThumbnail.getAttribute('data-image');
-                    
-                    const view360Url = firstImageThumbnail.getAttribute('data-view360');
-                    if (view360Url && view360Url.trim() !== '') {
-                      view360Btn.style.display = 'block';
-                      view360Btn.onclick = () => window.open(view360Url, '_blank');
+                    firstImageThumbnail.classList.add("active");
+                    mainImage.src =
+                      firstImageThumbnail.getAttribute("data-image");
+
+                    const view360Url =
+                      firstImageThumbnail.getAttribute("data-view360");
+                    if (view360Url && view360Url.trim() !== "") {
+                      view360Btn.style.display = "block";
+                      view360Btn.onclick = () =>
+                        window.open(view360Url, "_blank");
                     } else {
-                      view360Btn.style.display = 'none';
+                      view360Btn.style.display = "none";
                     }
                   } else {
                     // No images left
-                    mainImage.src = '/api/placeholder/400/250';
-                    view360Btn.style.display = 'none';
+                    mainImage.src = "/api/placeholder/400/250";
+                    view360Btn.style.display = "none";
                   }
                 }
-                
+
                 // Update image counter
                 updateImageCounter();
-                
+
                 // Show success toast
-                showToast('Gambar Dihapus', 'Gambar berhasil dihapus', 'success');
+                showToast(
+                  "Gambar Dihapus",
+                  "Gambar berhasil dihapus",
+                  "success"
+                );
               }
             });
           });
-          
+
           // Initialize image counter
           updateImageCounter();
         }
-        
+
         // Initialize venue image gallery
         initVenueImageGallery();
 

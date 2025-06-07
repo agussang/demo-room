@@ -726,7 +726,7 @@
         height: 100%;
         margin-bottom: 20px;
       }
-      
+
       /* Pulsing button animation */
       @keyframes pulse {
         0% {
@@ -751,7 +751,7 @@
         transition: all 0.3s ease;
         font-weight: 600;
       }
-      
+
       .pulse-button:hover {
         background-color: var(--accent-dark);
         transform: translateY(-3px);
@@ -759,7 +759,7 @@
         animation: none;
         color: var(--primary-dark);
       }
-      
+
       /* Floating action button */
       .floating-action-button {
         position: fixed;
@@ -777,7 +777,7 @@
         z-index: 1000;
         transition: all 0.3s ease;
       }
-      
+
       .floating-action-button::after {
         content: "Beralih ke Venue";
         position: absolute;
@@ -792,23 +792,23 @@
         transition: all 0.3s ease;
         white-space: nowrap;
       }
-      
+
       .floating-action-button:hover {
         background-color: var(--accent);
         color: var(--primary-dark);
         transform: translateY(-3px) rotate(360deg);
         box-shadow: 0 6px 15px rgba(42, 64, 97, 0.3);
       }
-      
+
       .floating-action-button:hover::after {
         opacity: 1;
         visibility: visible;
       }
-      
+
       .floating-action-button i {
         font-size: 1.5rem;
       }
-      
+
       /* Switch Mode Modal Styling */
       .switch-card {
         transition: all 0.3s ease;
@@ -819,12 +819,12 @@
         position: relative;
         border-radius: var(--border-radius);
       }
-      
+
       .switch-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
       }
-      
+
       .switch-card .icon-container {
         width: 80px;
         height: 80px;
@@ -836,27 +836,27 @@
         margin: 0 auto;
         transition: all 0.3s ease;
       }
-      
+
       .hotel-card .icon-container {
         color: var(--primary);
         border: 3px solid var(--primary-light);
       }
-      
+
       .venue-card .icon-container {
         color: var(--accent-dark);
         border: 3px solid var(--accent);
       }
-      
+
       .hotel-card:hover .icon-container {
         background: var(--primary);
         color: var(--light);
       }
-      
+
       .venue-card:hover .icon-container {
         background: var(--accent);
         color: var(--primary-dark);
       }
-      
+
       .hotel-card::before {
         content: "";
         position: absolute;
@@ -866,7 +866,7 @@
         height: 5px;
         background: var(--primary);
       }
-      
+
       .venue-card::before {
         content: "";
         position: absolute;
@@ -931,7 +931,11 @@
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#switchModeModal"
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#switchModeModal"
                     ><i class="fas fa-exchange-alt"></i> Beralih Mode Akses</a
                   >
                 </li>
@@ -976,7 +980,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="../mice-management/">
-                    <i class="fas fa-chalkboard"></i> Data MICE
+                    <i class="fas fa-chalkboard"></i> Ruang Meeting
                   </a>
                 </li>
                 <li class="nav-item">
@@ -1021,7 +1025,12 @@
               </p>
             </div>
             <div>
-              <button type="button" class="btn btn-accent btn-lg pulse-button" data-bs-toggle="modal" data-bs-target="#switchModeModal">
+              <button
+                type="button"
+                class="btn btn-accent btn-lg pulse-button"
+                data-bs-toggle="modal"
+                data-bs-target="#switchModeModal"
+              >
                 <i class="fas fa-exchange-alt me-2"></i> Beralih Mode Akses
               </button>
             </div>
@@ -1291,7 +1300,7 @@
                   </div>
                   <div class="progress-item">
                     <div class="progress-title">
-                      <span class="progress-label">Data MICE</span>
+                      <span class="progress-label">Ruang Meeting</span>
                       <span class="progress-percentage">0%</span>
                     </div>
                     <div class="progress">
@@ -1425,7 +1434,7 @@
                       <i class="fas fa-chalkboard"></i>
                     </div>
                     <div class="quick-link-text">
-                      <h4>Data MICE</h4>
+                      <h4>Ruang Meeting</h4>
                       <p>Ruang meeting, ballroom & kapasitas</p>
                     </div>
                   </a>
@@ -1536,7 +1545,13 @@
     </div>
 
     <!-- Floating action button -->
-    <button type="button" class="floating-action-button" data-bs-toggle="modal" data-bs-target="#switchModeModal" title="Beralih Mode Akses">
+    <button
+      type="button"
+      class="floating-action-button"
+      data-bs-toggle="modal"
+      data-bs-target="#switchModeModal"
+      title="Beralih Mode Akses"
+    >
       <i class="fas fa-exchange-alt"></i>
     </button>
 
@@ -1558,42 +1573,70 @@
     </footer>
 
     <!-- Switch Mode Modal -->
-    <div class="modal fade" id="switchModeModal" tabindex="-1" aria-labelledby="switchModeModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="switchModeModal"
+      tabindex="-1"
+      aria-labelledby="switchModeModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0">
           <div class="modal-header bg-primary text-white border-0">
-            <h5 class="modal-title" id="switchModeModalLabel">Pilih Mode Akses</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="switchModeModalLabel">
+              Pilih Mode Akses
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body p-4">
             <div class="row g-4">
               <div class="col-md-6">
-                <div class="card h-100 border-0 switch-card hotel-card" onclick="window.location.href='../dashboard/'">
+                <div
+                  class="card h-100 border-0 switch-card hotel-card"
+                  onclick="window.location.href='../dashboard/'"
+                >
                   <div class="card-body p-4 text-center">
                     <div class="icon-container mb-3">
                       <i class="fas fa-hotel fa-3x"></i>
                     </div>
                     <h4>Hotel</h4>
-                    <p class="mb-3">Kelola informasi hotel, kamar, dan fasilitas</p>
+                    <p class="mb-3">
+                      Kelola informasi hotel, kamar, dan fasilitas
+                    </p>
                     <span class="badge bg-success">Mode Aktif</span>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="card h-100 border-0 switch-card venue-card" onclick="window.location.href='../dashboard-venue/'">
+                <div
+                  class="card h-100 border-0 switch-card venue-card"
+                  onclick="window.location.href='../dashboard-venue/'"
+                >
                   <div class="card-body p-4 text-center">
                     <div class="icon-container mb-3">
                       <i class="fas fa-chalkboard fa-3x"></i>
                     </div>
                     <h4>Venue</h4>
-                    <p class="mb-3">Kelola ruang meeting, ballroom, dan event venue</p>
-                    <span class="btn btn-sm btn-outline-primary">Beralih ke Venue</span>
+                    <p class="mb-3">
+                      Kelola ruang meeting, ballroom, dan event venue
+                    </p>
+                    <span class="btn btn-sm btn-outline-primary"
+                      >Beralih ke Venue</span
+                    >
                   </div>
                 </div>
               </div>
             </div>
             <div class="text-center mt-4">
-              <p class="text-muted small">Pilih mode yang sesuai dengan kebutuhan Anda untuk mengelola data MICE ID INVENTORY</p>
+              <p class="text-muted small">
+                Pilih mode yang sesuai dengan kebutuhan Anda untuk mengelola
+                Ruang Meeting ID INVENTORY
+              </p>
             </div>
           </div>
         </div>
@@ -1604,10 +1647,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    
+    <!-- IndexedDB Storage -->
+    <script src="../js/indexeddb-storage.js"></script>
+    <!-- Dashboard Data Scripts -->
+    <script src="../js/dashboard-data.js"></script>
 
     <script>
       // Initialize charts when DOM is ready
       document.addEventListener("DOMContentLoaded", function () {
+        // Initialize tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        if (tooltipTriggerList.length > 0) {
+          const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        }
+        
+        // Add hotel-cards-container class and ID to the hotel list container
+        const quickLinksRow = document.querySelector('.quick-link').closest('.row');
+        if (quickLinksRow) {
+          // Create container for hotel list
+          const hotelListContainer = document.createElement('div');
+          hotelListContainer.className = 'row mt-4 hotel-cards-container';
+          hotelListContainer.id = 'hotel-list';
+          
+          // Insert before quick links section
+          quickLinksRow.parentNode.insertBefore(hotelListContainer, quickLinksRow);
+          
+          // Load hotel list
+          loadHotelList('hotel-list');
+        }
+        
         // Data completion doughnut chart
         const completionCtx = document
           .getElementById("completionChart")

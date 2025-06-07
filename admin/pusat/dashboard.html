@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Approval Pemerintah Pusat - Sistem Hotel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #2a4061 0%, #1a2c42 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 280px;
+        height: 100vh;
+        background: #2a4061;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(214, 169, 85, 0.1);
+        border-radius: 10px;
+      }
+
+      .logo h2 {
+        color: #d6a955;
+        font-size: 18px;
+        margin-top: 10px;
+        line-height: 1.3;
+      }
+
+      .logo i {
+        font-size: 40px;
+        color: #d6a955;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        margin-bottom: 8px;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s;
+        gap: 12px;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        background: #d6a955;
+        color: #2a4061;
+        transform: translateX(5px);
+      }
+
+      .main-content {
+        margin-left: 280px;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #d6a955;
+      }
+
+      .header h1 {
+        color: #2a4061;
+        margin-bottom: 5px;
+      }
+
+      .header p {
+        color: #666;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        background: #d6a955;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #d6a955;
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+        color: #2a4061;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .stat-icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 24px;
+        color: #d6a955;
+        opacity: 0.7;
+      }
+
+      .content-section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        margin-bottom: 25px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .section-title {
+        color: #2a4061;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .priority-badge {
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .priority-urgent {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 2px solid rgba(239, 68, 68, 0.3);
+      }
+
+      .priority-normal {
+        background: rgba(214, 169, 85, 0.1);
+        color: #d6a955;
+        border: 2px solid rgba(214, 169, 85, 0.3);
+      }
+
+      .application-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border-left: 5px solid #ddd;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .application-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .application-card.pending {
+        border-left-color: #d6a955;
+      }
+
+      .application-card.approved {
+        border-left-color: #10b981;
+      }
+
+      .application-card.rejected {
+        border-left-color: #ef4444;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .hotel-title {
+        color: #2a4061;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .hotel-company {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .verification-info {
+        color: #888;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .status-badge {
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .status-pending {
+        background: rgba(214, 169, 85, 0.1);
+        color: #d6a955;
+        border: 2px solid rgba(214, 169, 85, 0.3);
+      }
+
+      .status-approved {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 2px solid rgba(16, 185, 129, 0.3);
+      }
+
+      .status-rejected {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 2px solid rgba(239, 68, 68, 0.3);
+      }
+
+      .pemda-verification {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+        border-left: 4px solid #10b981;
+      }
+
+      .verification-title {
+        color: #2a4061;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .hotel-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 15px 0;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .info-label {
+        font-weight: 500;
+        color: #2a4061;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-primary {
+        background: #2a4061;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #1a2c42;
+        transform: translateY(-1px);
+      }
+
+      .btn-success {
+        background: #10b981;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background: #059669;
+        transform: translateY(-1px);
+      }
+
+      .btn-danger {
+        background: #ef4444;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+      }
+
+      .btn-warning {
+        background: #d6a955;
+        color: white;
+      }
+
+      .btn-warning:hover {
+        background: #c19640;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: #6b7280;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: #4b5563;
+        transform: translateY(-1px);
+      }
+
+      .approval-form {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 25px;
+        border-radius: 12px;
+        margin-top: 20px;
+        display: none;
+        border: 2px solid #d6a955;
+      }
+
+      .approval-form.active {
+        display: block;
+        animation: slideDown 0.3s ease;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-title {
+        color: #2a4061;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #2a4061;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: #d6a955;
+      }
+
+      .sk-preview {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px dashed #d6a955;
+        margin: 15px 0;
+      }
+
+      .sk-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .sk-number {
+        font-size: 16px;
+        font-weight: bold;
+        color: #2a4061;
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 3000;
+        animation: slideInRight 0.3s ease;
+      }
+
+      .notification.success {
+        background: #10b981;
+      }
+
+      .notification.error {
+        background: #ef4444;
+      }
+
+      .notification.warning {
+        background: #d6a955;
+      }
+
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(42, 64, 97, 0.8);
+        z-index: 2000;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 900px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .modal-title {
+        color: #2a4061;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .close-btn:hover {
+        color: #ef4444;
+      }
+
+      .verification-history {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 15px 0;
+      }
+
+      .history-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .history-icon {
+        width: 40px;
+        height: 40px;
+        background: #d6a955;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+
+        .sidebar.open {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hotel-info {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-university"></i>
+        <h2>PEMERINTAH PUSAT<br />Final Approval</h2>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#" class="nav-link active">
+            <i class="fas fa-tachometer-alt"></i>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-inbox"></i>
+            Menunggu Approval
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-stamp"></i>
+            Final Review
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-check-circle"></i>
+            Telah Disetujui
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-file-contract"></i>
+            Manajemen SK
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-chart-pie"></i>
+            Laporan Nasional
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-database"></i>
+            Database Hotel
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-cog"></i>
+            Pengaturan
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="header">
+        <h1>
+          <i class="fas fa-university"></i> Dashboard Approval Pemerintah Pusat
+        </h1>
+        <p>
+          Sistem Final Approval dan Penerbitan SK Hotel - Kementerian Pariwisata
+        </p>
+
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="fas fa-user-tie"></i>
+          </div>
+          <div>
+            <strong>Dr. Siti Nurhaliza, M.Par</strong><br />
+            <small>Direktur Standardisasi Hotel - Kementerian Pariwisata</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <i class="fas fa-clock stat-icon"></i>
+          <div class="stat-number">12</div>
+          <div class="stat-label">Menunggu Approval</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-check-circle stat-icon"></i>
+          <div class="stat-number">156</div>
+          <div class="stat-label">Telah Disetujui</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-times-circle stat-icon"></i>
+          <div class="stat-number">5</div>
+          <div class="stat-label">Ditolak</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-file-contract stat-icon"></i>
+          <div class="stat-number">161</div>
+          <div class="stat-label">SK Diterbitkan</div>
+        </div>
+      </div>
+
+      <!-- Applications List -->
+      <div class="content-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <i class="fas fa-stamp"></i> Hotel Terverifikasi Pemda
+          </h2>
+          <div style="display: flex; gap: 10px">
+            <span class="priority-badge priority-urgent">2 Urgent</span>
+            <span class="priority-badge priority-normal">10 Normal</span>
+          </div>
+        </div>
+
+        <!-- Application Card 1 - Urgent -->
+        <div class="application-card pending">
+          <div style="position: absolute; top: 15px; right: 15px">
+            <span class="priority-badge priority-urgent">
+              <i class="fas fa-exclamation-triangle"></i> Urgent
+            </span>
+          </div>
+
+          <div class="card-header">
+            <div>
+              <h3 class="hotel-title">Hotel Tugu Malang</h3>
+              <p class="hotel-company">
+                PT. Tugu Hotels & Restaurants - NIB: 9876543210987
+              </p>
+              <div class="verification-info">
+                <i class="fas fa-calendar"></i>
+                Diterima dari Pemda: 03 Juni 2025, 16:45 WIB
+              </div>
+            </div>
+            <span class="status-badge status-pending">Menunggu Approval</span>
+          </div>
+
+          <div class="pemda-verification">
+            <div class="verification-title">
+              <i class="fas fa-check-circle" style="color: #10b981"></i>
+              <strong>LOLOS VERIFIKASI PEMDA</strong>
+            </div>
+            <p>
+              <strong>Verifikator:</strong> Budi Santoso - Dinas Pariwisata
+              Malang
+            </p>
+            <p><strong>Tanggal Verifikasi:</strong> 03 Juni 2025</p>
+            <p>
+              <strong>Catatan:</strong> Semua dokumen lengkap dan sesuai
+              standar. Hotel memenuhi kriteria bintang 5.
+            </p>
+          </div>
+
+          <div class="hotel-info">
+            <div class="info-item">
+              <span class="info-label">Klasifikasi:</span>
+              <span>Bintang 5</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Lokasi:</span>
+              <span>Malang, Jawa Timur</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Jumlah Kamar:</span>
+              <span>45 kamar</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Waktu Tunggu:</span>
+              <span style="color: #ef4444; font-weight: bold">4 hari</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button
+              class="btn btn-primary"
+              onclick="showApprovalForm('central1')"
+            >
+              <i class="fas fa-stamp"></i> Review & Approval
+            </button>
+            <button class="btn btn-secondary" onclick="showModal('central1')">
+              <i class="fas fa-eye"></i> Lihat Hasil Verifikasi
+            </button>
+            <button class="btn btn-warning">
+              <i class="fas fa-history"></i> History
+            </button>
+          </div>
+
+          <div id="central1-form" class="approval-form">
+            <h4 class="form-title">
+              <i class="fas fa-stamp"></i>
+              Final Approval Review
+            </h4>
+
+            <div class="form-group">
+              <label class="form-label">Keputusan Final Approval:</label>
+              <select class="form-control" id="approvalDecision">
+                <option value="">Pilih Keputusan</option>
+                <option value="approve">
+                  ✅ Setujui - Hotel Resmi Terdaftar
+                </option>
+                <option value="approve-note">⚠️ Setujui dengan Catatan</option>
+                <option value="reject">❌ Tolak - Perlu Review Ulang</option>
+                <option value="return">🔄 Kembalikan ke Pemda</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nomor Surat Keputusan:</label>
+              <input
+                type="text"
+                class="form-control"
+                value="SK-HOTEL/2025/001234"
+                placeholder="Auto-generated"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Masa Berlaku Izin:</label>
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px"
+              >
+                <input type="date" class="form-control" value="2025-06-07" />
+                <input type="date" class="form-control" value="2030-06-07" />
+              </div>
+              <small style="color: #666"
+                >Berlaku 5 tahun dari tanggal persetujuan</small
+              >
+            </div>
+
+            <div class="sk-preview">
+              <div class="sk-header">
+                <h4 style="color: #2a4061">PREVIEW SURAT KEPUTUSAN</h4>
+                <div class="sk-number">No: SK-HOTEL/2025/001234</div>
+              </div>
+              <p>
+                <strong>Tentang:</strong> Penetapan Hotel Tugu Malang sebagai
+                Hotel Berbintang 5
+              </p>
+              <p>
+                <strong>Menimbang:</strong> Hasil verifikasi Pemda Malang
+                menunjukkan kesesuaian dengan standar
+              </p>
+              <p><strong>Berlaku:</strong> 07 Juni 2025 - 07 Juni 2030</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Catatan Final Approval:</label>
+              <textarea
+                class="form-control"
+                rows="4"
+                placeholder="Catatan dari Pemerintah Pusat..."
+              ></textarea>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn btn-success" onclick="finalApprove()">
+                <i class="fas fa-check-circle"></i> Approve & Terbitkan SK
+              </button>
+              <button class="btn btn-danger" onclick="rejectFinal()">
+                <i class="fas fa-times-circle"></i> Tolak Pengajuan
+              </button>
+              <button class="btn btn-warning" onclick="returnToPemda()">
+                <i class="fas fa-arrow-left"></i> Kembalikan ke Pemda
+              </button>
+              <button class="btn btn-secondary" onclick="saveDraft()">
+                <i class="fas fa-save"></i> Simpan Draft
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Card 2 - Normal Priority -->
+        <div class="application-card pending">
+          <div class="card-header">
+            <div>
+              <h3 class="hotel-title">Grand Resort Bali</h3>
+              <p class="hotel-company">
+                PT. Grand Resort Indonesia - NIB: 1111222233334
+              </p>
+              <div class="verification-info">
+                <i class="fas fa-calendar"></i>
+                Diterima dari Pemda: 05 Juni 2025, 10:20 WIB
+              </div>
+            </div>
+            <span class="status-badge status-pending">Menunggu Approval</span>
+          </div>
+
+          <div class="pemda-verification">
+            <div class="verification-title">
+              <i class="fas fa-check-circle" style="color: #10b981"></i>
+              <strong>LOLOS VERIFIKASI PEMDA</strong>
+            </div>
+            <p>
+              <strong>Verifikator:</strong> I Made Susilo - Dinas Pariwisata
+              Bali
+            </p>
+            <p><strong>Tanggal Verifikasi:</strong> 05 Juni 2025</p>
+            <p>
+              <strong>Catatan:</strong> Resort memenuhi standar bintang 4 dengan
+              fasilitas lengkap.
+            </p>
+          </div>
+
+          <div class="hotel-info">
+            <div class="info-item">
+              <span class="info-label">Klasifikasi:</span>
+              <span>Bintang 4</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Lokasi:</span>
+              <span>Bali</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Jumlah Kamar:</span>
+              <span>200 kamar</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Waktu Tunggu:</span>
+              <span style="color: #d6a955">2 hari</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary">
+              <i class="fas fa-stamp"></i> Review & Approval
+            </button>
+            <button class="btn btn-secondary">
+              <i class="fas fa-eye"></i> Lihat Hasil Verifikasi
+            </button>
+          </div>
+        </div>
+
+        <!-- Application Card 3 - Approved -->
+        <div class="application-card approved">
+          <div class="card-header">
+            <div>
+              <h3 class="hotel-title">Hotel Indonesia Kempinski</h3>
+              <p class="hotel-company">
+                PT. Hotel Indonesia Natour - NIB: 9999888877776
+              </p>
+              <div class="verification-info">
+                <i class="fas fa-calendar"></i>
+                SK Diterbitkan: 01 Juni 2025, 14:00 WIB
+              </div>
+            </div>
+            <span class="status-badge status-approved">Telah Disetujui</span>
+          </div>
+
+          <div
+            style="
+              background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+              padding: 15px;
+              border-radius: 10px;
+              margin: 15px 0;
+              border-left: 4px solid #10b981;
+            "
+          >
+            <div class="verification-title">
+              <i class="fas fa-file-contract" style="color: #10b981"></i>
+              <strong>SK TELAH DITERBITKAN</strong>
+            </div>
+            <p><strong>Nomor SK:</strong> SK-HOTEL/2025/001230</p>
+            <p><strong>Berlaku:</strong> 01 Juni 2025 - 01 Juni 2030</p>
+          </div>
+
+          <div class="hotel-info">
+            <div class="info-item">
+              <span class="info-label">Klasifikasi:</span>
+              <span>Bintang 5</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Lokasi:</span>
+              <span>Jakarta Pusat</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Jumlah Kamar:</span>
+              <span>289 kamar</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Status:</span>
+              <span style="color: #10b981">✅ Aktif</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-primary">
+              <i class="fas fa-download"></i> Download SK
+            </button>
+            <button class="btn btn-secondary">
+              <i class="fas fa-eye"></i> Lihat Detail
+            </button>
+            <button class="btn btn-warning">
+              <i class="fas fa-edit"></i> Edit SK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Verification Details -->
+    <div id="verificationModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">
+            <i class="fas fa-file-alt"></i>
+            Detail Verifikasi Hotel Tugu Malang
+          </h3>
+          <button class="close-btn" onclick="closeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="verification-history">
+          <h4 style="color: #2a4061; margin-bottom: 15px">
+            <i class="fas fa-history"></i> Riwayat Verifikasi
+          </h4>
+
+          <div class="history-item">
+            <div class="history-icon">
+              <i class="fas fa-paper-plane"></i>
+            </div>
+            <div>
+              <strong>Pengajuan Disubmit</strong><br />
+              <small>02 Juni 2025, 14:30 - Hotel Manager</small>
+            </div>
+          </div>
+
+          <div class="history-item">
+            <div class="history-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <div>
+              <strong>Verifikasi Pemda Dimulai</strong><br />
+              <small>02 Juni 2025, 15:00 - Budi Santoso (Pemda)</small>
+            </div>
+          </div>
+
+          <div class="history-item">
+            <div class="history-icon">
+              <i class="fas fa-check"></i>
+            </div>
+            <div>
+              <strong>Verifikasi Pemda Selesai</strong><br />
+              <small>03 Juni 2025, 16:45 - Budi Santoso (Pemda)</small>
+            </div>
+          </div>
+
+          <div class="history-item">
+            <div class="history-icon">
+              <i class="fas fa-arrow-right"></i>
+            </div>
+            <div>
+              <strong>Dikirim ke Pemerintah Pusat</strong><br />
+              <small>03 Juni 2025, 16:50 - Sistem Otomatis</small>
+            </div>
+          </div>
+
+          <div class="history-item">
+            <div class="history-icon" style="background: #d6a955">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div>
+              <strong>Menunggu Final Approval</strong><br />
+              <small>Sejak 03 Juni 2025 - Status Saat Ini</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          document
+            .querySelectorAll(".nav-link")
+            .forEach((l) => l.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+
+      function showApprovalForm(hotelId) {
+        const form = document.getElementById(hotelId + "-form");
+        if (form.classList.contains("active")) {
+          form.classList.remove("active");
+        } else {
+          document
+            .querySelectorAll(".approval-form")
+            .forEach((f) => f.classList.remove("active"));
+          form.classList.add("active");
+        }
+      }
+
+      function showModal(hotelId) {
+        document.getElementById("verificationModal").classList.add("active");
+      }
+
+      function closeModal() {
+        document.getElementById("verificationModal").classList.remove("active");
+      }
+
+      function finalApprove() {
+        const decision = document.getElementById("approvalDecision").value;
+
+        if (!decision) {
+          showNotification("Harap pilih keputusan approval!", "error");
+          return;
+        }
+
+        if (decision === "approve" || decision === "approve-note") {
+          showNotification(
+            "Hotel berhasil disetujui! SK sedang diterbitkan...",
+            "success"
+          );
+
+          setTimeout(() => {
+            showNotification("SK Hotel berhasil diterbitkan!", "success");
+            // Update UI
+            location.reload();
+          }, 3000);
+        }
+      }
+
+      function rejectFinal() {
+        if (
+          confirm(
+            "Apakah Anda yakin ingin menolak pengajuan ini? Keputusan ini akan dikomunikasikan ke Pemda dan Hotel Manager."
+          )
+        ) {
+          showNotification("Pengajuan hotel ditolak!", "error");
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        }
+      }
+
+      function returnToPemda() {
+        if (
+          confirm(
+            "Apakah Anda yakin ingin mengembalikan ke Pemda untuk review ulang?"
+          )
+        ) {
+          showNotification("Pengajuan dikembalikan ke Pemda!", "warning");
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        }
+      }
+
+      function saveDraft() {
+        showNotification("Draft berhasil disimpan!", "success");
+      }
+
+      function showNotification(message, type = "success") {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `<i class="fas fa-${
+          type === "success"
+            ? "check"
+            : type === "error"
+            ? "times"
+            : "exclamation-triangle"
+        }"></i> ${message}`;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.remove();
+        }, 4000);
+      }
+
+      // Close modal when clicking outside
+      document
+        .getElementById("verificationModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeModal();
+          }
+        });
+
+      // Auto-update waiting time
+      function updateWaitingTime() {
+        // Simulate real-time waiting time updates
+        const waitingElements = document.querySelectorAll(
+          '[style*="color: #ef4444"]'
+        );
+        waitingElements.forEach((el) => {
+          if (el.textContent.includes("hari")) {
+            // Update time dynamically
+          }
+        });
+      }
+
+      // Update every minute
+      setInterval(updateWaitingTime, 60000);
+
+      // Real-time notifications
+      function simulateRealTimeUpdates() {
+        const notifications = [
+          "Pengajuan baru dari Pemda Surabaya",
+          "Hotel di Jakarta memerlukan review urgent",
+          "SK berhasil diterbitkan untuk 3 hotel",
+        ];
+
+        setInterval(() => {
+          const randomNotif =
+            notifications[Math.floor(Math.random() * notifications.length)];
+          showNotification(randomNotif, "warning");
+        }, 300000); // Every 5 minutes
+      }
+
+      // Initialize real-time updates
+      simulateRealTimeUpdates();
+
+      // Mobile responsiveness
+      function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("open");
+      }
+
+      if (window.innerWidth <= 768) {
+        const mobileMenuBtn = document.createElement("button");
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        mobileMenuBtn.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: #2A4061;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            `;
+        mobileMenuBtn.onclick = toggleSidebar;
+        document.body.appendChild(mobileMenuBtn);
+      }
+
+      // Auto-generate SK number
+      function generateSKNumber() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const sequence = String(Math.floor(Math.random() * 999999)).padStart(
+          6,
+          "0"
+        );
+        return `SK-HOTEL/${year}/${sequence}`;
+      }
+
+      // Form validation
+      document.addEventListener("DOMContentLoaded", function () {
+        const approvalForms = document.querySelectorAll(".approval-form");
+        approvalForms.forEach((form) => {
+          const skInput = form.querySelector(
+            'input[placeholder="Auto-generated"]'
+          );
+          if (skInput && !skInput.value) {
+            skInput.value = generateSKNumber();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

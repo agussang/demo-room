@@ -869,7 +869,7 @@
                     kenyamanan dan nilai yang baik. Dengan luas 24 m², kamar
                     yang elegan ini dilengkapi dengan tempat tidur double yang
                     nyaman, semua kebutuhan modern termasuk WiFi gratis, TV LED
-                    32 inci, dan kamar mandi pribadi dengan shower.
+                    , dan kamar mandi pribadi dengan shower.
                   </p>
                   <p>
                     Ideal untuk wisatawan bisnis atau liburan singkat, kamar ini
@@ -1244,7 +1244,7 @@
                   <i class="fas fa-tv"></i>
                 </div>
                 <div class="inventory-info">
-                  <h6 class="inventory-title">TV LED 32"</h6>
+                  <h6 class="inventory-title">TV LED</h6>
                   <p class="inventory-quantity">1 unit per kamar</p>
                 </div>
               </div>
@@ -1313,16 +1313,26 @@
           <div class="room-section-header">
             <h4><i class="fas fa-images me-2"></i> Galeri Foto</h4>
             <button
-              class="btn btn-sm btn-outline-primary view-controls" id="manage-photos"
+              class="btn btn-sm btn-outline-primary view-controls"
+              id="manage-photos"
             >
               <i class="fas fa-edit me-1"></i> Kelola Foto
             </button>
             <div class="edit-controls">
-              <input type="file" id="photo-upload" accept="image/*" multiple class="d-none">
+              <input
+                type="file"
+                id="photo-upload"
+                accept="image/*"
+                multiple
+                class="d-none"
+              />
               <button class="btn btn-sm btn-success me-2" id="add-photos">
                 <i class="fas fa-plus me-1"></i> Tambah Foto
               </button>
-              <button class="btn btn-sm btn-outline-secondary" id="cancel-photo-edit">
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                id="cancel-photo-edit"
+              >
                 <i class="fas fa-times me-1"></i> Batal
               </button>
             </div>
@@ -1334,7 +1344,9 @@
                 <div class="text-center my-5">
                   <i class="fas fa-images fa-3x mb-3 text-muted"></i>
                   <h5>Belum ada foto</h5>
-                  <p class="text-muted">Klik "Kelola Foto" untuk menambahkan foto kamar</p>
+                  <p class="text-muted">
+                    Klik "Kelola Foto" untuk menambahkan foto kamar
+                  </p>
                 </div>
               </div>
             </div>
@@ -1443,7 +1455,9 @@
         const addPhotosBtn = document.getElementById("add-photos");
         const cancelPhotoEditBtn = document.getElementById("cancel-photo-edit");
         const photoUploadInput = document.getElementById("photo-upload");
-        const galleryContainer = document.getElementById("gallery-items-container");
+        const galleryContainer = document.getElementById(
+          "gallery-items-container"
+        );
 
         // Store original values of editable elements
         const originalValues = {};
@@ -1550,29 +1564,29 @@
 
         // Photo management functionality
         if (managePhotosBtn) {
-          managePhotosBtn.addEventListener("click", function() {
+          managePhotosBtn.addEventListener("click", function () {
             enterPhotoEditMode();
           });
         }
 
         if (addPhotosBtn) {
-          addPhotosBtn.addEventListener("click", function() {
+          addPhotosBtn.addEventListener("click", function () {
             photoUploadInput.click();
           });
         }
 
         if (cancelPhotoEditBtn) {
-          cancelPhotoEditBtn.addEventListener("click", function() {
+          cancelPhotoEditBtn.addEventListener("click", function () {
             exitPhotoEditMode();
           });
         }
 
         if (photoUploadInput) {
-          photoUploadInput.addEventListener("change", function(e) {
+          photoUploadInput.addEventListener("change", function (e) {
             const files = Array.from(e.target.files);
-            
+
             if (files.length === 0) return;
-            
+
             handlePhotoUpload(files);
           });
         }
@@ -1593,14 +1607,15 @@
             // Check if delete button already exists
             if (!item.querySelector(".delete-photo")) {
               const deleteBtn = document.createElement("button");
-              deleteBtn.className = "btn btn-sm btn-danger position-absolute top-0 end-0 m-2 delete-photo";
+              deleteBtn.className =
+                "btn btn-sm btn-danger position-absolute top-0 end-0 m-2 delete-photo";
               deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
               deleteBtn.dataset.index = index;
-              
-              deleteBtn.addEventListener("click", function() {
+
+              deleteBtn.addEventListener("click", function () {
                 deletePhoto(index);
               });
-              
+
               item.appendChild(deleteBtn);
             }
           });
@@ -1617,7 +1632,7 @@
           });
 
           // Remove delete buttons
-          document.querySelectorAll(".delete-photo").forEach(btn => {
+          document.querySelectorAll(".delete-photo").forEach((btn) => {
             btn.remove();
           });
         }
@@ -1625,28 +1640,28 @@
         // Function to handle photo upload
         function handlePhotoUpload(files) {
           // Get existing photos or initialize empty array
-          let photos = JSON.parse(localStorage.getItem('roomPhotos')) || [];
-          
-          files.forEach(file => {
+          let photos = JSON.parse(localStorage.getItem("roomPhotos")) || [];
+
+          files.forEach((file) => {
             const reader = new FileReader();
-            
-            reader.onload = function(event) {
+
+            reader.onload = function (event) {
               // Save photo data URL to array
               photos.push({
                 src: event.target.result,
-                alt: file.name
+                alt: file.name,
               });
-              
+
               // Save to localStorage
-              localStorage.setItem('roomPhotos', JSON.stringify(photos));
-              
+              localStorage.setItem("roomPhotos", JSON.stringify(photos));
+
               // Reload photos display
               loadPhotosFromStorage();
             };
-            
+
             reader.readAsDataURL(file);
           });
-          
+
           showNotification(
             "Berhasil",
             `${files.length} foto berhasil ditambahkan`,
@@ -1656,30 +1671,26 @@
 
         // Function to delete a photo
         function deletePhoto(index) {
-          let photos = JSON.parse(localStorage.getItem('roomPhotos')) || [];
-          
+          let photos = JSON.parse(localStorage.getItem("roomPhotos")) || [];
+
           // Remove the photo at the specified index
           photos.splice(index, 1);
-          
+
           // Save back to localStorage
-          localStorage.setItem('roomPhotos', JSON.stringify(photos));
-          
+          localStorage.setItem("roomPhotos", JSON.stringify(photos));
+
           // Reload photos display
           loadPhotosFromStorage();
-          
-          showNotification(
-            "Berhasil",
-            "Foto berhasil dihapus",
-            "success"
-          );
+
+          showNotification("Berhasil", "Foto berhasil dihapus", "success");
         }
 
         // Function to load photos from localStorage
         function loadPhotosFromStorage() {
           if (!galleryContainer) return;
-          
-          const photos = JSON.parse(localStorage.getItem('roomPhotos')) || [];
-          
+
+          const photos = JSON.parse(localStorage.getItem("roomPhotos")) || [];
+
           if (photos.length === 0) {
             // Show empty state
             galleryContainer.innerHTML = `
@@ -1691,10 +1702,10 @@
             `;
             return;
           }
-          
+
           // Create gallery items
-          let galleryHTML = '';
-          
+          let galleryHTML = "";
+
           photos.forEach((photo, index) => {
             galleryHTML += `
               <div class="gallery-item">
@@ -1709,36 +1720,38 @@
               </div>
             `;
           });
-          
+
           galleryContainer.innerHTML = galleryHTML;
-          
+
           // Add event listeners to view photos
-          document.querySelectorAll('.view-photo').forEach(btn => {
-            btn.addEventListener('click', function() {
+          document.querySelectorAll(".view-photo").forEach((btn) => {
+            btn.addEventListener("click", function () {
               const index = this.dataset.index;
               viewPhoto(index);
             });
           });
-          
+
           // If in edit mode, add delete buttons
-          if (document.querySelector('.edit-controls').style.display === 'block') {
+          if (
+            document.querySelector(".edit-controls").style.display === "block"
+          ) {
             enterPhotoEditMode();
           }
         }
 
         // Function to view a photo in larger size
         function viewPhoto(index) {
-          const photos = JSON.parse(localStorage.getItem('roomPhotos')) || [];
-          
+          const photos = JSON.parse(localStorage.getItem("roomPhotos")) || [];
+
           if (!photos[index]) return;
-          
+
           // Create modal for viewing photo
-          const modal = document.createElement('div');
-          modal.className = 'modal fade';
-          modal.id = 'photoViewModal';
-          modal.tabIndex = '-1';
-          modal.setAttribute('aria-hidden', 'true');
-          
+          const modal = document.createElement("div");
+          modal.className = "modal fade";
+          modal.id = "photoViewModal";
+          modal.tabIndex = "-1";
+          modal.setAttribute("aria-hidden", "true");
+
           modal.innerHTML = `
             <div class="modal-dialog modal-lg modal-dialog-centered">
               <div class="modal-content">
@@ -1752,20 +1765,22 @@
               </div>
             </div>
           `;
-          
+
           document.body.appendChild(modal);
-          
+
           const modalInstance = new bootstrap.Modal(modal);
           modalInstance.show();
-          
+
           // Remove modal from DOM when hidden
-          modal.addEventListener('hidden.bs.modal', function() {
+          modal.addEventListener("hidden.bs.modal", function () {
             modal.remove();
           });
         }
 
         // Load photos on page load
-        if (document.getElementById('gallery-tab').classList.contains('active')) {
+        if (
+          document.getElementById("gallery-tab").classList.contains("active")
+        ) {
           loadPhotosFromStorage();
         }
 

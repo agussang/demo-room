@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Get form input values
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('remember')?.checked || false;
       
       // Simple validation
       if (username.trim() === '' || password.trim() === '') {
@@ -19,8 +20,29 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       // In a real application, you would handle authentication here
-      // For demo purposes, we'll just redirect to the dashboard
-      window.location.href = 'dashboard/';
+      // For demo purposes, use these credentials
+      if ((username === 'admin' && password === 'admin123') || (username === 'user' && password === 'password')) {
+        // Save username if remember me is checked
+        if (rememberMe) {
+          localStorage.setItem('userName', username);
+        }
+        
+        // Redirect to welcome page - use absolute path for better compatibility
+        window.location.href = '/welcome.html';
+      } else {
+        // Show error message if element exists
+        const errorEl = document.getElementById('login-error');
+        if (errorEl) {
+          errorEl.style.display = 'block';
+          
+          // Hide error message after 3 seconds
+          setTimeout(function() {
+            errorEl.style.display = 'none';
+          }, 3000);
+        } else {
+          alert('Username atau password salah. Silakan coba lagi.');
+        }
+      }
     });
   }
 });

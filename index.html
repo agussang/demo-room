@@ -331,14 +331,14 @@
         const rememberMe = document.getElementById('remember').checked;
         
         // Simple demo credentials check (in a real app, this would be a server request)
-        if (username === 'admin' && password === 'admin123') {
+        if ((username === 'admin' && password === 'admin123') || (username === 'user' && password === 'password')) {
           // Save username if remember me is checked
           if (rememberMe) {
             localStorage.setItem('userName', username);
           }
           
-          // Redirect to welcome page
-          window.location.href = 'welcome.html';
+          // Redirect to welcome page - use relative and absolute paths for compatibility
+          window.location.href = '/welcome.html';
         } else {
           // Show error message
           document.getElementById('login-error').style.display = 'block';

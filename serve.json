@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard/index.html" },
+    { "source": "/dashboard/", "destination": "/dashboard/index.html" },
+    { "source": "/dashboard-venue", "destination": "/dashboard-venue/index.html" },
+    { "source": "/dashboard-venue/", "destination": "/dashboard-venue/index.html" },
+    { "source": "/welcome", "destination": "/welcome.html" }
+  ],
+  "cleanUrls": true
+}

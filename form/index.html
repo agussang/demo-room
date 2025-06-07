@@ -19,14 +19,414 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Main CSS -->
-    <link href="../assets/css/main.css" rel="stylesheet" />
-    <!-- Form Page CSS -->
-    <link href="../assets/css/form.css" rel="stylesheet" />
+
+    <style>
+      /* Custom CSS untuk perbaikan layout */
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .navbar {
+        background-color: #2a4061;
+        padding: 1rem 0;
+      }
+
+      .navbar-brand {
+        color: white !important;
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+
+      .navbar-brand span {
+        color: #e5bc6d;
+      }
+
+      .navbar-brand-subtitle {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 300;
+        opacity: 0.8;
+      }
+
+      .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .form-container {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      .step::before {
+        content: attr(data-step);
+        width: 40px;
+        height: 40px;
+        background: #e9ecef;
+        border-radius: 50%;
+        display: inline-block;
+        line-height: 40px;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+
+      .step.active::before {
+        background: #2a4061;
+        color: white;
+        box-shadow: 0 0 0 3px rgba(42, 64, 97, 0.2);
+      }
+
+      .step-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+      }
+
+      .step.active .step-text {
+        color: #2a4061;
+        font-weight: 500;
+      }
+
+      .form-section {
+        display: none;
+        padding: 2rem;
+      }
+
+      .form-section.active {
+        display: block;
+      }
+
+      .form-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f8f9fa;
+      }
+
+      .form-header h3 {
+        color: #2a4061;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .section-title {
+        font-weight: 600;
+        color: #2a4061;
+        margin-bottom: 1rem;
+      }
+
+      .form-label.required::after {
+        content: " *";
+        color: #dc3545;
+      }
+
+      .upload-area {
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s;
+      }
+
+      .upload-area:hover {
+        border-color: #2a4061;
+        background: #f8f9fa;
+      }
+
+      .upload-icon {
+        font-size: 3rem;
+        color: #e5bc6d;
+        margin-bottom: 1rem;
+      }
+
+      .upload-button {
+        background: #2a4061;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .upload-button:hover {
+        background: #1e2f47;
+        color: white;
+      }
+
+      /* Sidebar Styles */
+      .sidebar-container {
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+      }
+
+      .flowchart-container {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+      }
+
+      .flowchart-header {
+        background: #2a4061;
+        color: white;
+        padding: 1rem;
+      }
+
+      .flowchart-header h4 {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .flowchart {
+        padding: 1.5rem;
+      }
+
+      .flowchart-step {
+        background: #f8f9fa;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        border-left: 4px solid #dee2e6;
+      }
+
+      .flowchart-step.active {
+        background: #e8f4f8;
+        border-left-color: #2a4061;
+      }
+
+      .flowchart-step:hover {
+        transform: translateX(5px);
+      }
+
+      .api-badge {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: #e5bc6d;
+        color: #2a4061;
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        font-weight: 600;
+      }
+
+      .flowchart-title {
+        font-weight: 600;
+        color: #2a4061;
+        margin-bottom: 0.3rem;
+      }
+
+      .flowchart-desc {
+        font-size: 0.85rem;
+        color: #6c757d;
+      }
+
+      .business-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+      }
+
+      .gold-bar {
+        height: 5px;
+        background: linear-gradient(90deg, #e5bc6d 0%, #f4d03f 100%);
+      }
+
+      .business-card-title {
+        padding: 1rem;
+        margin: 0;
+        font-size: 1.1rem;
+        color: #2a4061;
+        border-bottom: 1px solid #f8f9fa;
+      }
+
+      .business-card-info {
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f8f9fa;
+      }
+
+      .business-card-info:last-child {
+        border-bottom: none;
+      }
+
+      .business-card-info i {
+        color: #e5bc6d;
+        margin-right: 0.75rem;
+        width: 20px;
+        text-align: center;
+      }
+
+      .business-card-info p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      .btn-primary {
+        background: #2a4061;
+        border-color: #2a4061;
+      }
+
+      .btn-primary:hover {
+        background: #1e2f47;
+        border-color: #1e2f47;
+      }
+
+      .btn-accent {
+        background: #e5bc6d;
+        border-color: #e5bc6d;
+        color: #2a4061;
+        font-weight: 600;
+      }
+
+      .btn-accent:hover {
+        background: #d9aa5a;
+        border-color: #d9aa5a;
+        color: #2a4061;
+      }
+
+      .map-container {
+        height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        background: #f8f9fa;
+      }
+      
+      #map {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .coordinates-display {
+        background: rgba(42, 64, 97, 0.9);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .custom-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .custom-tab {
+        flex: 1;
+        padding: 0.75rem;
+        text-align: center;
+        background: #f8f9fa;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+      }
+
+      .custom-tab.active {
+        background: #2a4061;
+        color: white;
+      }
+
+      .form-divider {
+        margin: 2rem 0 1rem;
+        padding: 0.5rem 0;
+        border-bottom: 2px solid #e5bc6d;
+        font-weight: 600;
+        color: #2a4061;
+      }
+
+      .tooltip-icon {
+        display: inline-block;
+        margin-left: 0.5rem;
+        width: 18px;
+        height: 18px;
+        background: #e5bc6d;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 18px;
+        font-size: 0.75rem;
+        cursor: help;
+      }
+
+      footer {
+        background: #2a4061;
+        color: white;
+        margin-top: 3rem;
+      }
+
+      footer a {
+        color: #e5bc6d;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: #f4d03f;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 991px) {
+        .sidebar-container {
+          position: relative;
+          margin-top: 2rem;
+        }
+
+        .main-container {
+          padding: 1rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .step-text {
+          display: none;
+        }
+
+        .step::before {
+          color: #6c757d;
+        }
+
+        .step.active::before {
+          color: white;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg sticky-top">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           MICE<span>ID</span> INVENTORY
@@ -40,30 +440,31 @@
       </div>
     </nav>
 
-    <div class="container py-4">
+    <div class="main-container">
       <div class="row">
-        <!-- Form Container -->
+        <!-- Form Container (Left Side) -->
         <div class="col-lg-8">
           <div class="form-container">
+            <!-- Step Indicator -->
             <div class="step-indicator">
-              <div class="step active" id="step1" onclick="showStep(1)">
-                1
+              <div
+                class="step active"
+                id="step1"
+                data-step="1"
+                onclick="showStep(1)"
+              >
                 <div class="step-text">Informasi Umum</div>
               </div>
-              <div class="step" id="step2" onclick="showStep(2)">
-                2
+              <div class="step" id="step2" data-step="2" onclick="showStep(2)">
                 <div class="step-text">Lokasi Properti</div>
               </div>
-              <div class="step" id="step3" onclick="showStep(3)">
-                3
+              <div class="step" id="step3" data-step="3" onclick="showStep(3)">
                 <div class="step-text">Kontak</div>
               </div>
-              <div class="step" id="step4" onclick="showStep(4)">
-                4
+              <div class="step" id="step4" data-step="4" onclick="showStep(4)">
                 <div class="step-text">Tempat Terdekat</div>
               </div>
-              <div class="step" id="step5" onclick="showStep(5)">
-                5
+              <div class="step" id="step5" data-step="5" onclick="showStep(5)">
                 <div class="step-text">Fasilitas</div>
               </div>
             </div>
@@ -74,6 +475,10 @@
                 <h3>
                   <i class="fas fa-info-circle me-2"></i> Informasi Umum Hotel
                 </h3>
+              </div>
+
+              <div class="section-title">
+                <i class="fas fa-building me-2"></i>INFORMASI USAHA
               </div>
 
               <div class="row mb-4">
@@ -88,6 +493,13 @@
                       id="nib"
                       placeholder="Masukkan NIB"
                     />
+                    <button
+                      class="btn btn-outline-primary"
+                      type="button"
+                      id="check-nib"
+                    >
+                      <i class="fas fa-check"></i> Verifikasi
+                    </button>
                   </div>
                   <div class="mt-2 d-flex align-items-center">
                     <small class="text-muted"
@@ -116,15 +528,6 @@
               </div>
 
               <div class="row mb-4">
-                <div class="col-md-6 mb-3">
-                  <button
-                    class="btn btn-outline-primary"
-                    type="button"
-                    id="check-nib"
-                  >
-                    <i class="fas fa-check"></i> Verifikasi
-                  </button>
-                </div>
                 <div class="col-md-6 mb-3">
                   <label for="chse" class="form-label required"
                     >Nomor Sertifikat CHSE</label
@@ -155,9 +558,6 @@
                     </span>
                   </div>
                 </div>
-              </div>
-
-              <div class="row mb-4">
                 <div class="col-md-6 mb-3">
                   <label for="hotel-name" class="form-label required"
                     >Nama Hotel</label
@@ -169,17 +569,10 @@
                     placeholder="Masukkan Nama Hotel"
                   />
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="sta" class="form-label"
-                    >Nomor Sertifikat Tanda Anggota (STA) PHRI</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="sta"
-                    placeholder="Masukkan Nomor STA PHRI"
-                  />
-                </div>
+              </div>
+
+              <div class="section-title">
+                <i class="fas fa-hotel me-2"></i>INFORMASI HOTEL
               </div>
 
               <div class="row mb-4">
@@ -199,9 +592,6 @@
                     <option value="bintang-5">Bintang 5</option>
                     <option value="bintang-5-luxury">Bintang 5 Luxury</option>
                   </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <!-- Empty space to maintain grid layout -->
                 </div>
               </div>
 
@@ -273,18 +663,6 @@
                   <small class="text-muted d-block mt-2"
                     >Dapat upload beberapa foto (multiple)</small
                   >
-                  <div class="preview-gallery">
-                    <div class="preview-item">
-                      <div class="text-center text-muted">
-                        <i class="fas fa-image"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item">
-                      <div class="text-center text-muted">
-                        <i class="fas fa-plus"></i>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -309,12 +687,10 @@
 
               <!-- Google Maps Integration -->
               <div class="map-container mb-4">
-                <div id="map" class="w-100 h-100 position-relative">
-                  <!-- The Google Maps will be loaded here by JavaScript -->
-                </div>
-
+                <div id="map"></div>
+                
                 <!-- Search box -->
-                <div class="position-absolute top-0 start-0 m-3 z-index-1">
+                <div class="position-absolute top-0 start-0 m-3" style="z-index: 100;">
                   <div class="bg-white rounded shadow-sm" style="width: 280px">
                     <div class="input-group">
                       <span class="input-group-text bg-white border-0">
@@ -324,94 +700,26 @@
                         type="text"
                         id="hotel-search"
                         class="form-control border-0 shadow-none"
-                        placeholder="Cari nama hotel"
+                        placeholder="Cari nama hotel atau alamat"
                       />
                     </div>
                   </div>
                 </div>
-
-                <!-- Map controls -->
-                <div class="position-absolute top-0 end-0 m-3">
-                  <div class="map-control">
-                    <button
-                      class="map-control-btn"
-                      id="btn-zoom-in"
-                      title="Zoom In"
-                    >
-                      <i class="fas fa-plus"></i>
-                    </button>
-                    <button
-                      class="map-control-btn"
-                      id="btn-zoom-out"
-                      title="Zoom Out"
-                    >
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button
-                      class="map-control-btn"
-                      id="btn-my-location"
-                      title="Lokasi Saya"
-                    >
-                      <i class="fas fa-location-arrow"></i>
-                    </button>
-                  </div>
+                
+                <!-- My Location button -->
+                <div class="position-absolute top-0 end-0 m-3" style="z-index: 100;">
+                  <button id="my-location-btn" class="btn btn-primary btn-sm shadow">
+                    <i class="fas fa-crosshairs me-1"></i> Lokasi Saya
+                  </button>
                 </div>
-
-                <!-- Map type controls -->
-                <div class="position-absolute bottom-0 start-0 m-3">
-                  <div class="bg-white rounded-pill shadow-sm px-3 py-1">
-                    <div class="btn-group" role="group">
-                      <button
-                        class="btn btn-sm py-1 px-2 map-type-btn active"
-                        data-map-type="roadmap"
-                        style="background-color: #2a4061; color: white"
-                      >
-                        Peta
-                      </button>
-                      <button
-                        class="btn btn-sm py-1 px-2 map-type-btn text-muted"
-                        data-map-type="satellite"
-                      >
-                        Satelit
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Instructions -->
-                <div
-                  class="position-absolute bottom-0 end-0 m-3 bg-white p-2 rounded shadow-sm d-flex align-items-center"
-                >
-                  <i
-                    class="fas fa-map-marker-alt me-2"
-                    style="color: #e5bc6d"
-                  ></i>
-                  <span>Klik pada peta untuk pin point lokasi</span>
-                </div>
-
+                
                 <!-- Coordinates display -->
-                <div
-                  class="position-absolute bottom-0 start-50 translate-middle-x mb-3"
-                >
+                <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3">
                   <div class="coordinates-display">
-                    <i class="fas fa-location-arrow"></i>
+                    <i class="fas fa-location-arrow me-2"></i>
                     <span id="coordinates-display">6.1754° S, 106.8272° E</span>
                   </div>
                 </div>
-
-                <!-- Hidden inputs for coordinates -->
-                <input
-                  type="hidden"
-                  id="lat-input"
-                  name="latitude"
-                  value="-6.1754"
-                />
-                <input
-                  type="hidden"
-                  id="lng-input"
-                  name="longitude"
-                  value="106.8272"
-                />
               </div>
 
               <div class="row mb-4">
@@ -419,13 +727,25 @@
                   <label for="province" class="form-label required"
                     >Provinsi</label
                   >
-                  <input type="text" class="form-control" id="province" placeholder="Provinsi akan terisi otomatis" readonly>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="province"
+                    placeholder="Provinsi akan terisi otomatis"
+                    readonly
+                  />
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="regency" class="form-label required"
                     >Kabupaten/Kota</label
                   >
-                  <input type="text" class="form-control" id="regency" placeholder="Kabupaten/Kota akan terisi otomatis" readonly>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="regency"
+                    placeholder="Kabupaten/Kota akan terisi otomatis"
+                    readonly
+                  />
                 </div>
               </div>
 
@@ -434,13 +754,25 @@
                   <label for="district" class="form-label required"
                     >Kecamatan</label
                   >
-                  <input type="text" class="form-control" id="district" placeholder="Kecamatan akan terisi otomatis" readonly>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="district"
+                    placeholder="Kecamatan akan terisi otomatis"
+                    readonly
+                  />
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="village" class="form-label required"
                     >Kelurahan / Desa</label
                   >
-                  <input type="text" class="form-control" id="village" placeholder="Kelurahan/Desa akan terisi otomatis" readonly>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="village"
+                    placeholder="Kelurahan/Desa akan terisi otomatis"
+                    readonly
+                  />
                 </div>
               </div>
 
@@ -524,7 +856,9 @@
                 </div>
               </div>
 
-              <div class="section-title">Sosial Media</div>
+              <div class="section-title">
+                <i class="fas fa-share-alt me-2"></i>Sosial Media
+              </div>
 
               <div class="row mb-4">
                 <div class="col-md-6 mb-3">
@@ -674,7 +1008,7 @@
                 </div>
               </div>
 
-              <div class="custom-tabs mb-3">
+              <div class="custom-tabs">
                 <div class="custom-tab active" data-tab="transportation">
                   Transportasi
                 </div>
@@ -753,7 +1087,9 @@
                 <h3><i class="fas fa-concierge-bell me-2"></i> Fasilitas</h3>
               </div>
 
-              <div class="section-title">Fasilitas Hotel</div>
+              <div class="section-title">
+                <i class="fas fa-concierge-bell me-2"></i>Fasilitas Hotel
+              </div>
 
               <div class="row mb-4">
                 <div class="col-12 mb-3">
@@ -898,7 +1234,9 @@
                 </div>
               </div>
 
-              <div class="section-title">Fasilitas Tambahan</div>
+              <div class="section-title">
+                <i class="fas fa-plus-circle me-2"></i>Fasilitas Tambahan
+              </div>
 
               <div class="mb-4">
                 <div class="input-group">
@@ -920,7 +1258,7 @@
                   >Tambahkan fasilitas lain yang belum tercantum pada
                   daftar</small
                 >
-                
+
                 <!-- Daftar fasilitas tambahan yang telah ditambahkan -->
                 <div class="mt-3">
                   <div id="additional-facilities-list" class="list-group">
@@ -928,6 +1266,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="d-flex justify-content-between">
                 <button
                   type="button"
@@ -944,107 +1283,127 @@
           </div>
         </div>
 
-        <!-- Sidebar Content -->
+        <!-- Sidebar Content (Right Side) -->
         <div class="col-lg-4">
-          <!-- Flowchart -->
-          <div class="flowchart-container">
-            <div class="flowchart-header">
-              <h4 class="mb-0">Flowchart Sistem</h4>
-            </div>
-            <div class="flowchart flowchart-interactive">
-              <div
-                class="flowchart-step active"
-                id="flow-step1"
-                onclick="showStep(1)"
-              >
-                <div class="api-badge">API Integration</div>
-                <div class="flowchart-title">Step 1: Informasi Umum</div>
-                <div class="flowchart-desc">NIB, CHSE, Klasifikasi, Foto</div>
+          <div class="sidebar-container">
+            <!-- Flowchart -->
+            <div class="flowchart-container">
+              <div class="flowchart-header">
+                <h4>Flowchart Sistem</h4>
               </div>
-              <div class="flowchart-step" id="flow-step2" onclick="showStep(2)">
-                <div class="flowchart-title">Step 2: Lokasi Properti</div>
-                <div class="flowchart-desc">Maps, Alamat, Koordinat</div>
-              </div>
-              <div class="flowchart-step" id="flow-step3" onclick="showStep(3)">
-                <div class="flowchart-title">Step 3: Kontak</div>
-                <div class="flowchart-desc">Telepon, Website, Media Sosial</div>
-              </div>
-              <div class="flowchart-step" id="flow-step4" onclick="showStep(4)">
-                <div class="api-badge">AI Integration</div>
-                <div class="flowchart-title">Step 4: Tempat Terdekat</div>
-                <div class="flowchart-desc">Bandara, Mall, Restoran</div>
-              </div>
-              <div class="flowchart-step" id="flow-step5" onclick="showStep(5)">
-                <div class="flowchart-title">Step 5: Fasilitas</div>
-                <div class="flowchart-desc">WiFi, Parkir, Sustainability</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Business Card -->
-          <div class="business-card">
-            <div class="gold-bar"></div>
-            <h5 class="business-card-title">Hotel Status</h5>
-
-            <div class="business-card-info">
-              <i class="fas fa-check-circle"></i>
-              <p>
-                <strong>NIB:</strong>
-                <span id="status-nib">Menunggu Verifikasi</span>
-              </p>
-            </div>
-
-            <div class="business-card-info">
-              <i class="fas fa-check-circle"></i>
-              <p>
-                <strong>CHSE:</strong>
-                <span id="status-chse">Menunggu Verifikasi</span>
-              </p>
-            </div>
-
-            <div class="business-card-info">
-              <i class="fas fa-info-circle"></i>
-              <p><strong>Nama:</strong> <span id="status-name">-</span></p>
-            </div>
-
-            <div class="business-card-info">
-              <i class="fas fa-star"></i>
-              <p>
-                <strong>Klasifikasi:</strong>
-                <span id="status-classification">-</span>
-              </p>
-            </div>
-
-            <div class="business-card-info">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>
-                <strong>Lokasi:</strong> <span id="status-location">-</span>
-              </p>
-            </div>
-          </div>
-
-          <!-- Help Card -->
-          <div class="card mt-4">
-            <div class="card-header bg-primary text-white">
-              <h5 class="mb-0">
-                <i class="fas fa-question-circle me-2"></i> Butuh Bantuan?
-              </h5>
-            </div>
-            <div class="card-body">
-              <p>
-                Jika Anda memiliki pertanyaan atau mengalami kesulitan dalam
-                mengisi data, silakan hubungi tim support kami:
-              </p>
-              <div class="d-grid gap-2">
-                <a href="#" class="btn btn-outline-primary">
-                  <i class="fas fa-headset me-2"></i> Live Chat
-                </a>
-                <a
-                  href="mailto:support@miceid.com"
-                  class="btn btn-outline-primary"
+              <div class="flowchart">
+                <div
+                  class="flowchart-step active"
+                  id="flow-step1"
+                  onclick="showStep(1)"
                 >
-                  <i class="fas fa-envelope me-2"></i> Email Support
-                </a>
+                  <div class="api-badge">API Integration</div>
+                  <div class="flowchart-title">Step 1: Informasi Umum</div>
+                  <div class="flowchart-desc">Informasi Usaha & Hotel</div>
+                </div>
+                <div
+                  class="flowchart-step"
+                  id="flow-step2"
+                  onclick="showStep(2)"
+                >
+                  <div class="flowchart-title">Step 2: Lokasi Properti</div>
+                  <div class="flowchart-desc">Maps, Alamat, Koordinat</div>
+                </div>
+                <div
+                  class="flowchart-step"
+                  id="flow-step3"
+                  onclick="showStep(3)"
+                >
+                  <div class="flowchart-title">Step 3: Kontak</div>
+                  <div class="flowchart-desc">
+                    Telepon, Website, Media Sosial
+                  </div>
+                </div>
+                <div
+                  class="flowchart-step"
+                  id="flow-step4"
+                  onclick="showStep(4)"
+                >
+                  <div class="api-badge">AI Integration</div>
+                  <div class="flowchart-title">Step 4: Tempat Terdekat</div>
+                  <div class="flowchart-desc">Bandara, Mall, Restoran</div>
+                </div>
+                <div
+                  class="flowchart-step"
+                  id="flow-step5"
+                  onclick="showStep(5)"
+                >
+                  <div class="flowchart-title">Step 5: Fasilitas</div>
+                  <div class="flowchart-desc">WiFi, Parkir, Sustainability</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Business Card -->
+            <div class="business-card">
+              <div class="gold-bar"></div>
+              <h5 class="business-card-title">Hotel Status</h5>
+
+              <div class="business-card-info">
+                <i class="fas fa-check-circle"></i>
+                <p>
+                  <strong>NIB:</strong>
+                  <span id="status-nib">Menunggu Verifikasi</span>
+                </p>
+              </div>
+
+              <div class="business-card-info">
+                <i class="fas fa-check-circle"></i>
+                <p>
+                  <strong>CHSE:</strong>
+                  <span id="status-chse">Menunggu Verifikasi</span>
+                </p>
+              </div>
+
+              <div class="business-card-info">
+                <i class="fas fa-info-circle"></i>
+                <p><strong>Nama:</strong> <span id="status-name">-</span></p>
+              </div>
+
+              <div class="business-card-info">
+                <i class="fas fa-star"></i>
+                <p>
+                  <strong>Klasifikasi:</strong>
+                  <span id="status-classification">-</span>
+                </p>
+              </div>
+
+              <div class="business-card-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>
+                  <strong>Lokasi:</strong> <span id="status-location">-</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Help Card -->
+            <div class="card shadow-sm">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                  <i class="fas fa-question-circle me-2"></i> Butuh Bantuan?
+                </h5>
+              </div>
+              <div class="card-body">
+                <p>
+                  Jika Anda memiliki pertanyaan atau mengalami kesulitan dalam
+                  mengisi data, silakan hubungi tim support kami:
+                </p>
+                <div class="d-grid gap-2">
+                  <a href="#" class="btn btn-outline-primary">
+                    <i class="fas fa-headset me-2"></i> Live Chat
+                  </a>
+                  <a
+                    href="mailto:support@miceid.com"
+                    class="btn btn-outline-primary"
+                  >
+                    <i class="fas fa-envelope me-2"></i> Email Support
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -1053,7 +1412,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="py-3 mt-5">
+    <footer class="py-3">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -1069,33 +1428,376 @@
       </div>
     </footer>
 
-    <!-- Toast notification container -->
-    <div class="toast-container"></div>
-
-    <!-- Bootstrap JS -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <!-- Array.from polyfill script -->
+    
+    <!-- Add hidden inputs for latitude and longitude -->
+    <input type="hidden" id="lat-input" name="latitude" value="-6.1754">
+    <input type="hidden" id="lng-input" name="longitude" value="106.8272">
+    
+    <!-- IndexedDB and Form Scripts -->
+    <script src="../js/indexeddb-storage.js"></script>
+    <script src="../js/file-upload.js"></script>
+    <script src="../js/form-submit.js"></script>
+    <script src="../js/submit-handler.js"></script>
+    
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0W0zOWhaiVXCI2djW_C0SXDEmAOIHJmw&libraries=places,geometry&callback=initMap" async defer></script>
+    <script src="../js/nearby-places.js"></script>
+    
     <script>
-      // Penanganan error untuk script yang menggunakan Array.from
-      const originalFrom = Array.from;
-      Array.from = function(arg) {
-        if (arg === undefined || arg === null) {
-          console.warn("Array.from received undefined/null value - returning empty array");
-          return [];
+      // Basic form navigation functions
+      let currentStep = 1;
+      const totalSteps = 5;
+
+      function showStep(step) {
+        // Hide all sections
+        document.querySelectorAll(".form-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Show selected section
+        document.getElementById("section" + step).classList.add("active");
+
+        // Update step indicators
+        document.querySelectorAll(".step").forEach((s, index) => {
+          if (index + 1 <= step) {
+            s.classList.add("active");
+          } else {
+            s.classList.remove("active");
+          }
+        });
+
+        // Update flowchart
+        document.querySelectorAll(".flowchart-step").forEach((s, index) => {
+          if (index + 1 <= step) {
+            s.classList.add("active");
+          } else {
+            s.classList.remove("active");
+          }
+        });
+
+        currentStep = step;
+      }
+
+      function nextStep(currentStep) {
+        if (currentStep < totalSteps) {
+          showStep(currentStep + 1);
         }
-        return originalFrom.apply(Array, arguments);
-      };
+      }
+
+      function prevStep(currentStep) {
+        if (currentStep > 1) {
+          showStep(currentStep - 1);
+        }
+      }
+
+      // Initialize tooltips
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+
+      // Custom tab functionality for nearby places
+      document.querySelectorAll(".custom-tab").forEach((tab) => {
+        tab.addEventListener("click", function () {
+          const tabName = this.getAttribute("data-tab");
+
+          // Remove active class from all tabs
+          document
+            .querySelectorAll(".custom-tab")
+            .forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+
+          // Hide all tab panes
+          document.querySelectorAll(".tab-pane").forEach((pane) => {
+            pane.style.display = "none";
+          });
+
+          // Show selected tab pane
+          document.getElementById(tabName).style.display = "block";
+        });
+      });
+
+      // Add facility functionality
+      document
+        .getElementById("add-facility")
+        ?.addEventListener("click", function () {
+          const input = document.getElementById("facility-input");
+          const facilityName = input.value.trim();
+
+          if (facilityName) {
+            const list = document.getElementById("additional-facilities-list");
+            const item = document.createElement("div");
+            item.className =
+              "list-group-item d-flex justify-content-between align-items-center";
+            item.innerHTML = `
+                    <span><i class="fas fa-check-circle text-success me-2"></i>${facilityName}</span>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+            list.appendChild(item);
+            input.value = "";
+          }
+        });
+
+      // Form field listeners for status updates
+      document
+        .getElementById("hotel-name")
+        ?.addEventListener("input", function () {
+          document.getElementById("status-name").textContent =
+            this.value || "-";
+        });
+
+      document
+        .getElementById("classification")
+        ?.addEventListener("change", function () {
+          const text = this.options[this.selectedIndex].text;
+          document.getElementById("status-classification").textContent =
+            text !== "Pilih Klasifikasi" ? text : "-";
+        });
+
+      // Global variables for map
+      let map, marker, geocoder;
       
-      // Simple callback when Google Maps API is ready
+      // Initialize Google Maps
       function initMap() {
-        console.log("Google Maps API loaded and ready");
+        // Create geocoder instance
+        geocoder = new google.maps.Geocoder();
+        
+        // Default location (Indonesia)
+        const defaultLocation = { lat: -6.1754, lng: 106.8272 };
+        
+        // Map options
+        const mapOptions = {
+          center: defaultLocation,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: true,
+          fullscreenControl: true,
+          streetViewControl: true,
+          zoomControl: true
+        };
+        
+        // Create map
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        
+        // Create marker
+        marker = new google.maps.Marker({
+          position: defaultLocation,
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          title: "Lokasi Hotel"
+        });
+        
+        // Update coordinates when marker is dragged
+        google.maps.event.addListener(marker, 'dragend', function() {
+          const position = marker.getPosition();
+          updateCoordinatesDisplay(position.lat(), position.lng());
+          
+          // Update hidden inputs
+          document.getElementById('lat-input').value = position.lat();
+          document.getElementById('lng-input').value = position.lng();
+          
+          // Reverse geocode to get address
+          reverseGeocode(position);
+          
+          // Update nearby places
+          updateNearbyPlaces(position);
+        });
+        
+        // Update marker on map click
+        google.maps.event.addListener(map, 'click', function(event) {
+          marker.setPosition(event.latLng);
+          updateCoordinatesDisplay(event.latLng.lat(), event.latLng.lng());
+          
+          // Update hidden inputs
+          document.getElementById('lat-input').value = event.latLng.lat();
+          document.getElementById('lng-input').value = event.latLng.lng();
+          
+          // Reverse geocode to get address
+          reverseGeocode(event.latLng);
+          
+          // Update nearby places
+          updateNearbyPlaces(event.latLng);
+        });
+        
+        // Setup search box
+        const input = document.getElementById('hotel-search');
+        if (input) {
+          const searchBox = new google.maps.places.SearchBox(input);
+          
+          // Bias searchBox results towards current map viewport
+          map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+          });
+          
+          // Listen for the event fired when the user selects a prediction
+          searchBox.addListener('places_changed', function() {
+            const places = searchBox.getPlaces();
+            
+            if (places.length === 0) {
+              return;
+            }
+            
+            const place = places[0];
+            
+            if (!place.geometry || !place.geometry.location) {
+              console.log("No geometry found for this place");
+              return;
+            }
+            
+            // Center map on selected place
+            map.setCenter(place.geometry.location);
+            marker.setPosition(place.geometry.location);
+            
+            // Update coordinates
+            updateCoordinatesDisplay(place.geometry.location.lat(), place.geometry.location.lng());
+            
+            // Update hidden inputs
+            document.getElementById('lat-input').value = place.geometry.location.lat();
+            document.getElementById('lng-input').value = place.geometry.location.lng();
+            
+            // Get address
+            reverseGeocode(place.geometry.location);
+            
+            // Update nearby places
+            updateNearbyPlaces(place.geometry.location);
+          });
+        }
+        
+        // Setup "My Location" button
+        document.getElementById('my-location-btn').addEventListener('click', function() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function(position) {
+                const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+                
+                // Center map and update marker
+                map.setCenter(pos);
+                marker.setPosition(pos);
+                
+                // Update coordinates display
+                updateCoordinatesDisplay(pos.lat, pos.lng);
+                
+                // Update hidden inputs
+                document.getElementById('lat-input').value = pos.lat;
+                document.getElementById('lng-input').value = pos.lng;
+                
+                // Reverse geocode to get address
+                reverseGeocode(pos);
+                
+                // Update nearby places
+                updateNearbyPlaces(pos);
+              },
+              function() {
+                alert('Error: Tidak dapat menentukan lokasi Anda. Pastikan Anda telah mengizinkan akses lokasi.');
+              }
+            );
+          } else {
+            alert('Error: Browser Anda tidak mendukung geolocation.');
+          }
+        });
+        
+        // Initialize nearby places with default location
+        initNearbyPlaces(map, defaultLocation);
+      }
+      
+      // Update nearby places when location changes
+      function updateNearbyPlaces(location) {
+        const pos = (location instanceof google.maps.LatLng) ? 
+          { lat: location.lat(), lng: location.lng() } : 
+          location;
+          
+        initNearbyPlaces(map, pos);
+      }
+      
+      // Reverse geocode a location
+      function reverseGeocode(latlng) {
+        geocoder.geocode({ 'location': latlng }, function(results, status) {
+          if (status === 'OK' && results[0]) {
+            // Fill address field with formatted address
+            const addressField = document.getElementById('address');
+            if (addressField) {
+              addressField.value = results[0].formatted_address;
+            }
+            
+            // Extract administrative areas
+            extractAdministrativeAreas(results);
+          }
+        });
+      }
+      
+      // Extract administrative areas from geocoding results
+      function extractAdministrativeAreas(results) {
+        // Initialize variables
+        let province = '';
+        let regency = '';
+        let district = '';
+        let village = '';
+        let postalCode = '';
+        
+        // Loop through results to find components
+        for (let i = 0; i < results.length; i++) {
+          const components = results[i].address_components;
+          
+          for (let j = 0; j < components.length; j++) {
+            const component = components[j];
+            const types = component.types;
+            
+            // Check for postal code
+            if (types.includes('postal_code') && !postalCode) {
+              postalCode = component.long_name;
+              document.getElementById('postal-code').value = postalCode;
+            }
+            
+            // Check for province (administrative_area_level_1)
+            if (types.includes('administrative_area_level_1') && !province) {
+              province = component.long_name;
+              document.getElementById('province').value = province;
+            }
+            
+            // Check for regency/city (administrative_area_level_2)
+            if (types.includes('administrative_area_level_2') && !regency) {
+              regency = component.long_name;
+              document.getElementById('regency').value = regency;
+            }
+            
+            // Check for district (administrative_area_level_3)
+            if (types.includes('administrative_area_level_3') && !district) {
+              district = component.long_name;
+              document.getElementById('district').value = district;
+            }
+            
+            // Check for village/subdistrict (administrative_area_level_4)
+            if (types.includes('administrative_area_level_4') && !village) {
+              village = component.long_name;
+              document.getElementById('village').value = village;
+            }
+          }
+        }
+        
+        // Update status location display
+        if (regency && province) {
+          document.getElementById('status-location').textContent = regency + ', ' + province;
+        }
+      }
+
+      function updateCoordinatesDisplay(lat, lng) {
+        const display = document.getElementById("coordinates-display");
+        if (display) {
+          display.textContent = `${lat.toFixed(4)}° ${
+            lat > 0 ? "N" : "S"
+          }, ${lng.toFixed(4)}° ${lng > 0 ? "E" : "W"}`;
+        }
       }
     </script>
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAS5Vc3Ixr-TYcoAdmTAWqfsuQchoQtEHs&libraries=places&callback=initMap" async defer></script>
-    <!-- Custom Scripts -->
-    <script src="../js/address-autocomplete.js"></script>
-    <script src="../js/nearby-places-ai.js"></script>
-    <script src="../js/form.js"></script>
   </body>
 </html>

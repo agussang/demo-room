@@ -810,19 +810,48 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize the list
   updateAdditionalFacilitiesList();
 
+  // Initialize file upload handler if upload elements exist
+  const fileInput = document.getElementById('hotel-photos');
+  const filePreview = document.getElementById('photos-preview');
+  
+  if (fileInput && filePreview) {
+    window.uploadHandler = new FileUploadHandler(fileInput, filePreview, {
+      maxSizeMB: 5,
+      allowedTypes: ['image/jpeg', 'image/png', 'image/gif'],
+      multiple: true,
+      onUploadSuccess: (fileInfo) => {
+        console.log('File uploaded successfully:', fileInfo);
+      },
+      onUploadError: (file, error) => {
+        console.error('Error uploading file:', file.name, error);
+      }
+    });
+  }
+
   // Form submission
   document
     .getElementById("submit-form")
-    .addEventListener("click", function () {
-      showNotification(
-        "Data Tersimpan",
-        "Informasi hotel berhasil disimpan dan diproses",
-        "success"
-      );
+    .addEventListener("click", async function () {
+      try {
+        // Save form data to IndexedDB
+        const hotelId = await submitHotelForm();
+        
+        showNotification(
+          "Data Tersimpan",
+          "Informasi hotel berhasil disimpan dan dapat dilihat di dashboard",
+          "success"
+        );
 
-      // Redirect to dashboard after a delay
-      setTimeout(() => {
-        window.location.href = "../dashboard/";
-      }, 2000);
+        // Redirect to dashboard after a delay
+        setTimeout(() => {
+          window.location.href = "../dashboard/?id=" + hotelId;
+        }, 2000);
+      } catch (error) {
+        showNotification(
+          "Error",
+          "Gagal menyimpan data: " + error.message,
+          "error"
+        );
+      }
     });
 });

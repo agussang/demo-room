@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Manajemen Hotel Indonesia | Kementerian Pariwisata</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+      }
+
+      /* Header Navigation */
+      .navbar {
+        background: rgba(42, 64, 97, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .navbar.scrolled {
+        background: rgba(42, 64, 97, 0.98);
+        padding: 10px 0;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: white;
+      }
+
+      .logo-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: white;
+      }
+
+      .logo-text h2 {
+        font-size: 20px;
+        margin-bottom: 2px;
+      }
+
+      .logo-text p {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+        padding: 8px 16px;
+        border-radius: 5px;
+      }
+
+      .nav-links a:hover {
+        background: rgba(214, 169, 85, 0.2);
+        color: #d6a955;
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        background: linear-gradient(
+            135deg,
+            rgba(42, 64, 97, 0.9),
+            rgba(42, 64, 97, 0.7)
+          ),
+          url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="hotel-pattern" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23f8f9fa" opacity="0.1"/><path d="M20 20h60v60H20z" fill="%23D6A955" opacity="0.1"/><circle cx="80" cy="20" r="8" fill="%23D6A955" opacity="0.15"/></pattern></defs><rect width="1000" height="1000" fill="url(%23hotel-pattern)"/></svg>');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        padding: 0 20px;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+        line-height: 1.8;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        color: white;
+        box-shadow: 0 4px 15px rgba(214, 169, 85, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(214, 169, 85, 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .btn-outline:hover {
+        background: white;
+        color: #2a4061;
+        transform: translateY(-3px);
+      }
+
+      /* Stats Section */
+      .stats {
+        padding: 80px 0;
+        background: #f8f9fa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        text-align: center;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 40px 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        border-top: 5px solid #d6a955;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #2a4061, #1a2c42);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 32px;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #2a4061;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Services Section */
+      .services {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #2a4061, #1a2c42);
+        color: white;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-header h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+
+      .section-header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+        margin-top: 60px;
+      }
+
+      .service-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 40px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s;
+        text-align: center;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .service-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px;
+        font-size: 40px;
+        color: white;
+      }
+
+      .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #d6a955;
+      }
+
+      .service-card p {
+        opacity: 0.9;
+        line-height: 1.8;
+        margin-bottom: 30px;
+      }
+
+      .service-card .btn {
+        font-size: 14px;
+        padding: 12px 25px;
+      }
+
+      /* Workflow Section */
+      .workflow {
+        padding: 100px 0;
+        background: #f8f9fa;
+      }
+
+      .workflow-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 60px;
+        position: relative;
+      }
+
+      .workflow-step {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+        transition: transform 0.3s;
+      }
+
+      .workflow-step:hover {
+        transform: translateY(-5px);
+      }
+
+      .step-number {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .step-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #2a4061, #1a2c42);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto 30px;
+        color: white;
+        font-size: 32px;
+      }
+
+      .workflow-step h3 {
+        color: #2a4061;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+      }
+
+      .workflow-step p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      /* CTA Section */
+      .cta {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        color: white;
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+
+      .cta p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+      }
+
+      /* Footer */
+      .footer {
+        background: #2a4061;
+        color: white;
+        padding: 60px 0 30px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .footer-section h3 {
+        margin-bottom: 20px;
+        color: #d6a955;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        line-height: 1.8;
+      }
+
+      .footer-section a:hover {
+        color: #d6a955;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 30px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.8s ease;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero p {
+          font-size: 1.1rem;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+        }
+
+        .section-header h2 {
+          font-size: 2rem;
+        }
+
+        .services-grid,
+        .workflow-steps {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Scroll Animations */
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease;
+      }
+
+      .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Floating Action Button */
+      .fab {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        box-shadow: 0 4px 20px rgba(214, 169, 85, 0.3);
+        cursor: pointer;
+        transition: all 0.3s;
+        z-index: 1000;
+      }
+
+      .fab:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(214, 169, 85, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-hotel"></i>
+          </div>
+          <div class="logo-text">
+            <h2>HOTEL MANAGEMENT</h2>
+            <p>Kementerian Pariwisata RI</p>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#services">Layanan</a></li>
+          <li><a href="#workflow">Alur Kerja</a></li>
+          <li><a href="#contact">Kontak</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Sistem Manajemen Hotel Indonesia</h1>
+        <p>
+          Platform terintegrasi untuk pendaftaran, verifikasi, dan pengelolaan
+          hotel di Indonesia. Mendukung ekosistem pariwisata dan industri MICE
+          yang berkelanjutan.
+        </p>
+        <div class="hero-buttons">
+          <a href="hotel-manager/" class="btn btn-primary">
+            <i class="fas fa-user-tie"></i>
+            Hotel Manager
+          </a>
+          <a href="admin/pemda/dashboard.html" class="btn btn-outline">
+            <i class="fas fa-building"></i>
+            Admin Pemda
+          </a>
+          <a href="admin/pusat/dashboard.html" class="btn btn-outline">
+            <i class="fas fa-university"></i>
+            Pemerintah Pusat
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card scroll-reveal">
+            <div class="stat-icon">
+              <i class="fas fa-hotel"></i>
+            </div>
+            <div class="stat-number">1,247</div>
+            <div class="stat-label">Hotel Terdaftar</div>
+          </div>
+          <div class="stat-card scroll-reveal">
+            <div class="stat-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="stat-number">34</div>
+            <div class="stat-label">Provinsi</div>
+          </div>
+          <div class="stat-card scroll-reveal">
+            <div class="stat-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <div class="stat-number">892</div>
+            <div class="stat-label">Sertifikat CHSE</div>
+          </div>
+          <div class="stat-card scroll-reveal">
+            <div class="stat-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="stat-number">156</div>
+            <div class="stat-label">Venue MICE</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <h2>Layanan Kami</h2>
+          <p>
+            Sistem komprehensif untuk pengelolaan hotel dan fasilitas MICE di
+            seluruh Indonesia
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card scroll-reveal">
+            <div class="service-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>Pendaftaran Hotel</h3>
+            <p>
+              Sistem pendaftaran hotel online yang mudah dan terintegrasi dengan
+              database nasional. Mendukung berbagai klasifikasi hotel dari
+              bintang 1 hingga 5.
+            </p>
+            <a
+              href="hotel-manager/forms/hotel-registration.html"
+              class="btn btn-outline"
+            >
+              <i class="fas fa-arrow-right"></i>
+              Mulai Daftar
+            </a>
+          </div>
+          <div class="service-card scroll-reveal">
+            <div class="service-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Verifikasi & Validasi</h3>
+            <p>
+              Proses verifikasi dokumen dan validasi kesesuaian standar hotel
+              oleh Pemda dan Pemerintah Pusat secara digital dan transparan.
+            </p>
+            <a href="admin/pemda/dashboard.html" class="btn btn-outline">
+              <i class="fas fa-arrow-right"></i>
+              Portal Verifikasi
+            </a>
+          </div>
+          <div class="service-card scroll-reveal">
+            <div class="service-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3>Manajemen MICE</h3>
+            <p>
+              Platform khusus untuk pengelolaan venue dan fasilitas MICE
+              (Meeting, Incentive, Convention, Exhibition) dengan standar
+              internasional.
+            </p>
+            <a href="hotel-manager/ruang-meeting/" class="btn btn-outline">
+              <i class="fas fa-arrow-right"></i>
+              Kelola MICE
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="workflow" id="workflow">
+      <div class="container">
+        <div class="section-header scroll-reveal">
+          <h2>Alur Kerja Sistem</h2>
+          <p>
+            Proses terintegrasi dari pendaftaran hingga penerbitan sertifikat
+          </p>
+        </div>
+        <div class="workflow-steps">
+          <div class="workflow-step scroll-reveal">
+            <div class="step-number">1</div>
+            <div class="step-icon">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <h3>Pendaftaran Hotel</h3>
+            <p>
+              Hotel manager mengisi formulir pendaftaran lengkap dengan dokumen
+              pendukung seperti NIB, CHSE, dan informasi fasilitas.
+            </p>
+          </div>
+          <div class="workflow-step scroll-reveal">
+            <div class="step-number">2</div>
+            <div class="step-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3>Verifikasi Pemda</h3>
+            <p>
+              Pemerintah Daerah melakukan verifikasi dokumen, lokasi, dan
+              kesesuaian dengan standar klasifikasi hotel.
+            </p>
+          </div>
+          <div class="workflow-step scroll-reveal">
+            <div class="step-number">3</div>
+            <div class="step-icon">
+              <i class="fas fa-university"></i>
+            </div>
+            <h3>Approval Pusat</h3>
+            <p>
+              Pemerintah Pusat memberikan persetujuan final dan menerbitkan
+              Surat Keputusan (SK) resmi.
+            </p>
+          </div>
+          <div class="workflow-step scroll-reveal">
+            <div class="step-number">4</div>
+            <div class="step-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <h3>Sertifikat Resmi</h3>
+            <p>
+              Hotel mendapatkan sertifikat resmi dan terdaftar dalam database
+              nasional pariwisata Indonesia.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container scroll-reveal">
+        <h2>Bergabunglah Dengan Ekosistem Pariwisata Indonesia</h2>
+        <p>
+          Daftarkan hotel Anda sekarang dan menjadi bagian dari industri
+          pariwisata Indonesia yang berkelanjutan
+        </p>
+        <a
+          href="hotel-manager/forms/hotel-registration.html"
+          class="btn btn-outline"
+        >
+          <i class="fas fa-rocket"></i>
+          Mulai Sekarang
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <h3>Kementerian Pariwisata RI</h3>
+            <p>
+              Sistem Manajemen Hotel Indonesia merupakan platform resmi
+              Kementerian Pariwisata dan Ekonomi Kreatif Republik Indonesia
+              untuk mendukung industri perhotelan nasional.
+            </p>
+          </div>
+          <div class="footer-section">
+            <h3>Layanan</h3>
+            <p><a href="hotel-manager/">Portal Hotel Manager</a></p>
+            <p><a href="admin/pemda/">Verifikasi Pemda</a></p>
+            <p><a href="admin/pusat/">Approval Pemerintah Pusat</a></p>
+            <p><a href="documentation/">Dokumentasi API</a></p>
+          </div>
+          <div class="footer-section">
+            <h3>Kontak</h3>
+            <p><i class="fas fa-phone"></i> +62 21 3838 2000</p>
+            <p><i class="fas fa-envelope"></i> info@kemenparekraf.go.id</p>
+            <p><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</p>
+            <p><i class="fas fa-globe"></i> www.kemenparekraf.go.id</p>
+          </div>
+          <div class="footer-section">
+            <h3>Dukungan</h3>
+            <p><a href="documentation/user-guide/">Panduan Pengguna</a></p>
+            <p><a href="documentation/api/">API Documentation</a></p>
+            <p><a href="#help">FAQ</a></p>
+            <p><a href="#support">Support Ticket</a></p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Kementerian Pariwisata dan Ekonomi Kreatif Republik
+            Indonesia. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="scrollToTop()">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // Scroll reveal animation
+      function revealElements() {
+        const reveals = document.querySelectorAll(".scroll-reveal");
+
+        reveals.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add("revealed");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", revealElements);
+
+      // Initial check for elements already in view
+      revealElements();
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Scroll to top function
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Show/hide floating action button
+      window.addEventListener("scroll", function () {
+        const fab = document.querySelector(".fab");
+        if (window.scrollY > 300) {
+          fab.style.opacity = "1";
+          fab.style.transform = "scale(1)";
+        } else {
+          fab.style.opacity = "0";
+          fab.style.transform = "scale(0)";
+        }
+      });
+
+      // Add loading animation
+      window.addEventListener("load", function () {
+        document.body.style.opacity = "1";
+      });
+
+      // Mobile menu toggle (placeholder)
+      function toggleMobileMenu() {
+        // Add mobile menu functionality here
+        console.log("Mobile menu toggle");
+      }
+
+      // Add click events for CTA buttons
+      document.addEventListener("DOMContentLoaded", function () {
+        // Track button clicks for analytics
+        const buttons = document.querySelectorAll(".btn");
+        buttons.forEach((button) => {
+          button.addEventListener("click", function () {
+            console.log("Button clicked:", this.textContent.trim());
+            // Add analytics tracking here
+          });
+        });
+
+        // Add hover effects for service cards
+        const serviceCards = document.querySelectorAll(".service-card");
+        serviceCards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-10px) scale(1.02)";
+          });
+
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0) scale(1)";
+          });
+        });
+      });
+
+      // Initialize particles or background animations (optional)
+      function initBackgroundAnimation() {
+        // Add subtle background animations here
+      }
+
+      initBackgroundAnimation();
+    </script>
+  </body>
+</html>

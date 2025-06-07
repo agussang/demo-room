@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Admin | Sistem Manajemen Hotel Indonesia</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2A4061 0%, #1a2c42 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .admin-selector {
+            max-width: 900px;
+            width: 90%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #2A4061;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .admin-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 3px solid transparent;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: #D6A955;
+        }
+
+        .admin-card.pemda {
+            border-left: 5px solid #10b981;
+        }
+
+        .admin-card.pusat {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .admin-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 40px;
+        }
+
+        .admin-card.pemda .admin-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .admin-card.pusat .admin-icon {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .admin-title {
+            font-size: 1.8rem;
+            color: #2A4061;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .admin-subtitle {
+            color: #D6A955;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .admin-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2A4061;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .back-button {
+            padding: 12px 25px;
+            background: transparent;
+            color: #666;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: #f8f9fa;
+            border-color: #2A4061;
+            color: #2A4061;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-selector {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .admin-stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-selector">
+        <div class="header">
+            <h1>Portal Administrasi</h1>
+            <p>Pilih portal administrasi sesuai dengan level kewenangan dan tanggung jawab Anda dalam sistem verifikasi hotel.</p>
+        </div>
+
+        <div class="admin-grid">
+            <!-- Pemda Portal -->
+            <a href="pemda/dashboard.html" class="admin-card pemda">
+                <div class="admin-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="admin-subtitle">Pemerintah Daerah</div>
+                <h3 class="admin-title">Portal Pemda</h3>
+                <p class="admin-description">
+                    Dashboard untuk verifikasi dan validasi pengajuan hotel di tingkat daerah. Melakukan review awal dokumen dan compliance check.
+                </p>
+                <div class="admin-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Pengajuan Baru</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">89</div>
+                        <div class="stat-label">Diverifikasi</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Dalam Review</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Pemerintah Pusat Portal -->
+            <a href="pusat/dashboard.html" class="admin-card pusat">
+                <div class="admin-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="admin-subtitle">Kementerian Pariwisata</div>
+                <h3 class="admin-title">Portal Pemerintah Pusat</h3>
+                <p class="admin-description">
+                    Dashboard untuk final approval dan penerbitan SK resmi. Melakukan review akhir dan menerbitkan sertifikat hotel.
+                </p>
+                <div class="admin-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Pending Approval</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">SK Diterbitkan</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1,247</div>
+                        <div class="stat-label">Hotel Aktif</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="../" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Kembali ke Beranda
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Add click analytics
+        document.querySelectorAll('.admin-card').forEach(card => {
+            card.addEventListener('click', function() {
+                console.log('Admin portal selected:', this.querySelector('.admin-title').textContent);
+            });
+        });
+    </script>
+</body>
+</html>

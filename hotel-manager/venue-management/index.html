@@ -1444,7 +1444,7 @@
                                             <div class="col-md-3 mb-3">
                                                 <div class="layout-option" data-layout="exhibition">
                                                     <div class="layout-icon">
-                                                        <img src="../assets/images/image.png" alt="Exhibition Icon" style="width: 2em; height: 2em; object-fit: contain;">
+                                                        <img src="../assets/image.png" alt="Exhibition Icon" style="width: 2em; height: 2em; object-fit: contain;"><!-- Using transparent image -->
                                                     </div>
                                                     <div class="layout-title">Exhibition</div>
                                                     <div class="layout-description">Booth-booth pameran</div>
@@ -3244,7 +3244,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JS -->
-    <script src="../js/venue-management.js"></script>
+    <script src="../assets/js/venue-management.js"></script>
     <script>
     // Additional script with original functions preserved
     
@@ -3322,65 +3322,124 @@
 
 // Function to show specific step
 function showStep(step) {
-    // Hide all sections
-    document.querySelectorAll(".form-section").forEach((section) => {
-        section.classList.remove("active");
-    });
+    console.log("Showing step:", step);
     
-    // Show the requested section
-    document.getElementById("section" + step).classList.add("active");
-    
-    // Update step indicators
-    updateStepIndicators(step);
-    
-    // Update flowchart
-    updateFlowchart(step);
-    
-    // Update current step
-    currentStep = step;
-    
-    // Scroll to top
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-    
-    // If we're on the last step, update summary
-    if (step === 5) {
-        updateSummary();
+    try {
+        // Hide all sections
+        document.querySelectorAll(".form-section").forEach((section) => {
+            console.log("Removing active class from section:", section.id);
+            section.classList.remove("active");
+        });
+        
+        // Show the requested section
+        const sectionElement = document.getElementById("section" + step);
+        console.log("Looking for section element:", "section" + step);
+        
+        if (sectionElement) {
+            console.log("Section found, adding active class to:", sectionElement.id);
+            sectionElement.classList.add("active");
+        } else {
+            console.error("Section not found:", "section" + step);
+            return false;
+        }
+        
+        // Update step indicators
+        console.log("Updating step indicators for step:", step);
+        updateStepIndicators(step);
+        
+        // Update flowchart
+        console.log("Updating flowchart for step:", step);
+        updateFlowchart(step);
+        
+        // Update current step
+        console.log("Setting current step to:", step);
+        currentStep = step;
+        
+        // Scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        
+        // If we're on the last step, update summary
+        if (step === 5) {
+            console.log("On last step, updating summary");
+            updateSummary();
+        }
+        
+        console.log("Step navigation completed successfully");
+        return true;
+    } catch (error) {
+        console.error("Error in showStep function:", error);
+        return false;
     }
-    
-    return true;
 }
 
 // Update step indicators
 function updateStepIndicators(active) {
-    // Reset all steps
-    document.querySelectorAll(".step").forEach((step, index) => {
-        const stepNumber = index + 1;
-        step.classList.remove("active", "completed");
+    console.log("Updating step indicators for active step:", active);
+    try {
+        // Reset all steps
+        const steps = document.querySelectorAll(".step");
+        console.log("Found", steps.length, "step indicators");
         
-        if (stepNumber < active) {
-            step.classList.add("completed");
-        } else if (stepNumber === active) {
-            step.classList.add("active");
+        if (steps.length === 0) {
+            console.error("No step indicators found on the page");
+            return false;
         }
-    });
+        
+        steps.forEach((step, index) => {
+            const stepNumber = index + 1;
+            console.log("Processing step", stepNumber, step);
+            step.classList.remove("active", "completed");
+            
+            if (stepNumber < active) {
+                step.classList.add("completed");
+                console.log("Marked step", stepNumber, "as completed");
+            } else if (stepNumber === active) {
+                step.classList.add("active");
+                console.log("Marked step", stepNumber, "as active");
+            }
+        });
+        return true;
+    } catch (error) {
+        console.error("Error in updateStepIndicators:", error);
+        return false;
+    }
 }
 
 // Update flowchart
 function updateFlowchart(active) {
-    // Reset all flowchart steps
-    document.querySelectorAll(".flowchart-step").forEach((step, index) => {
-        const stepNumber = index + 1;
-        step.classList.remove("active", "completed");
+    console.log("Updating flowchart for active step:", active);
+    try {
+        // Reset all flowchart steps
+        const flowchartSteps = document.querySelectorAll(".flowchart-step");
+        console.log("Found", flowchartSteps.length, "flowchart steps");
         
-        if (stepNumber < active) {
-            step.classList.add("completed");
-        } else if (stepNumber === active) {
-            step.classList.add("active");
+        if (flowchartSteps.length === 0) {
+            console.log("No flowchart steps found on the page - this might be normal if flowchart is not implemented");
+            return true; // Not a critical error, continue execution
         }
-    });
+        
+        flowchartSteps.forEach((step, index) => {
+            const stepNumber = index + 1;
+            console.log("Processing flowchart step", stepNumber, step);
+            step.classList.remove("active", "completed");
+            
+            if (stepNumber < active) {
+                step.classList.add("completed");
+                console.log("Marked flowchart step", stepNumber, "as completed");
+            } else if (stepNumber === active) {
+                step.classList.add("active");
+                console.log("Marked flowchart step", stepNumber, "as active");
+            }
+        });
+        return true;
+    } catch (error) {
+        console.error("Error in updateFlowchart:", error);
+        // Don't return false here as this is not critical functionality
+        return true;
+    }
 }
 
 // Function to show toast notifications
@@ -3437,10 +3496,41 @@ function showNotification(title, message, type) {
 
 // Document ready function
 document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM Content Loaded - Initializing venue management page");
+    
+    // Verify critical page elements exist
+    const section1 = document.getElementById("section1");
+    const section2 = document.getElementById("section2");
+    const section3 = document.getElementById("section3");
+    const section4 = document.getElementById("section4");
+    const section5 = document.getElementById("section5");
+    
+    console.log("Form sections found:", {
+        "section1": !!section1,
+        "section2": !!section2,
+        "section3": !!section3,
+        "section4": !!section4,
+        "section5": !!section5
+    });
+    
+    const nextBtn1 = document.getElementById("next-btn-1");
+    const nextBtn2 = document.getElementById("next-btn-2");
+    const nextBtn3 = document.getElementById("next-btn-3");
+    const nextBtn4 = document.getElementById("next-btn-4");
+    
+    console.log("Navigation buttons found:", {
+        "next-btn-1": !!nextBtn1,
+        "next-btn-2": !!nextBtn2,
+        "next-btn-3": !!nextBtn3,
+        "next-btn-4": !!nextBtn4
+    });
+    
     // Load saved form data from localStorage
+    console.log("Loading saved form data");
     loadFormData();
     
     // Initialize tooltips
+    console.log("Initializing tooltips");
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     
@@ -3484,43 +3574,107 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
     
-    // Form navigation buttons
+    // Form navigation buttons with improved error handling
     document.getElementById("next-btn-1").addEventListener("click", function() {
-        saveFormData();
-        showStep(2);
+        console.log("Next button 1 clicked - attempting to navigate to step 2");
+        try {
+            saveFormData();
+            if (!showStep(2)) {
+                console.error("Failed to navigate to step 2");
+                showNotification("Error", "Failed to navigate to next step. Please try again or reload the page.", "error");
+            }
+        } catch (error) {
+            console.error("Error handling next-btn-1 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("prev-btn-2").addEventListener("click", function() {
-        saveFormData();
-        showStep(1);
+        console.log("Previous button 2 clicked - attempting to navigate to step 1");
+        try {
+            saveFormData();
+            if (!showStep(1)) {
+                console.error("Failed to navigate to step 1");
+                showNotification("Error", "Failed to navigate to previous step. Please try again or reload the page.", "error");
+            }
+        } catch (error) {
+            console.error("Error handling prev-btn-2 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("next-btn-2").addEventListener("click", function() {
-        saveFormData();
-        showStep(3);
+        console.log("Next button 2 clicked - attempting to navigate to step 3");
+        try {
+            saveFormData();
+            if (!showStep(3)) {
+                console.error("Failed to navigate to step 3");
+                showNotification("Error", "Failed to navigate to next step. Please try again or reload the page.", "error");
+            }
+        } catch (error) {
+            console.error("Error handling next-btn-2 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("prev-btn-3").addEventListener("click", function() {
-        saveFormData();
-        showStep(2);
+        console.log("Previous button 3 clicked - attempting to navigate to step 2");
+        try {
+            saveFormData();
+            if (!showStep(2)) {
+                console.error("Failed to navigate to step 2");
+                showNotification("Error", "Failed to navigate to previous step. Please try again or reload the page.", "error");
+            }
+        } catch (error) {
+            console.error("Error handling prev-btn-3 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("next-btn-3").addEventListener("click", function() {
-        saveFormData();
-        showStep(4);
+        console.log("Next button 3 clicked - attempting to navigate to step 4");
+        try {
+            saveFormData();
+            if (!showStep(4)) {
+                console.error("Failed to navigate to step 4");
+                showNotification("Error", "Failed to navigate to next step. Please try again or reload the page.", "error");
+            }
+        } catch (error) {
+            console.error("Error handling next-btn-3 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("prev-btn-4").addEventListener("click", function() {
-        saveFormData();
-        showStep(3);
+        console.log("Previous button 4 clicked - attempting to navigate to step 3");
+        try {
+            saveFormData();
+            if (!showStep(3)) {
+                console.error("Failed to navigate to step 3");
+                showNotification("Error", "Failed to navigate to previous step. Please try again or reload the page.", "error");
+            }
+        } catch (error) {
+            console.error("Error handling prev-btn-4 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("next-btn-4").addEventListener("click", function() {
-        saveFormData();
-        showStep(5);
-        
-        // Update summary data
-        updateSummary();
+        console.log("Next button 4 clicked - attempting to navigate to step 5");
+        try {
+            saveFormData();
+            if (!showStep(5)) {
+                console.error("Failed to navigate to step 5");
+                showNotification("Error", "Failed to navigate to next step. Please try again or reload the page.", "error");
+                return;
+            }
+            
+            // Update summary data
+            updateSummary();
+        } catch (error) {
+            console.error("Error handling next-btn-4 click:", error);
+            showNotification("Error", "An unexpected error occurred. Please try again or reload the page.", "error");
+        }
     });
     
     document.getElementById("prev-btn-5").addEventListener("click", function() {

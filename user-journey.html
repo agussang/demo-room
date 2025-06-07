@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Journey - MICE ID Inventory</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="assets/css/user-journey.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="journey-container">
+            <div class="journey-header">
+                <h1>MICE ID Inventory User Journey</h1>
+                <p class="lead">Alur pengguna untuk manajemen informasi hotel dan fasilitas pertemuan</p>
+            </div>
+            
+            <!-- Intro -->
+            <div class="row mb-5">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="highlight-box">
+                        <h3 class="text-center mb-4">Keunggulan Utama</h3>
+                        
+                        <div class="key-benefit">
+                            <i class="fas fa-database"></i>
+                            <div class="key-benefit-content">
+                                <h4>Penyimpanan Lokal Efisien</h4>
+                                <p>Menggunakan IndexedDB untuk menyimpan data (termasuk gambar) di browser pengguna tanpa membutuhkan server database.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="key-benefit">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <div class="key-benefit-content">
+                                <h4>Integrasi Google Maps</h4>
+                                <p>Memudahkan pengguna memilih lokasi, melihat tempat terdekat, dan mendapatkan rekomendasi lokasi.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="key-benefit">
+                            <i class="fas fa-tasks"></i>
+                            <div class="key-benefit-content">
+                                <h4>Form Multi-tahap</h4>
+                                <p>Pengalaman pengisian data yang terstruktur dan mudah dengan indikator progres.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="key-benefit">
+                            <i class="fas fa-image"></i>
+                            <div class="key-benefit-content">
+                                <h4>Pengelolaan Gambar</h4>
+                                <p>Upload dan pengelolaan gambar untuk semua fasilitas hotel dan ruang meeting.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Journey Steps -->
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <!-- Step 1: Login -->
+                    <div class="journey-step">
+                        <div class="journey-step-number">1</div>
+                        <div class="journey-step-content">
+                            <div class="journey-step-title">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <h3>Login ke Sistem</h3>
+                            </div>
+                            <div class="journey-step-description">
+                                <p>Pengguna mengakses halaman login dan memasukkan kredensial untuk masuk ke sistem MICE ID Inventory.</p>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Autentikasi Pengguna</h4>
+                                    <p class="journey-action-description">Pengguna memasukkan username dan password pada form login</p>
+                                </div>
+                            </div>
+                            
+                            <div class="screen-preview">
+                                <div class="screen-header">Login Screen</div>
+                                <img src="assets/images/mockup-login.jpg" alt="Login Screen" onerror="this.src='https://via.placeholder.com/800x450?text=Login+Screen';">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Dashboard -->
+                    <div class="journey-step">
+                        <div class="journey-step-number">2</div>
+                        <div class="journey-step-content">
+                            <div class="journey-step-title">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <h3>Dashboard</h3>
+                            </div>
+                            <div class="journey-step-description">
+                                <p>Setelah login berhasil, pengguna diarahkan ke dashboard utama yang menampilkan ringkasan data hotel dan opsi navigasi utama.</p>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Melihat Ringkasan</h4>
+                                    <p class="journey-action-description">Pengguna dapat melihat statistik kelengkapan data dan status verifikasi</p>
+                                </div>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Navigasi Menu</h4>
+                                    <p class="journey-action-description">Pengguna memilih area yang ingin dikelola (Informasi Hotel, Data Kamar, Ruang Meeting, dll)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="screen-preview">
+                                <div class="screen-header">Hotel Dashboard</div>
+                                <img src="hotel-manager/dashboard/dashboard-preview.jpg" alt="Dashboard Screen" onerror="this.src='https://via.placeholder.com/800x500?text=Dashboard+Screen';">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Form Registrasi Hotel -->
+                    <div class="journey-step">
+                        <div class="journey-step-number">3</div>
+                        <div class="journey-step-content">
+                            <div class="journey-step-title">
+                                <i class="fas fa-hotel"></i>
+                                <h3>Registrasi/Edit Informasi Hotel</h3>
+                            </div>
+                            <div class="journey-step-description">
+                                <p>Pengguna mengisi formulir informasi hotel dengan data-data penting seperti NIB, nama perusahaan, nama hotel, lokasi, dan lainnya.</p>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-building"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Informasi Usaha</h4>
+                                            <p class="journey-action-description">Mengisi data NIB, nama perusahaan, nomor CHSE, dan nama hotel</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-info-circle"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Informasi Hotel</h4>
+                                            <p class="journey-action-description">Mengisi data klasifikasi, deskripsi, dan upload foto hotel</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Lokasi Properti</h4>
+                                            <p class="journey-action-description">Memilih lokasi di peta dan melihat tempat terdekat</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-address-card"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Kontak & Media Sosial</h4>
+                                            <p class="journey-action-description">Mengisi kontak dan informasi media sosial hotel</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="screen-preview">
+                                <div class="screen-header">Form Registrasi Hotel</div>
+                                <img src="hotel-manager/forms/form-preview.jpg" alt="Hotel Registration Form" onerror="this.src='https://via.placeholder.com/800x500?text=Hotel+Registration+Form';">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Manajemen Kamar -->
+                    <div class="journey-step">
+                        <div class="journey-step-number">4</div>
+                        <div class="journey-step-content">
+                            <div class="journey-step-title">
+                                <i class="fas fa-bed"></i>
+                                <h3>Manajemen Kamar</h3>
+                            </div>
+                            <div class="journey-step-description">
+                                <p>Pengguna mengelola informasi tentang kamar yang tersedia di hotel, termasuk tipe kamar, fasilitas, dan detail lainnya.</p>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Tambah Tipe Kamar</h4>
+                                    <p class="journey-action-description">Pengguna menambahkan tipe-tipe kamar yang tersedia di hotel</p>
+                                </div>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Edit Informasi Kamar</h4>
+                                    <p class="journey-action-description">Pengguna dapat mengedit detail tipe kamar seperti fasilitas, harga, dan kapasitas</p>
+                                </div>
+                            </div>
+                            
+                            <div class="screen-preview">
+                                <div class="screen-header">Halaman Manajemen Kamar</div>
+                                <img src="hotel-manager/room-management/room-preview.jpg" alt="Room Management" onerror="this.src='https://via.placeholder.com/800x450?text=Room+Management';">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5: Manajemen Ruang Meeting -->
+                    <div class="journey-step">
+                        <div class="journey-step-number">5</div>
+                        <div class="journey-step-content">
+                            <div class="journey-step-title">
+                                <i class="fas fa-chalkboard"></i>
+                                <h3>Manajemen Ruang Meeting</h3>
+                            </div>
+                            <div class="journey-step-description">
+                                <p>Pengguna mengelola informasi ruang meeting dan venue acara yang tersedia di hotel, termasuk spesifikasi dan fasilitas.</p>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-info"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Informasi Umum</h4>
+                                            <p class="journey-action-description">Mengisi data nama, tipe, dan deskripsi ruang meeting</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Kapasitas</h4>
+                                            <p class="journey-action-description">Mengisi kapasitas untuk berbagai konfigurasi (theater, classroom, dll)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-expand-arrows-alt"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Dimensi & Spesifikasi</h4>
+                                            <p class="journey-action-description">Mengisi ukuran dan spesifikasi teknis ruangan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="journey-action">
+                                        <div class="journey-action-icon">
+                                            <i class="fas fa-wifi"></i>
+                                        </div>
+                                        <div class="journey-action-content">
+                                            <h4 class="journey-action-title">Fasilitas & Koneksi</h4>
+                                            <p class="journey-action-description">Mengisi data fasilitas pendukung dan koneksi internet</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="screen-preview">
+                                <div class="screen-header">Halaman Manajemen Ruang Meeting</div>
+                                <img src="hotel-manager/ruang-meeting/ruang-meeting-preview.jpg" alt="Ruang Meeting Management" onerror="this.src='https://via.placeholder.com/800x500?text=Ruang+Meeting+Management';">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 6: Melihat Dashboard & Data -->
+                    <div class="journey-step">
+                        <div class="journey-step-number">6</div>
+                        <div class="journey-step-content">
+                            <div class="journey-step-title">
+                                <i class="fas fa-chart-bar"></i>
+                                <h3>Melihat Dashboard & Data</h3>
+                            </div>
+                            <div class="journey-step-description">
+                                <p>Pengguna kembali ke dashboard untuk melihat ringkasan data yang telah dimasukkan, status verifikasi, dan statistik kelengkapan.</p>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Status Kelengkapan</h4>
+                                    <p class="journey-action-description">Melihat progres kelengkapan data hotel dan fasilitas</p>
+                                </div>
+                            </div>
+                            
+                            <div class="journey-action">
+                                <div class="journey-action-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="journey-action-content">
+                                    <h4 class="journey-action-title">Aktivitas Terbaru</h4>
+                                    <p class="journey-action-description">Melihat log aktivitas terkini pada sistem</p>
+                                </div>
+                            </div>
+                            
+                            <div class="screen-preview">
+                                <div class="screen-header">Dashboard Ringkasan</div>
+                                <img src="hotel-manager/dashboard/dashboard-summary.jpg" alt="Dashboard Summary" onerror="this.src='https://via.placeholder.com/800x500?text=Dashboard+Summary';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="journey-footer">
+                <p>MICE ID Inventory &copy; 2025. All rights reserved.</p>
+                <a href="index.html" class="back-to-home mt-3">
+                    <i class="fas fa-arrow-left me-2"></i> Kembali ke Halaman Utama
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

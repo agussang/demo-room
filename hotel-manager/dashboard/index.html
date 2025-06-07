@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - MICE ID INVENTORY</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Chart.js -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/Chart.min.css"
+    />
+    <style>
+      :root {
+        --primary: #2a4061;
+        --primary-light: #3a5680;
+        --primary-dark: #1a2c45;
+        --accent: #e5bc6d;
+        --accent-light: #f1d196;
+        --accent-dark: #d6a955;
+        --light: #ffffff;
+        --light-gray: #f8f9fa;
+        --mid-gray: #e2e8f0;
+        --text-dark: #1a202c;
+        --text-medium: #4a5568;
+        --text-light: #718096;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04),
+          0 1px 3px rgba(0, 0, 0, 0.08);
+        --transition: all 0.25s ease;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--text-dark);
+        background-color: var(--light-gray);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      /* Navbar styling */
+      .navbar {
+        background-color: var(--primary);
+        padding: 0.75rem 1rem;
+        box-shadow: var(--box-shadow);
+      }
+
+      .navbar-brand {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        color: var(--light) !important;
+        font-size: 1.5rem;
+      }
+
+      .navbar-brand span {
+        color: var(--accent);
+      }
+
+      .navbar-brand-subtitle {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        display: block;
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+      }
+
+      .navbar .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .navbar .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      .navbar .nav-link {
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: var(--transition);
+        border-radius: var(--border-radius);
+      }
+
+      .navbar .nav-link:hover {
+        color: var(--light);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .navbar .nav-link.active {
+        color: var(--primary);
+        background-color: var(--accent);
+      }
+
+      .navbar .dropdown-menu {
+        border: none;
+        box-shadow: var(--box-shadow);
+        border-radius: var(--border-radius);
+      }
+
+      .navbar .dropdown-item {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+      }
+
+      .navbar .dropdown-item:hover {
+        background-color: var(--light-gray);
+      }
+
+      .navbar .dropdown-item i {
+        width: 1.25rem;
+        margin-right: 0.5rem;
+        color: var(--primary);
+      }
+
+      /* Sidebar styling */
+      .sidebar {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        height: calc(100vh - 4.5rem);
+        position: sticky;
+        top: 4.5rem;
+        transition: var(--transition);
+      }
+
+      .sidebar-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 1.5rem;
+        border-bottom: 3px solid var(--accent);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .sidebar-header h5 {
+        color: var(--light);
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+      }
+
+      .sidebar-menu {
+        padding: 1rem 0;
+        overflow-y: auto;
+        max-height: calc(100vh - 10rem);
+      }
+
+      .sidebar-menu .nav-link {
+        padding: 0.75rem 1.5rem;
+        color: var(--text-medium);
+        border-left: 3px solid transparent;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar-menu .nav-link:hover {
+        background: rgba(42, 64, 97, 0.05);
+        color: var(--primary);
+        border-left-color: var(--accent);
+      }
+
+      .sidebar-menu .nav-link.active {
+        background: rgba(42, 64, 97, 0.1);
+        color: var(--primary);
+        border-left-color: var(--accent);
+        font-weight: 500;
+      }
+
+      .sidebar-menu .nav-link i {
+        width: 1.5rem;
+        text-align: center;
+        margin-right: 0.75rem;
+        font-size: 1rem;
+        opacity: 0.85;
+      }
+
+      /* Card styling */
+      .dashboard-card {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        border: none;
+        transition: var(--transition);
+        overflow: hidden;
+        height: 100%;
+        margin-bottom: 20px;
+      }
+
+      .dashboard-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .dashboard-card .card-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 1.5rem;
+        font-weight: 500;
+        border-bottom: 3px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .dashboard-card .card-header h5 {
+        color: var(--light);
+        margin: 0;
+        font-size: 1.1rem;
+      }
+
+      .dashboard-card .card-body {
+        padding: 1.5rem;
+      }
+
+      /* Stat card */
+      .stat-card {
+        padding: 1.25rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        background: var(--light);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        border-left: 4px solid var(--primary);
+        margin-bottom: 1.5rem;
+        height: 100%;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      .stat-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 1rem;
+        flex-shrink: 0;
+      }
+
+      .stat-icon.primary {
+        background-color: rgba(42, 64, 97, 0.15);
+        color: var(--primary);
+      }
+
+      .stat-icon.success {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: var(--success);
+      }
+
+      .stat-icon.warning {
+        background-color: rgba(245, 158, 11, 0.15);
+        color: var(--warning);
+      }
+
+      .stat-icon.danger {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: var(--danger);
+      }
+
+      .stat-icon.info {
+        background-color: rgba(59, 130, 246, 0.15);
+        color: var(--info);
+      }
+
+      .stat-icon i {
+        font-size: 1.5rem;
+      }
+
+      .stat-content {
+        flex-grow: 1;
+      }
+
+      .stat-title {
+        font-size: 0.85rem;
+        color: var(--text-medium);
+        margin-bottom: 0.25rem;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        line-height: 1.2;
+        color: var(--text-dark);
+      }
+
+      .stat-badge {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 20px;
+        font-weight: 600;
+        margin-left: 0.5rem;
+      }
+
+      .stat-badge.up {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: var(--success);
+      }
+
+      .stat-badge.down {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: var(--danger);
+      }
+
+      .stat-badge i {
+        margin-right: 0.25rem;
+        font-size: 0.75rem;
+      }
+
+      /* Progress bar styling */
+      .progress-item {
+        margin-bottom: 1.25rem;
+      }
+
+      .progress-title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .progress-label {
+        font-weight: 500;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+      }
+
+      .progress-percentage {
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .progress {
+        height: 8px;
+        border-radius: 4px;
+        background-color: var(--light-gray);
+        overflow: visible;
+      }
+
+      .progress-bar {
+        border-radius: 4px;
+        position: relative;
+      }
+
+      .progress-bar.bg-primary {
+        background-color: var(--primary) !important;
+      }
+
+      .progress-bar.bg-success {
+        background-color: var(--success) !important;
+      }
+
+      .progress-bar.bg-warning {
+        background-color: var(--warning) !important;
+      }
+
+      .progress-bar.bg-danger {
+        background-color: var(--danger) !important;
+      }
+
+      /* Hotel profile card */
+      .hotel-profile-card {
+        background: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        transition: var(--transition);
+        height: 100%;
+        margin-bottom: 20px;
+      }
+
+      .hotel-profile-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .hotel-profile-header {
+        background: var(--primary);
+        color: var(--light);
+        padding: 2rem 1.5rem;
+        position: relative;
+        text-align: center;
+      }
+
+      .hotel-profile-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent);
+      }
+
+      .hotel-logo {
+        width: 90px;
+        height: 90px;
+        background: var(--light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        color: var(--primary);
+        border: 3px solid var(--accent);
+        margin: 0 auto 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hotel-profile-header h4 {
+        color: var(--light);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .hotel-profile-header p {
+        margin-bottom: 0.5rem;
+        opacity: 0.9;
+      }
+
+      .verification-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .verification-badge.verified {
+        background: rgba(16, 185, 129, 0.2);
+        color: var(--success);
+      }
+
+      .verification-badge.pending {
+        background: rgba(245, 158, 11, 0.2);
+        color: var(--warning);
+      }
+
+      .verification-badge i {
+        margin-right: 0.35rem;
+      }
+
+      .hotel-profile-details {
+        padding: 1.5rem;
+      }
+
+      .hotel-detail-item {
+        display: flex;
+        margin-bottom: 1rem;
+      }
+
+      .hotel-detail-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .hotel-detail-item i {
+        width: 1.25rem;
+        margin-right: 0.75rem;
+        color: var(--accent);
+      }
+
+      .hotel-detail-item p {
+        margin: 0;
+        color: var(--text-medium);
+      }
+
+      /* Quick links */
+      .quick-link {
+        display: flex;
+        align-items: center;
+        padding: 1.25rem;
+        border-radius: var(--border-radius);
+        background: var(--light);
+        box-shadow: var(--box-shadow);
+        margin-bottom: 1.5rem;
+        transition: var(--transition);
+        text-decoration: none;
+        color: var(--text-dark);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        height: 100%; /* Ensure consistent height */
+      }
+
+      .quick-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .quick-link:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        color: var(--primary);
+      }
+
+      .quick-link:hover::before {
+        width: 100%;
+        opacity: 0.05;
+      }
+
+      .quick-link-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--primary);
+        color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--border-radius);
+        margin-right: 1rem;
+        transition: var(--transition);
+        flex-shrink: 0;
+      }
+
+      .quick-link:hover .quick-link-icon {
+        background: var(--accent);
+        color: var(--primary);
+      }
+
+      .quick-link-text {
+        flex-grow: 1;
+      }
+
+      .quick-link-text h4 {
+        margin: 0 0 0.25rem;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: var(--transition);
+      }
+
+      .quick-link-text p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--text-medium);
+      }
+
+      /* Timeline styling */
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-bottom: 1.5rem;
+      }
+
+      .timeline-item:last-child {
+        padding-bottom: 0;
+      }
+
+      .timeline-item:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        left: -1.5rem;
+        top: 2.5rem;
+        bottom: 0;
+        width: 2px;
+        background-color: var(--mid-gray);
+      }
+
+      .timeline-icon {
+        position: absolute;
+        left: -2rem;
+        top: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        color: var(--light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      .timeline-icon.success {
+        background-color: var(--success);
+      }
+
+      .timeline-icon.warning {
+        background-color: var(--warning);
+      }
+
+      .timeline-icon.danger {
+        background-color: var(--danger);
+      }
+
+      .timeline-content {
+        padding: 1rem 1.5rem;
+        background-color: var(--light);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+      }
+
+      .timeline-title {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-title h6 {
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .timeline-time {
+        font-size: 0.75rem;
+        color: var(--text-light);
+      }
+
+      .timeline-text {
+        margin: 0;
+        color: var(--text-medium);
+        font-size: 0.9rem;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--primary);
+        color: var(--light);
+        padding: 1rem 0;
+        margin-top: auto;
+        position: relative;
+      }
+
+      footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent);
+      }
+
+      footer p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      footer a {
+        color: var(--light);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      footer a:hover {
+        color: var(--accent);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 992px) {
+        .sidebar {
+          height: auto;
+          position: static;
+          margin-bottom: 1.5rem;
+        }
+
+        .sidebar-menu {
+          max-height: none;
+        }
+      }
+
+      /* Fix for overlapping cards */
+      .row-eq-height {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .row-eq-height > [class*="col-"] {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-container {
+        height: 100%;
+        margin-bottom: 20px;
+      }
+
+      /* Pulsing button animation */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(229, 188, 109, 0.7);
+          transform: scale(1);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(229, 188, 109, 0);
+          transform: scale(1.02);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(229, 188, 109, 0);
+          transform: scale(1);
+        }
+      }
+
+      .pulse-button {
+        animation: pulse 2s infinite;
+        background-color: var(--accent);
+        color: var(--primary-dark);
+        border: none;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .pulse-button:hover {
+        background-color: var(--accent-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(229, 188, 109, 0.3);
+        animation: none;
+        color: var(--primary-dark);
+      }
+
+      /* Floating action button */
+      .floating-action-button {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .floating-action-button::after {
+        content: "Beralih ke Venue";
+        position: absolute;
+        right: 70px;
+        background-color: var(--primary-dark);
+        color: var(--light);
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .floating-action-button:hover {
+        background-color: var(--accent);
+        color: var(--primary-dark);
+        transform: translateY(-3px) rotate(360deg);
+        box-shadow: 0 6px 15px rgba(42, 64, 97, 0.3);
+      }
+
+      .floating-action-button:hover::after {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .floating-action-button i {
+        font-size: 1.5rem;
+      }
+
+      /* Switch Mode Modal Styling */
+      .switch-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: var(--light-gray);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        position: relative;
+        border-radius: var(--border-radius);
+      }
+
+      .switch-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .switch-card .icon-container {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+      }
+
+      .hotel-card .icon-container {
+        color: var(--primary);
+        border: 3px solid var(--primary-light);
+      }
+
+      .venue-card .icon-container {
+        color: var(--accent-dark);
+        border: 3px solid var(--accent);
+      }
+
+      .hotel-card:hover .icon-container {
+        background: var(--primary);
+        color: var(--light);
+      }
+
+      .venue-card:hover .icon-container {
+        background: var(--accent);
+        color: var(--primary-dark);
+      }
+
+      .hotel-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--primary);
+      }
+
+      .venue-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          MICE<span>ID</span> INVENTORY
+          <span class="navbar-brand-subtitle"
+            >Professional Data Management for Business</span
+          >
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user-circle me-1"></i> Hotel Manager
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-user"></i> Profil Saya</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fas fa-cog"></i> Pengaturan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#switchModeModal"
+                    ><i class="fas fa-exchange-alt"></i> Beralih Mode Akses</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="../index.html"
+                    ><i class="fas fa-sign-out-alt"></i> Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-xl-2 mb-4">
+          <div class="sidebar">
+            <div class="sidebar-header">
+              <h5>Menu Navigasi</h5>
+              <i class="fas fa-bars"></i>
+            </div>
+            <div class="sidebar-menu">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../forms/hotel-registration.html">
+                    <i class="fas fa-hotel"></i> Informasi Hotel
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../room-management/">
+                    <i class="fas fa-bed"></i> Data Kamar
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../ruang-meeting/">
+                    <i class="fas fa-chalkboard"></i> Ruang Meeting
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-image"></i> Galeri Foto
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-concierge-bell"></i> Fasilitas
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-chart-line"></i> Statistik
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-cog"></i> Pengaturan
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fas fa-question-circle"></i> Bantuan
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9 col-xl-10">
+          <!-- Page Title -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h2 class="mb-1">Selamat Datang, Hotel Manager</h2>
+              <p class="text-muted mb-0">
+                Hotel Mulia Malang Dashboard | Terakhir diperbarui: Hari ini,
+                10:30 WIB
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-accent btn-lg pulse-button"
+                data-bs-toggle="modal"
+                data-bs-target="#switchModeModal"
+              >
+                <i class="fas fa-exchange-alt me-2"></i> Beralih Mode Akses
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="row row-eq-height mb-4">
+            <div class="col-md-6 col-xl-3">
+              <div class="card-container">
+                <div class="stat-card">
+                  <div class="stat-icon primary">
+                    <i class="fas fa-hotel"></i>
+                  </div>
+                  <div class="stat-content">
+                    <p class="stat-title">Kelengkapan Data</p>
+                    <p class="stat-value">
+                      54%<span class="stat-badge up"
+                        ><i class="fas fa-arrow-up"></i>5%</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <div class="card-container">
+                <div class="stat-card">
+                  <div class="stat-icon success">
+                    <i class="fas fa-bed"></i>
+                  </div>
+                  <div class="stat-content">
+                    <p class="stat-title">Total Kamar</p>
+                    <p class="stat-value">
+                      50<span class="stat-badge up"
+                        ><i class="fas fa-check"></i>Lengkap</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <div class="card-container">
+                <div class="stat-card">
+                  <div class="stat-icon warning">
+                    <i class="fas fa-chalkboard"></i>
+                  </div>
+                  <div class="stat-content">
+                    <p class="stat-title">Venue Meeting</p>
+                    <p class="stat-value">
+                      3<span class="stat-badge down"
+                        ><i class="fas fa-clock"></i>Perlu Data</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <div class="card-container">
+                <div class="stat-card">
+                  <div class="stat-icon info">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <div class="stat-content">
+                    <p class="stat-title">Status Verifikasi</p>
+                    <p class="stat-value">
+                      Menunggu<span class="stat-badge warning"
+                        ><i class="fas fa-clock"></i>1-2 hari</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row row-eq-height">
+            <!-- Hotel Profile -->
+            <div class="col-lg-4">
+              <div class="hotel-profile-card">
+                <div class="hotel-profile-header">
+                  <div class="hotel-logo">
+                    <i class="fas fa-hotel"></i>
+                  </div>
+                  <h4>Hotel Mulia Malang</h4>
+                  <p>Malang, Jawa Timur</p>
+                  <span class="verification-badge pending">
+                    <i class="fas fa-clock"></i> Menunggu Verifikasi
+                  </span>
+                </div>
+                <div class="hotel-profile-details">
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-building"></i>
+                    <p>PT Mulia Hospitality Indonesia</p>
+                  </div>
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-id-card"></i>
+                    <p>NIB: 812345678910</p>
+                  </div>
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-certificate"></i>
+                    <p>CHSE: CH2024-0012345</p>
+                  </div>
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-star"></i>
+                    <p>Bintang 4</p>
+                  </div>
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Jl. Sukarno Hatta No. 123, Malang</p>
+                  </div>
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+62 341 123456</p>
+                  </div>
+                  <div class="hotel-detail-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>info@hotelmulia.com</p>
+                  </div>
+                  <div class="mt-3">
+                    <a href="../forms/hotel-registration.html" class="btn btn-primary w-100">
+                      <i class="fas fa-edit me-1"></i> Edit Informasi Hotel
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Verifiction Status Card -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h5>Status Verifikasi</h5>
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <div class="card-body p-0">
+                  <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex align-items-center py-3">
+                      <div class="me-3 text-warning">
+                        <i class="fas fa-id-card fa-lg"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0">NIB (Nomor Induk Berusaha)</h6>
+                        <small class="text-muted"
+                          >Proses verifikasi 1-2 hari kerja</small
+                        >
+                      </div>
+                      <span class="badge bg-warning rounded-pill"
+                        >Menunggu</span
+                      >
+                    </div>
+                    <div class="list-group-item d-flex align-items-center py-3">
+                      <div class="me-3 text-warning">
+                        <i class="fas fa-certificate fa-lg"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0">Sertifikat CHSE</h6>
+                        <small class="text-muted"
+                          >Proses verifikasi 1-2 hari kerja</small
+                        >
+                      </div>
+                      <span class="badge bg-warning rounded-pill"
+                        >Menunggu</span
+                      >
+                    </div>
+                    <div class="list-group-item d-flex align-items-center py-3">
+                      <div class="me-3 text-danger">
+                        <i class="fas fa-hotel fa-lg"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0">Data Property</h6>
+                        <small class="text-muted">Lengkapi data hotel</small>
+                      </div>
+                      <span class="badge bg-danger rounded-pill"
+                        >Belum Lengkap</span
+                      >
+                    </div>
+                    <div class="list-group-item d-flex align-items-center py-3">
+                      <div class="me-3 text-success">
+                        <i class="fas fa-map-marked-alt fa-lg"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0">Lokasi</h6>
+                        <small class="text-muted">Koordinat tersimpan</small>
+                      </div>
+                      <span class="badge bg-success rounded-pill"
+                        >Terverifikasi</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress and Charts -->
+            <div class="col-lg-8">
+              <div class="dashboard-card mb-4">
+                <div class="card-header">
+                  <h5>Status Kelengkapan Data</h5>
+                  <button class="btn btn-sm btn-outline-light">
+                    <i class="fas fa-question-circle me-1"></i> Bantuan
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Informasi Umum</span>
+                      <span class="progress-percentage">100%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 100%"
+                        aria-valuenow="100"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Lokasi Properti</span>
+                      <span class="progress-percentage">100%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 100%"
+                        aria-valuenow="100"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Informasi Kontak</span>
+                      <span class="progress-percentage">75%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        role="progressbar"
+                        style="width: 75%"
+                        aria-valuenow="75"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Data Kamar</span>
+                      <span class="progress-percentage">50%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-primary"
+                        role="progressbar"
+                        style="width: 50%"
+                        aria-valuenow="50"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Ruang Meeting</span>
+                      <span class="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        role="progressbar"
+                        style="width: 0%"
+                        aria-valuenow="0"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Fasilitas Hotel</span>
+                      <span class="progress-percentage">50%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-primary"
+                        role="progressbar"
+                        style="width: 50%"
+                        aria-valuenow="50"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-title">
+                      <span class="progress-label">Galeri Foto</span>
+                      <span class="progress-percentage">30%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        role="progressbar"
+                        style="width: 30%"
+                        aria-valuenow="30"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between mt-4"
+                  >
+                    <div>
+                      <h5 class="mb-0">
+                        Total kelengkapan data: <strong>54%</strong>
+                      </h5>
+                      <p class="text-muted small mb-0">
+                        Lengkapi semua bagian untuk mendapatkan verifikasi dari
+                        sistem
+                      </p>
+                    </div>
+                    <div>
+                      <canvas
+                        id="completionChart"
+                        width="120"
+                        height="120"
+                      ></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Chart -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h5>Status Verifikasi</h5>
+                  <div>
+                    <button class="btn btn-sm btn-outline-light me-2">
+                      Mingguan
+                    </button>
+                    <button class="btn btn-sm btn-outline-light active">
+                      Bulanan
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="progressChart" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Links and Timeline -->
+          <div class="row row-eq-height mt-4">
+            <!-- Quick Links -->
+            <div class="col-lg-6">
+              <h4 class="mb-3">Lengkapi Data Hotel</h4>
+              <div class="row row-eq-height">
+                <div class="col-md-6 mb-3">
+                  <a href="../forms/hotel-registration.html" class="quick-link">
+                    <div class="quick-link-icon">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="quick-link-text">
+                      <h4>Informasi Umum</h4>
+                      <p>Data dasar hotel, NIB, CHSE & klasifikasi</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <a href="../forms/hotel-registration.html" class="quick-link">
+                    <div class="quick-link-icon">
+                      <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="quick-link-text">
+                      <h4>Lokasi Properti</h4>
+                      <p>Alamat, koordinat & tempat terdekat</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <a href="../room-management/" class="quick-link">
+                    <div class="quick-link-icon">
+                      <i class="fas fa-bed"></i>
+                    </div>
+                    <div class="quick-link-text">
+                      <h4>Data Kamar</h4>
+                      <p>Tipe kamar, fasilitas & detail kamar</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <a href="../venue-management/" class="quick-link">
+                    <div class="quick-link-icon">
+                      <i class="fas fa-chalkboard"></i>
+                    </div>
+                    <div class="quick-link-text">
+                      <h4>Ruang Meeting</h4>
+                      <p>Ruang meeting, ballroom & kapasitas</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <a href="../forms/hotel-registration.html" class="quick-link">
+                    <div class="quick-link-icon">
+                      <i class="fas fa-address-card"></i>
+                    </div>
+                    <div class="quick-link-text">
+                      <h4>Informasi Kontak</h4>
+                      <p>Telepon, email, website & sosial media</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <a href="../forms/hotel-registration.html" class="quick-link">
+                    <div class="quick-link-icon">
+                      <i class="fas fa-concierge-bell"></i>
+                    </div>
+                    <div class="quick-link-text">
+                      <h4>Fasilitas</h4>
+                      <p>Daftar fasilitas & layanan hotel</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="col-lg-6">
+              <div class="dashboard-card h-100">
+                <div class="card-header">
+                  <h5>Aktivitas Terbaru</h5>
+                  <button class="btn btn-sm btn-outline-light">
+                    <i class="fas fa-filter me-1"></i> Filter
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="timeline">
+                    <div class="timeline-item">
+                      <div class="timeline-icon primary">
+                        <i class="fas fa-plus"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">
+                          <h6>Pendaftaran Hotel</h6>
+                          <span class="timeline-time">2 jam yang lalu</span>
+                        </div>
+                        <p class="timeline-text">
+                          Hotel Mulia Malang berhasil didaftarkan dalam sistem
+                          MICE ID INVENTORY
+                        </p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-icon success">
+                        <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">
+                          <h6>Lokasi Terverifikasi</h6>
+                          <span class="timeline-time">1.5 jam yang lalu</span>
+                        </div>
+                        <p class="timeline-text">
+                          Koordinat lokasi hotel berhasil diverifikasi dan
+                          disimpan dalam sistem
+                        </p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-icon warning">
+                        <i class="fas fa-id-card"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">
+                          <h6>Verifikasi NIB</h6>
+                          <span class="timeline-time">1 jam yang lalu</span>
+                        </div>
+                        <p class="timeline-text">
+                          Permohonan verifikasi NIB telah dikirim. Menunggu
+                          proses verifikasi
+                        </p>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-icon warning">
+                        <i class="fas fa-certificate"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <div class="timeline-title">
+                          <h6>Verifikasi CHSE</h6>
+                          <span class="timeline-time">1 jam yang lalu</span>
+                        </div>
+                        <p class="timeline-text">
+                          Permohonan verifikasi sertifikat CHSE telah dikirim.
+                          Menunggu proses verifikasi
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating action button -->
+    <button
+      type="button"
+      class="floating-action-button"
+      data-bs-toggle="modal"
+      data-bs-target="#switchModeModal"
+      title="Beralih Mode Akses"
+    >
+      <i class="fas fa-exchange-alt"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="py-3 mt-5">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2025 MICE ID INVENTORY. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="#" class="me-3"
+              ><i class="fas fa-envelope me-1"></i> Kontak</a
+            >
+            <a href="#"><i class="fas fa-info-circle me-1"></i> Bantuan</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Switch Mode Modal -->
+    <div
+      class="modal fade"
+      id="switchModeModal"
+      tabindex="-1"
+      aria-labelledby="switchModeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-primary text-white border-0">
+            <h5 class="modal-title" id="switchModeModalLabel">
+              Pilih Mode Akses
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div
+                  class="card h-100 border-0 switch-card hotel-card"
+                  onclick="window.location.href='../dashboard/'"
+                >
+                  <div class="card-body p-4 text-center">
+                    <div class="icon-container mb-3">
+                      <i class="fas fa-hotel fa-3x"></i>
+                    </div>
+                    <h4>Hotel</h4>
+                    <p class="mb-3">
+                      Kelola informasi hotel, kamar, dan fasilitas
+                    </p>
+                    <span class="badge bg-success">Mode Aktif</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  class="card h-100 border-0 switch-card venue-card"
+                  onclick="window.location.href='venue-dashboard.html'"
+                >
+                  <div class="card-body p-4 text-center">
+                    <div class="icon-container mb-3">
+                      <i class="fas fa-chalkboard fa-3x"></i>
+                    </div>
+                    <h4>Venue</h4>
+                    <p class="mb-3">
+                      Kelola ruang meeting, ballroom, dan event venue
+                    </p>
+                    <span class="btn btn-sm btn-outline-primary"
+                      >Beralih ke Venue</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <p class="text-muted small">
+                Pilih mode yang sesuai dengan kebutuhan Anda untuk mengelola
+                Ruang Meeting ID INVENTORY
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    
+    <!-- IndexedDB Storage -->
+    <script src="../js/indexeddb-storage.js"></script>
+    <!-- Dashboard Data Scripts -->
+    <script src="../js/dashboard-data.js"></script>
+
+    <script>
+      // Initialize charts when DOM is ready
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        if (tooltipTriggerList.length > 0) {
+          const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        }
+        
+        // Add hotel-cards-container class and ID to the hotel list container
+        const quickLinksRow = document.querySelector('.quick-link').closest('.row');
+        if (quickLinksRow) {
+          // Create container for hotel list
+          const hotelListContainer = document.createElement('div');
+          hotelListContainer.className = 'row mt-4 hotel-cards-container';
+          hotelListContainer.id = 'hotel-list';
+          
+          // Insert before quick links section
+          quickLinksRow.parentNode.insertBefore(hotelListContainer, quickLinksRow);
+          
+          // Load hotel list
+          loadHotelList('hotel-list');
+        }
+        
+        // Data completion doughnut chart
+        const completionCtx = document
+          .getElementById("completionChart")
+          .getContext("2d");
+        const completionChart = new Chart(completionCtx, {
+          type: "doughnut",
+          data: {
+            labels: ["Selesai", "Belum Selesai"],
+            datasets: [
+              {
+                data: [54, 46],
+                backgroundColor: ["#2A4061", "#e2e8f0"],
+                borderWidth: 0,
+                borderRadius: 5,
+                cutout: "70%",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    return context.parsed + "%";
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        // Progress line chart
+        const progressCtx = document
+          .getElementById("progressChart")
+          .getContext("2d");
+        const progressChart = new Chart(progressCtx, {
+          type: "line",
+          data: {
+            labels: [
+              "1 Mei",
+              "8 Mei",
+              "15 Mei",
+              "22 Mei",
+              "29 Mei",
+              "Hari Ini",
+            ],
+            datasets: [
+              {
+                label: "Kelengkapan Data (%)",
+                data: [10, 25, 30, 40, 45, 54],
+                borderColor: "#2A4061",
+                backgroundColor: "rgba(42, 64, 97, 0.1)",
+                fill: true,
+                tension: 0.4,
+                borderWidth: 3,
+                pointBackgroundColor: "#2A4061",
+                pointBorderColor: "#fff",
+                pointRadius: 5,
+                pointHoverRadius: 7,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                  callback: function (value) {
+                    return value + "%";
+                  },
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    return "Kelengkapan: " + context.parsed.y + "%";
+                  },
+                },
+              },
+            },
+          },
+        });
+      });
+    </script>
+    
+    <!-- Database and Dashboard Data Scripts -->
+    <script src="../assets/js/indexeddb-storage.js"></script>
+    <script src="../assets/js/dashboard-data.js"></script>
+  </body>
+</html>

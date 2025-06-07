@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pilih Jenis Pendaftaran | Hotel Management System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #2a4061 0%, #1a2c42 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+      }
+
+      .selection-container {
+        max-width: 1000px;
+        width: 90%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        animation: fadeInUp 0.8s ease;
+      }
+
+      .header {
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        color: #2a4061;
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 1.2rem;
+        line-height: 1.6;
+      }
+
+      .registration-types {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .type-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+        cursor: pointer;
+        border: 3px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .type-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        border-color: #d6a955;
+      }
+
+      .type-card.selected {
+        border-color: #2a4061;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      }
+
+      .type-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #2a4061, #1a2c42);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 32px;
+      }
+
+      .type-card.hotel .type-icon {
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+      }
+
+      .type-card.venue .type-icon {
+        background: linear-gradient(135deg, #10b981, #059669);
+      }
+
+      .type-card.hybrid .type-icon {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      }
+
+      .type-title {
+        font-size: 1.5rem;
+        color: #2a4061;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .type-description {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .type-features {
+        list-style: none;
+        text-align: left;
+        margin-bottom: 25px;
+      }
+
+      .type-features li {
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #555;
+        font-size: 14px;
+      }
+
+      .type-features li i {
+        color: #10b981;
+        font-size: 12px;
+      }
+
+      .recommended-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: linear-gradient(135deg, #d6a955, #b8934a);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #2a4061, #1a2c42);
+        color: white;
+        box-shadow: 0 4px 15px rgba(42, 64, 97, 0.3);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(42, 64, 97, 0.4);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #666;
+        border: 2px solid #ddd;
+      }
+
+      .btn-secondary:hover {
+        background: #f8f9fa;
+        border-color: #2a4061;
+        color: #2a4061;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(42, 64, 97, 0.9);
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 600px;
+        width: 90%;
+        text-align: center;
+        animation: modalFadeIn 0.3s ease;
+      }
+
+      .quick-start {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        border-left: 4px solid #d6a955;
+      }
+
+      .quick-start h3 {
+        color: #2a4061;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .quick-start p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .selection-container {
+          padding: 20px;
+          margin: 20px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .registration-types {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+        }
+      }
+
+      .breadcrumb {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+      }
+
+      .breadcrumb a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        color: #d6a955;
+      }
+
+      .selection-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: #2a4061;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+      }
+
+      .type-card.selected .selection-indicator {
+        display: flex;
+      }
+
+      .info-tooltip {
+        position: relative;
+        display: inline-block;
+        margin-left: 5px;
+        cursor: help;
+      }
+
+      .info-tooltip .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: #2a4061;
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .info-tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../">Beranda</a>
+      <i class="fas fa-chevron-right"></i>
+      <a href="index.html">Hotel Manager</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>Pilih Jenis Pendaftaran</span>
+    </div>
+
+    <!-- Main Selection Container -->
+    <div class="selection-container">
+      <div class="header">
+        <h1>Pilih Jenis Pendaftaran</h1>
+        <p>
+          Tentukan jenis fasilitas yang ingin Anda daftarkan. Sistem akan
+          menyesuaikan formulir dan persyaratan sesuai pilihan Anda.
+        </p>
+      </div>
+
+      <div class="registration-types">
+        <!-- Hotel Only -->
+        <div class="type-card hotel" onclick="selectType('hotel')">
+          <div class="selection-indicator">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="type-icon">
+            <i class="fas fa-hotel"></i>
+          </div>
+          <h3 class="type-title">
+            Hotel Saja
+            <span class="info-tooltip">
+              <i class="fas fa-info-circle"></i>
+              <span class="tooltip-text"
+                >Untuk pendaftaran hotel tanpa fasilitas venue MICE</span
+              >
+            </span>
+          </h3>
+          <p class="type-description">
+            Daftarkan hotel dengan fokus pada layanan akomodasi. Ideal untuk
+            hotel yang belum memiliki fasilitas meeting atau event.
+          </p>
+          <ul class="type-features">
+            <li>
+              <i class="fas fa-check"></i> Pendaftaran hotel & klasifikasi
+            </li>
+            <li><i class="fas fa-check"></i> Manajemen kamar & tarif</li>
+            <li><i class="fas fa-check"></i> Sertifikasi CHSE</li>
+            <li><i class="fas fa-check"></i> Sistem booking standar</li>
+            <li><i class="fas fa-check"></i> Dashboard analytics dasar</li>
+          </ul>
+        </div>
+
+        <!-- Venue/MICE Only -->
+        <div class="type-card venue" onclick="selectType('venue')">
+          <div class="selection-indicator">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="type-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3 class="type-title">
+            Venue/MICE Saja
+            <span class="info-tooltip">
+              <i class="fas fa-info-circle"></i>
+              <span class="tooltip-text"
+                >Untuk pendaftaran venue meeting/event tanpa akomodasi</span
+              >
+            </span>
+          </h3>
+          <p class="type-description">
+            Daftarkan venue khusus untuk meeting, conference, dan event. Cocok
+            untuk convention center atau venue independen.
+          </p>
+          <ul class="type-features">
+            <li><i class="fas fa-check"></i> Pendaftaran venue MICE</li>
+            <li><i class="fas fa-check"></i> Manajemen ruang & kapasitas</li>
+            <li><i class="fas fa-check"></i> Sistem booking event</li>
+            <li><i class="fas fa-check"></i> Package management</li>
+            <li><i class="fas fa-check"></i> Event calendar integration</li>
+          </ul>
+        </div>
+
+        <!-- Hotel + Venue (Hybrid) -->
+        <div class="type-card hybrid" onclick="selectType('hybrid')">
+          <div class="recommended-badge">Recommended</div>
+          <div class="selection-indicator">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="type-icon">
+            <i class="fas fa-building-user"></i>
+          </div>
+          <h3 class="type-title">
+            Hotel + Venue
+            <span class="info-tooltip">
+              <i class="fas fa-info-circle"></i>
+              <span class="tooltip-text"
+                >Pendaftaran lengkap untuk hotel dengan fasilitas MICE</span
+              >
+            </span>
+          </h3>
+          <p class="type-description">
+            Solusi lengkap untuk hotel dengan fasilitas MICE. Kelola akomodasi
+            dan venue event dalam satu sistem terintegrasi.
+          </p>
+          <ul class="type-features">
+            <li><i class="fas fa-check"></i> Semua fitur hotel</li>
+            <li><i class="fas fa-check"></i> Semua fitur venue/MICE</li>
+            <li><i class="fas fa-check"></i> Integrated booking system</li>
+            <li><i class="fas fa-check"></i> Package bundling</li>
+            <li><i class="fas fa-check"></i> Advanced analytics</li>
+            <li><i class="fas fa-check"></i> Cross-selling tools</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quick-start">
+        <h3>
+          <i class="fas fa-lightbulb"></i>
+          Tips Pemilihan
+        </h3>
+        <p>
+          Pilih "Hotel + Venue" jika Anda berencana menambah fasilitas MICE di
+          masa depan. Anda dapat memulai dengan hotel saja dan mengaktifkan
+          venue nanti.
+        </p>
+      </div>
+
+      <div class="action-buttons">
+        <button
+          class="btn btn-primary"
+          id="continueBtn"
+          onclick="continueRegistration()"
+          disabled
+        >
+          <i class="fas fa-arrow-right"></i>
+          Lanjutkan Pendaftaran
+        </button>
+        <a href="index.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i>
+          Kembali ke Portal
+        </a>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+      <div class="modal-content">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDescription"></p>
+        <div style="margin-top: 30px">
+          <button class="btn btn-primary" onclick="proceedToForm()">
+            <i class="fas fa-check"></i>
+            Ya, Lanjutkan
+          </button>
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal()"
+            style="margin-left: 15px"
+          >
+            <i class="fas fa-times"></i>
+            Batal
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let selectedType = null;
+
+      const typeData = {
+        hotel: {
+          title: "Pendaftaran Hotel",
+          description:
+            "Anda akan diarahkan ke formulir pendaftaran hotel dengan fokus pada layanan akomodasi.",
+          formUrl: "forms/hotel-registration.html",
+          color: "#D6A955",
+        },
+        venue: {
+          title: "Pendaftaran Venue/MICE",
+          description:
+            "Anda akan diarahkan ke formulir pendaftaran venue dengan fokus pada fasilitas meeting dan event.",
+          formUrl: "forms/venue-registration.html",
+          color: "#10b981",
+        },
+        hybrid: {
+          title: "Pendaftaran Hotel + Venue",
+          description:
+            "Anda akan diarahkan ke formulir pendaftaran lengkap yang mencakup hotel dan fasilitas venue.",
+          formUrl: "forms/hybrid-registration.html",
+          color: "#3b82f6",
+        },
+      };
+
+      function selectType(type) {
+        // Remove previous selection
+        document.querySelectorAll(".type-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+
+        // Add selection to clicked card
+        document.querySelector(`.type-card.${type}`).classList.add("selected");
+
+        selectedType = type;
+
+        // Enable continue button
+        document.getElementById("continueBtn").disabled = false;
+
+        // Add visual feedback
+        setTimeout(() => {
+          document.querySelector(`.type-card.${type}`).style.transform =
+            "scale(1.05)";
+          setTimeout(() => {
+            document.querySelector(`.type-card.${type}`).style.transform =
+              "scale(1)";
+          }, 200);
+        }, 100);
+      }
+
+      function continueRegistration() {
+        if (!selectedType) return;
+
+        const data = typeData[selectedType];
+        document.getElementById("modalTitle").textContent = data.title;
+        document.getElementById("modalDescription").textContent =
+          data.description;
+
+        document.getElementById("confirmationModal").classList.add("active");
+      }
+
+      function closeModal() {
+        document.getElementById("confirmationModal").classList.remove("active");
+      }
+
+      function proceedToForm() {
+        if (!selectedType) return;
+
+        const data = typeData[selectedType];
+
+        // Store selection in localStorage for form to use
+        localStorage.setItem("registrationType", selectedType);
+        localStorage.setItem("registrationTimestamp", new Date().toISOString());
+
+        // Show loading state
+        const continueBtn = document.getElementById("continueBtn");
+        continueBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> Memuat Formulir...';
+        continueBtn.disabled = true;
+
+        // Simulate loading and redirect
+        setTimeout(() => {
+          // Create URL with type parameter
+          const url = `${
+            data.formUrl
+          }?type=${selectedType}&timestamp=${Date.now()}`;
+          window.location.href = url;
+        }, 1500);
+      }
+
+      // Add keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        switch (e.key) {
+          case "1":
+            selectType("hotel");
+            break;
+          case "2":
+            selectType("venue");
+            break;
+          case "3":
+            selectType("hybrid");
+            break;
+          case "Enter":
+            if (selectedType) continueRegistration();
+            break;
+          case "Escape":
+            closeModal();
+            break;
+        }
+      });
+
+      // Add analytics tracking
+      function trackSelection(type) {
+        console.log("Registration type selected:", type);
+        // Add analytics code here
+      }
+
+      // Auto-focus on recommended option
+      document.addEventListener("DOMContentLoaded", function () {
+        // Highlight recommended option
+        const hybridCard = document.querySelector(".type-card.hybrid");
+        if (hybridCard) {
+          hybridCard.style.boxShadow =
+            "0 0 0 2px #D6A955, 0 8px 30px rgba(0,0,0,0.1)";
+          setTimeout(() => {
+            hybridCard.style.boxShadow = "0 8px 30px rgba(0,0,0,0.1)";
+          }, 2000);
+        }
+      });
+
+      // Handle browser back button
+      window.addEventListener("popstate", function (e) {
+        if (
+          document
+            .getElementById("confirmationModal")
+            .classList.contains("active")
+        ) {
+          closeModal();
+          e.preventDefault();
+        }
+      });
+
+      // Save progress
+      window.addEventListener("beforeunload", function (e) {
+        if (selectedType) {
+          localStorage.setItem("lastSelectedType", selectedType);
+        }
+      });
+
+      // Restore previous selection
+      window.addEventListener("load", function () {
+        const lastSelected = localStorage.getItem("lastSelectedType");
+        if (lastSelected && typeData[lastSelected]) {
+          selectType(lastSelected);
+
+          // Show restoration notification
+          setTimeout(() => {
+            const notification = document.createElement("div");
+            notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #10b981;
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        z-index: 10000;
+                        animation: slideInRight 0.3s ease;
+                    `;
+            notification.innerHTML =
+              '<i class="fas fa-info-circle"></i> Pilihan sebelumnya dipulihkan';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+              notification.remove();
+            }, 3000);
+          }, 500);
+        }
+      });
+    </script>
+  </body>
+</html>

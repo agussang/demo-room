@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "🚀 Starting Hotel Management System Development Server..."
 echo "=================================================="
-echo "🌐 Server will be available at: http://localhost:8000"
+echo "🌐 Server will be available at: http://localhost:8000 and http://[your-ip]:8000"
 echo "📱 Mobile testing: http://[your-ip]:8000"
 echo ""
 echo "🔗 Quick Access:"
@@ -13,4 +13,4 @@ echo ""
 echo "Press Ctrl+C to stop the server"
 echo "=================================================="
 
-php -S localhost:8000
+php -S 0.0.0.0:8000

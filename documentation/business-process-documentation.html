@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentasi Proses Bisnis - MICE ID Inventory</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a4061;
+            --primary-light: #3a5680;
+            --primary-dark: #1a2c45;
+            --accent: #e5bc6d;
+            --accent-light: #f1d196;
+            --accent-dark: #d6a955;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --mid-gray: #e2e8f0;
+            --text-dark: #1a202c;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.08);
+            --transition: all 0.25s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--light);
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 0,100 1000,100"/></svg>');
+            background-size: 100% 100%;
+        }
+
+        .header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: var(--light);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        .toc {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 2rem;
+            z-index: 100;
+        }
+
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-medium);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+        }
+
+        .toc a:hover {
+            background: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .toc a.active {
+            background: var(--primary);
+            color: var(--light);
+        }
+
+        .content-section {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            flex-grow: 1;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        .process-card {
+            background: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .process-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .process-steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .process-steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .process-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary);
+            color: var(--light);
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .flow-diagram {
+            background: var(--light);
+            border: 2px dashed var(--mid-gray);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            margin: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            margin: 0 0.5rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .feature-card h5 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-medium);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .business-rules {
+            background: linear-gradient(135deg, var(--warning) 0%, var(--accent) 100%);
+            color: var(--primary-dark);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .business-rules h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .business-rules ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .business-rules li {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .data-flow {
+            background: var(--light);
+            border: 1px solid var(--mid-gray);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .data-flow h5 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .data-flow .flow-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-flow .flow-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .data-flow .flow-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-badge.approved {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-badge.rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .status-badge.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: var(--primary);
+            color: var(--light);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .toc {
+                position: static;
+                margin-bottom: 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1><i class="fas fa-book-open me-3"></i>Dokumentasi Proses Bisnis</h1>
+                    <p>Sistem Manajemen Hotel Indonesia - MICE ID Inventory</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <!-- Table of Contents -->
+            <div class="col-lg-3">
+                <div class="toc">
+                    <h3><i class="fas fa-list me-2"></i>Daftar Isi</h3>
+                    <ul>
+                        <li><a href="#overview" class="toc-link">Overview Sistem</a></li>
+                        <li><a href="#hotel-manager" class="toc-link">Portal Hotel Manager</a></li>
+                        <li><a href="#pemda" class="toc-link">Portal Pemda</a></li>
+                        <li><a href="#pusat" class="toc-link">Portal Pemerintah Pusat</a></li>
+                        <li><a href="#dashboard" class="toc-link">Dashboard Hotel</a></li>
+                        <li><a href="#verification" class="toc-link">Sistem Verifikasi</a></li>
+                        <li><a href="#features" class="toc-link">Fitur Khusus</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Overview Section -->
+                <div id="overview" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Overview Sistem</h2>
+                            <p>Gambaran umum sistem MICE ID Inventory untuk manajemen hotel</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Tujuan Sistem</h4>
+                        <p>Sistem MICE ID Inventory dirancang untuk mengelola proses registrasi, verifikasi, dan approval hotel secara digital dengan workflow yang terstruktur dan transparan.</p>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-hotel"></i>
+                            </div>
+                            <h5>Hotel Management</h5>
+                            <p>Pengelolaan data hotel, kamar, dan fasilitas secara komprehensif</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h5>Verification System</h5>
+                            <p>Sistem verifikasi bertingkat dari Pemda hingga Pemerintah Pusat</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5>Real-time Tracking</h5>
+                            <p>Monitoring progress dan status verifikasi secara real-time</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hotel Manager Section -->
+                <div id="hotel-manager" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Portal Hotel Manager</h2>
+                            <p>Sistem manajemen hotel untuk pengelolaan data dan operasional</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Proses Bisnis Utama</h4>
+                        <ol class="process-steps">
+                            <li><strong>Pendaftaran Hotel:</strong> Input data hotel baru termasuk informasi dasar, NIB, CHSE, dan klasifikasi bintang</li>
+                            <li><strong>Manajemen Kamar:</strong> Pengelolaan inventory kamar dengan dynamic pricing dan availability management</li>
+                            <li><strong>Manajemen Venue:</strong> Pengaturan venue untuk meeting dan event dengan sistem booking terintegrasi</li>
+                            <li><strong>Ruang Meeting:</strong> Fasilitas khusus untuk business events dengan standar internasional</li>
+                            <li><strong>Dashboard Analytics:</strong> Monitoring performa hotel real-time (okupansi, revenue, rating tamu)</li>
+                        </ol>
+                    </div>
+
+                    <div class="data-flow">
+                        <h5>Data Flow Hotel Manager</h5>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Hotel Manager → Input data hotel → Sistem validasi → Penyimpanan IndexedDB</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Status tracking: <span class="status-badge pending">Baru</span> → <span class="status-badge active">Proses</span> → <span class="status-badge pending">Menunggu Verifikasi</span> → <span class="status-badge approved">Verifikasi Pemda</span> → <span class="status-badge approved">Approval Pusat</span></span>
+                        </div>
+                    </div>
+
+                    <div class="business-rules">
+                        <h4>Business Rules</h4>
+                        <ul>
+                            <li>Semua data hotel harus lengkap sebelum submit verifikasi</li>
+                            <li>NIB dan CHSE harus valid dan tidak expired</li>
+                            <li>Koordinat lokasi harus akurat dan terverifikasi</li>
+                            <li>Foto hotel minimal 10 gambar dengan kualitas HD</li>
+                            <li>Data kamar harus mencakup fasilitas lengkap</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pemda Section -->
+                <div id="pemda" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Portal Pemda</h2>
+                            <p>Sistem verifikasi dan validasi hotel tingkat daerah</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Proses Verifikasi Pemda</h4>
+                        <ol class="process-steps">
+                            <li><strong>Verifikasi Dokumen:</strong> Review NIB, CHSE, dan dokumen pendukung lainnya</li>
+                            <li><strong>Validasi Lokasi:</strong> Pengecekan koordinat dan kesesuaian dengan izin lokasi</li>
+                            <li><strong>Checklist Compliance:</strong> Verifikasi standar klasifikasi hotel sesuai regulasi</li>
+                            <li><strong>Site Inspection:</strong> Pemeriksaan fisik hotel jika diperlukan</li>
+                            <li><strong>Approval/Reject:</strong> Keputusan persetujuan atau penolakan dengan catatan detail</li>
+                        </ol>
+                    </div>
+
+                    <div class="flow-diagram">
+                        <div class="flow-step">Pengajuan dari Hotel Manager</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Review Dokumen</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Verifikasi Checklist</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Keputusan</div>
+                    </div>
+
+                    <div class="data-flow">
+                        <h5>Workflow Keputusan</h5>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Jika <span class="status-badge approved">Disetujui</span> → Dikirim ke Pemerintah Pusat</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Jika <span class="status-badge rejected">Ditolak</span> → Dikembalikan ke Hotel Manager dengan feedback</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Jika <span class="status-badge pending">Perlu Perbaikan</span> → Dikembalikan untuk revisi</span>
+                        </div>
+                    </div>
+
+                    <div class="business-rules">
+                        <h4>Standar Verifikasi Pemda</h4>
+                        <ul>
+                            <li>Dokumen NIB harus valid dan sesuai dengan data OSS</li>
+                            <li>Sertifikat CHSE harus tersedia dan masih berlaku</li>
+                            <li>Lokasi hotel harus sesuai dengan izin yang diberikan</li>
+                            <li>Klasifikasi hotel harus memenuhi standar minimum</li>
+                            <li>Fasilitas hotel harus sesuai dengan yang dideklarasikan</li>
+                            <li>Foto hotel harus representatif dan sesuai kondisi aktual</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pemerintah Pusat Section -->
+                <div id="pusat" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Portal Pemerintah Pusat</h2>
+                            <p>Sistem final approval dan penerbitan SK tingkat nasional</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Proses Final Approval</h4>
+                        <ol class="process-steps">
+                            <li><strong>Final Review:</strong> Review komprehensif dari pengajuan yang telah lolos verifikasi Pemda</li>
+                            <li><strong>Validasi Nasional:</strong> Pengecekan terhadap database nasional dan standar internasional</li>
+                            <li><strong>Penerbitan SK:</strong> Pembuatan Surat Keputusan resmi dengan nomor unik dan masa berlaku</li>
+                            <li><strong>Database Integration:</strong> Integrasi dengan database nasional hotel terverifikasi</li>
+                            <li><strong>Monitoring & Maintenance:</strong> Pemantauan berkala dan renewal sistem</li>
+                        </ol>
+                    </div>
+
+                    <div class="flow-diagram">
+                        <div class="flow-step">Pengajuan dari Pemda</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Final Review</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Keputusan Approval</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Penerbitan SK</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Database Nasional</div>
+                    </div>
+
+                    <div class="data-flow">
+                        <h5>Manajemen SK (Surat Keputusan)</h5>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Auto-generate nomor SK dengan format: SK-HOTEL/YYYY/NNNNNN</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Masa berlaku SK: 5 tahun dari tanggal persetujuan</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Digital signature dan QR code untuk verifikasi</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Sistem reminder untuk renewal 6 bulan sebelum expired</span>
+                        </div>
+                    </div>
+
+                    <div class="business-rules">
+                        <h4>Standar Approval Nasional</h4>
+                        <ul>
+                            <li>Hotel harus lolos verifikasi Pemda dengan status "Disetujui"</li>
+                            <li>Tidak ada duplikasi dalam database nasional</li>
+                            <li>Memenuhi standar internasional sesuai klasifikasi</li>
+                            <li>Compliance dengan regulasi nasional dan internasional</li>
+                            <li>Dokumentasi lengkap dan dapat diverifikasi</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Dashboard Hotel</h2>
+                            <p>Monitoring dan tracking progress hotel secara real-time</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Fitur Dashboard</h4>
+                        <ol class="process-steps">
+                            <li><strong>Progress Tracking:</strong> Monitoring kelengkapan data hotel secara real-time dengan progress bar</li>
+                            <li><strong>Status Verifikasi:</strong> Tracking status NIB, CHSE, dan verifikasi dokumen lainnya</li>
+                            <li><strong>Data Completion:</strong> Sistem scoring untuk mengukur kelengkapan data hotel</li>
+                            <li><strong>Quick Actions:</strong> Akses cepat ke form input dan update data yang diperlukan</li>
+                            <li><strong>Notification Center:</strong> Sistem notifikasi untuk update status dan action items</li>
+                        </ol>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <h5>Completion Analytics</h5>
+                            <p>Analisis kelengkapan data dengan visualisasi chart yang intuitif</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h5>Real-time Notifications</h5>
+                            <p>Notifikasi instant untuk setiap perubahan status verifikasi</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h5>Activity Timeline</h5>
+                            <p>Timeline aktivitas untuk tracking semua perubahan data</p>
+                        </div>
+                    </div>
+
+                    <div class="data-flow">
+                        <h5>Data Flow Dashboard</h5>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Data hotel → Validasi completeness → Progress calculation → Visual dashboard</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Real-time updates setiap perubahan data</span>
+                        </div>
+                        <div class="flow-item">
+                            <div class="flow-dot"></div>
+                            <span>Notifikasi status verifikasi dan tindakan yang diperlukan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verification System Section -->
+                <div id="verification" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Sistem Verifikasi Bertingkat</h2>
+                            <p>Workflow verifikasi komprehensif dengan multiple level approval</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Workflow Verifikasi Lengkap</h4>
+                        <ol class="process-steps">
+                            <li><strong>Hotel Manager:</strong> Submit pengajuan dengan dokumen lengkap dan data komprehensif</li>
+                            <li><strong>Pemda:</strong> Verifikasi dokumen, compliance check, dan validasi lokasi</li>
+                            <li><strong>Pemerintah Pusat:</strong> Final approval, penerbitan SK, dan integrasi database nasional</li>
+                            <li><strong>Database Nasional:</strong> Registrasi resmi hotel dalam sistem nasional</li>
+                            <li><strong>Monitoring:</strong> Pemantauan berkala dan sistem renewal otomatis</li>
+                        </ol>
+                    </div>
+
+                    <div class="flow-diagram">
+                        <div class="flow-step">Submit Application</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Pemda Verification</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">Central Approval</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">SK Issuance</div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-step">National Database</div>
+                    </div>
+
+                    <div class="business-rules">
+                        <h4>Business Rules Sistem Verifikasi</h4>
+                        <ul>
+                            <li>Semua dokumen harus valid dan lengkap sebelum submit</li>
+                            <li>Verifikasi Pemda harus selesai sebelum escalation ke Pusat</li>
+                            <li>SK memiliki masa berlaku 5 tahun dengan sistem renewal</li>
+                            <li>Real-time tracking tersedia di semua level administrasi</li>
+                            <li>Automated notification system untuk semua stakeholder</li>
+                            <li>Document management dengan preview dan version control</li>
+                            <li>Audit trail lengkap untuk compliance dan monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Special Features Section -->
+                <div id="features" class="content-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Fitur Khusus</h2>
+                            <p>Fitur-fitur unggulan yang mendukung efisiensi dan user experience</p>
+                        </div>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Mode Switching</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-hotel"></i>
+                                    </div>
+                                    <h5>Hotel Mode</h5>
+                                    <p>Fokus pada pengelolaan data hotel, kamar, dan fasilitas umum</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-chalkboard"></i>
+                                    </div>
+                                    <h5>Venue Mode</h5>
+                                    <p>Fokus pada pengelolaan ruang meeting, ballroom, dan event space</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3">Seamless switching antara kedua mode untuk optimalisasi workflow berdasarkan kebutuhan operasional.</p>
+                    </div>
+
+                    <div class="process-card">
+                        <h4>Security & Compliance</h4>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <h5>Role-based Access</h5>
+                                <p>Kontrol akses berdasarkan peran dan level otoritas</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <h5>Document Encryption</h5>
+                                <p>Enkripsi dokumen untuk keamanan data sensitif</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <h5>Audit Trail</h5>
+                                <p>Pencatatan lengkap semua aktivitas untuk compliance</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <h5>CHSE Monitoring</h5>
+                                <p>Monitoring otomatis sertifikat CHSE dan renewal</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="business-rules">
+                        <h4>Keunggulan Sistem</h4>
+                        <ul>
+                            <li>Transparansi penuh dalam proses verifikasi hotel</li>
+                            <li>Workflow yang jelas dan terstruktur di semua level</li>
+                            <li>Real-time tracking untuk semua stakeholder</li>
+                            <li>Automated notification dan reminder system</li>
+                            <li>Integration dengan sistem nasional dan internasional</li>
+                            <li>User-friendly interface dengan responsive design</li>
+                            <li>Comprehensive reporting dan analytics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2025 MICE ID INVENTORY. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>Dokumentasi Proses Bisnis - Versi 1.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for table of contents
+        document.addEventListener('DOMContentLoaded', function() {
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = document.querySelectorAll('.content-section');
+            
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Update active link
+                        tocLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+            
+            // Update active link on scroll
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Back to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTopBtn = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    </script>
+</body>
+</html>
